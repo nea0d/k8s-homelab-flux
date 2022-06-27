@@ -1,3 +1,14 @@
+# ---
+# apiVersion: source.toolkit.fluxcd.io/v1beta2
+# kind: GitRepository
+# metadata:
+#   name: flux-cluster
+#   namespace: flux-system
+# spec:
+#   interval: 10m
+#   ref:
+#     branch: main
+#   url: https://github.com/nea0d/k8s-homelab-flux.git
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: GitRepository
@@ -6,9 +17,11 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
+  url: ssh://git@github.com:nea0d/k8s-homelab-flux.git
   ref:
     branch: main
-  url: https://github.com/nea0d/k8s-homelab-flux.git
+  secretRef:
+    name: github-deploy-key
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
