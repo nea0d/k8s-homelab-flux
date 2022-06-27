@@ -9,5 +9,25 @@
     - name: Pausing for 5 seconds...
       pause:
         seconds: 5
+
+    # - name: Create ansible remote tmp dir
+    #   file:
+    #     path: /tmp/.ansible/tmp
+    #     state: directory
+    #     owner: root
+    #     group: root
+    #     mode: 0775
+    #     recurse: yes
   roles:
     - prepare
+
+  tasks:
+    - name: Configure log rotation
+      include_role:
+        name: nickhammond.logrotate
+        public: true
+
+    - name: Install and configure log2ram
+      include_role:
+        name: chzerv.log2ram
+        public: true

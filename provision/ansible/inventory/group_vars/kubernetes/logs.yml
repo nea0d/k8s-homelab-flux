@@ -1,0 +1,41 @@
+systemd_journal_system_max_use: 50M
+systemd_journal_system_max_file_size: 20M
+
+logrotate_scripts:
+  - name: rsyslog
+    path: /var/log/syslog
+    options:
+      - maxsize 5M
+      - rotate 3
+      - daily
+      - missingok
+      - notifempty
+      - delaycompress
+      - compress
+    scripts:
+      postrotate: /usr/lib/rsyslog/rsyslog-rotate
+
+  - name: rsyslog-msg
+    paths:
+      - /var/log/mail.info
+      - /var/log/mail.warn
+      - /var/log/mail.err
+      - /var/log/mail.log
+      - /var/log/daemon.log
+      - /var/log/kern.log
+      - /var/log/auth.log
+      - /var/log/user.log
+      - /var/log/lpr.log
+      - /var/log/cron.log
+      - /var/log/debug
+      - /var/log/messages
+    options:
+      - rotate 3
+      - daily
+      - missingok
+      - notifempty
+      - compress
+      - delaycompress
+      - sharedscripts
+    scripts:
+      postrotate: /usr/lib/rsyslog/rsyslog-rotate

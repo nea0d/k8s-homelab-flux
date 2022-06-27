@@ -1,0 +1,7 @@
+---
+# (string) Timezone for the servers (e.g. Europe/Paris)
+timezone: "${BOOTSTRAP_TIMEZONE}"
+
+# (list) Additional ssh public keys to add to the nodes
+ssh_authorized_keys:
+  - ${BOOTSTRAP_SSH_AUTHORIZED_KEYS}

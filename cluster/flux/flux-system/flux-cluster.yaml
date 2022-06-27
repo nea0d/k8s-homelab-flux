@@ -8,7 +8,7 @@ spec:
   interval: 10m
   ref:
     branch: main
-  url: https://github.com/nea0d/flux-homelab.git
+  url: https://github.com/nea0d/k8s-homelab-flux.git
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization

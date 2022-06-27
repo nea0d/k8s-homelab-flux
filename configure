@@ -69,6 +69,8 @@ main() {
         # generate ansible settings
         envsubst < "${PROJECT_DIR}/tmpl/ansible/kube-vip.yml" \
             > "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/kube-vip.yml"
+        envsubst < "${PROJECT_DIR}/tmpl/ansible/ubuntu.yml" \
+            > "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/ubuntu.yml"
         # generate ansible hosts file and secrets
         generate_ansible_hosts
         generate_ansible_host_secrets
@@ -367,6 +369,10 @@ verify_ansible_hosts() {
             _log "ERROR" "The traefik load balancer IP '${BOOTSTRAP_METALLB_TRAEFIK_ADDR}' should not be the same as the IP for node '${!node_addr}'"
             exit 1
         fi
+
+        # add fingerprint to known-hosts file
+        _log "INFO" "Add SSH Fingerprint of '${!var}' to known_hosts"
+        ssh-keyscan -t ssh-rsa -H ${!var} >> ~/.ssh/known_hosts
 
         if ssh -q -o BatchMode=yes -o ConnectTimeout=5 "${!node_username}"@"${!var}" "true"; then
             _log "INFO" "SSH into host '${!var}' with username '${!node_username}' was successfull"
