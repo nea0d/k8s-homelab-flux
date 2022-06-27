@@ -17,7 +17,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  url: ssh://git@github.com:nea0d/k8s-homelab-flux.git
+  url: ssh://git@github.com/nea0d/k8s-homelab-flux.git
   ref:
     branch: main
   secretRef:
