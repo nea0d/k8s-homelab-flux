@@ -8,6 +8,7 @@ resources:
   - jetstack.yaml
   - k8s-at-home.yaml
   - k8s-gateway.yaml
+  - longhorn-charts.yaml
   - metallb.yaml
   - metrics-server.yaml
   - stakater.yaml
