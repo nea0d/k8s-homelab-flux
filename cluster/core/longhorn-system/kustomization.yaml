@@ -6,4 +6,3 @@ resources:
   - namespace.yaml
   - helm-release.yaml
   - longhorn-ssd-storage-class.yaml
-  - longhorn-volume-snapshot.yaml
