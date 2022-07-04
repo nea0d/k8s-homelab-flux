@@ -9,15 +9,6 @@
     - name: Pausing for 5 seconds...
       pause:
         seconds: 5
-
-    # - name: Create ansible remote tmp dir
-    #   file:
-    #     path: /tmp/.ansible/tmp
-    #     state: directory
-    #     owner: root
-    #     group: root
-    #     mode: 0775
-    #     recurse: yes
   roles:
     - prepare
 

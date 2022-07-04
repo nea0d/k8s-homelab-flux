@@ -1,0 +1,26 @@
+---
+- name: Creates volumes directory
+  file:
+    path: /mnt/volumes
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create list of mounted devices
+  set_fact:
+    mounted_devices: "{{ ansible_mounts|json_query('[].device') }}"
+
+- name: Create File System for volumes storage
+  filesystem:
+    fstype: ext4
+    dev: "{{ volumes_mount_src }}"
+  when: volumes_mount_src not in mounted_devices
+
+- name: Mount File System for volumes storage
+  mount:
+    path: "{{ volumes_mount_path }}"
+    src: "{{ volumes_mount_src }}"
+    fstype: ext4
+    state: mounted
+  when: volumes_mount_src not in mounted_devices

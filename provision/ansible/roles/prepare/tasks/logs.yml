@@ -1,12 +1,24 @@
 ---
-- name: limit the total size of journald logs
-  lineinfile:
-    dest: /etc/systemd/journald.conf
-    regexp: ^SystemMaxUse=
-    line: SystemMaxUse={{ systemd_journal_system_max_use }}
+# - name: limit the total size of journald logs
+#   lineinfile:
+#     dest: /etc/systemd/journald.conf
+#     regexp: ^SystemMaxUse=
+#     line: SystemMaxUse={{ systemd_journal_system_max_use }}
 
-- name: limit the size of each journald log file
-  lineinfile:
-    dest: /etc/systemd/journald.conf
-    regexp: ^SystemMaxFileSize=
-    line: SystemMaxFileSize={{ systemd_journal_system_max_file_size }}
+# - name: limit the size of each journald log file
+#   lineinfile:
+#     dest: /etc/systemd/journald.conf
+#     regexp: ^SystemMaxFileSize=
+#     line: SystemMaxFileSize={{ systemd_journal_system_max_file_size }}
+
+- name: upload new journald template
+  template:
+    src: 'journald.conf.j2'
+    dest: '/etc/systemd/journald.conf'
+  become: true # <-- unless you are connecting as root
+
+- name: reload systemd-journald
+  systemd:
+    name: systemd-journald
+    state: restarted
+  become: true

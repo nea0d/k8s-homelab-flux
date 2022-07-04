@@ -28,3 +28,4 @@ repos:
     rev: v2.1.1
     hooks:
       - id: forbid-secrets
+        exclude: ^tmpl/
