@@ -21,21 +21,32 @@ spec:
       defaultClassReplicaCount: 2
       defaultClass: true
       defaultFsType: ext4
-      defaultDataLocality: disabled # best-effort otherwise
+      defaultDataLocality: best-effort # disabled otherwise
       reclaimPolicy: Delete
       migratable: false
       recurringJobSelector:
-        enable: false
+        enable: true
         jobList: '[
                     {"name":"daily-snapshot", "task":"snapshot", "cron":"0 0 * * ?", "retain":7, "groups": ["daily-snaphpt"]},
                     {"name":"weekly-backup", "task":"backup", "cron":"0 1 ? * FRI", "retain":4, "groups": ["default", "weekly-backup"]}
                   ]'
     defaultSettings:
       backupTarget: ${SECRET_LONGHORN_BACKUP_TARGET}
-      backupTargetCredentialSecret: longhorn-backup
+      # backupTargetCredentialSecret: longhorn-backup # Uncomment only if using s3 backup target
       defaultDataPath: ${SECRET_LONGHORN_STORAGE_MOUNT_PATH}
       defaultReplicaCount: 2
       defaultLonghornStaticStorageClass: longhorn-static
+      createDefaultDiskLabeledNodes: true
+      replicaSoftAntiAffinity: false
+      storageOverProvisioningPercentage: 200
+      storageMinimalAvailablePercentage: 10
+      upgradeChecker: false
+      autoSalvage: true
+      autoDeletePodWhenVolumeDetachedUnexpectedly: true
+      allowVolumeCreationWithDegradedAvailability: true
+      nodeDownPodDeletionPolicy: "delete-both-statefulset-and-deployment-pod"
+      volumeAttachmentRecoveryPolicy: "wait"
+      replicaReplenishmentWaitInterval: 300
     ingress:
       enabled: true
       ingressClassName: "traefik"

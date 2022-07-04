@@ -8,6 +8,9 @@ k3s_control_node: false
 # (dict) k3s settings for all worker nodes
 k3s_agent:
   node-ip: "{{ ansible_host }}"
+  # Longhorn specific label to create disks on workers only
+  node-label:
+    - "node.longhorn.io/create-default-disk=true"
   kubelet-arg:
     # Allow k8s services to contain TCP and UDP on the same port
     - "feature-gates=MixedProtocolLBService=true"

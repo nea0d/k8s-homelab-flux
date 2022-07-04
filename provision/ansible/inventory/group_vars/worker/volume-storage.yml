@@ -1,6 +1,6 @@
 ---
 # (string) volume storage disk
-volumes_mount_src: /dev/sdb
+volumes_mount_src: "/dev/sdb"
 
 # (string) volume storage mount point
-volumes_mount_path: {{SECRET_LONGHORN_STORAGE_MOUNT_PATH}}
+volumes_mount_path: "/mnt/volumes"
