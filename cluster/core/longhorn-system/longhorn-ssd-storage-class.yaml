@@ -1,7 +1,10 @@
+---
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
   name: longhorn-ssd
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
 provisioner: driver.longhorn.io
 allowVolumeExpansion: true
 reclaimPolicy: Delete
@@ -19,11 +22,7 @@ parameters:
   #  nodeSelector: "storage,fast"
   recurringJobSelector: '[
       {
-        "name":"daily-snapshot",
-        "isGroup":true
-      },
-      {
-        "name":"weekly-backup",
+        "name":"weekly",
         "isGroup":true
       }
     ]'

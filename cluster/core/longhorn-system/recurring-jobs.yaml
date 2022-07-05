@@ -1,0 +1,75 @@
+---
+# Snapshot every 6 hours / retain for 24h
+apiVersion: longhorn.io/v1beta1
+kind: RecurringJob
+metadata:
+  name: hourly-snapshot
+  namespace: longhorn-system
+spec:
+  cron: "0 */6 * * *"
+  task: "snapshot"
+  groups:
+    - daily
+    - critical
+  retain: 4
+  concurrency: 2
+---
+#backup every day at 1h00 / retain 14 days
+apiVersion: longhorn.io/v1beta1
+kind: RecurringJob
+metadata:
+  name: daily-backup
+  namespace: longhorn-system
+spec:
+  cron: "0 1 * * *"
+  task: "backup"
+  groups:
+    - daily
+    - critical
+  retain: 14
+  concurrency: 2
+---
+# Snapshot every day at 0h00 / retain for 7 days
+apiVersion: longhorn.io/v1beta1
+kind: RecurringJob
+metadata:
+  name: daily-snapshot
+  namespace: longhorn-system
+spec:
+  cron: "0 0 * * *"
+  task: "snapshot"
+  groups:
+    - weekly
+    - default
+  retain: 7
+  concurrency: 2
+---
+#backup every friday at 1h00 / retain 4 weeks
+apiVersion: longhorn.io/v1beta1
+kind: RecurringJob
+metadata:
+  name: weekly-backup
+  namespace: longhorn-system
+spec:
+  cron: "0 1 * * FRI"
+  task: "backup"
+  groups:
+    - weekly
+    - default
+  retain: 4
+  concurrency: 2
+---
+#backup every 1st of the month at 1h00 / retain 6 months
+apiVersion: longhorn.io/v1beta1
+kind: RecurringJob
+metadata:
+  name: monthly-backup
+  namespace: longhorn-system
+spec:
+  cron: "0 1 1 * *"
+  task: "backup"
+  groups:
+    - monthly
+    - light
+  retain: 6
+  concurrency: 2

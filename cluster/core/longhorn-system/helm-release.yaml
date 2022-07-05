@@ -19,18 +19,13 @@ spec:
   values:
     persistence:
       defaultClassReplicaCount: 2
-      defaultClass: true
+      defaultClass: false
       defaultFsType: ext4
       defaultDataLocality: best-effort # disabled otherwise
       reclaimPolicy: Delete
       migratable: false
-      recurringJobSelector:
-        enable: true
-        jobList: '[
-                    {"name":"daily-snapshot", "task":"snapshot", "cron":"0 0 * * ?", "retain":7, "groups": ["daily-snaphpt"]},
-                    {"name":"weekly-backup", "task":"backup", "cron":"0 1 ? * FRI", "retain":4, "groups": ["default", "weekly-backup"]}
-                  ]'
     defaultSettings:
+      allowRecurringJobWhileVolumeDetached: true
       backupTarget: ${SECRET_LONGHORN_BACKUP_TARGET}
       # backupTargetCredentialSecret: longhorn-backup # Uncomment only if using s3 backup target
       defaultDataPath: ${SECRET_LONGHORN_STORAGE_MOUNT_PATH}
