@@ -31,8 +31,9 @@ spec:
       namespaceSelector:
         matchNames:
           - default
+          - longhorn-system
+          - monitoring
           - networking
-          - core
       name: "you"
       customApps:
         - name: Some External Cluster Service
@@ -114,13 +115,13 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
         hosts:
-          - host: "hajimari.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "hajimari.${SECRET_DOMAIN}"
+              - *host
             secretName: "hajimari-tls"
     persistence:
       data:

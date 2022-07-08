@@ -1,3 +1,4 @@
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -11,6 +12,7 @@ resources:
   - longhorn-charts.yaml
   - metallb.yaml
   - metrics-server.yaml
+  - prometheus-community-charts.yaml
   - stakater.yaml
   - traefik.yaml
   - weaveworks-kured.yaml

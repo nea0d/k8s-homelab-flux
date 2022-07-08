@@ -1,0 +1,250 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 36.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community-charts
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    alertmanager:
+      config:
+        global:
+          slack_api_url: "${SECRET_ALERT_MANAGER_MATTERMOST_WEBHOOK}"
+          resolve_timeout: 5m
+        receivers:
+          - name: 'null'
+          - name: 'mattermost'
+            slack_configs:
+              - channel: '#prometheus'
+                icon_url: https://avatars3.githubusercontent.com/u/3380462
+                username: 'Prometheus'
+                send_resolved: true
+                title: |-
+                  [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }} {{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }} {{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }} {{ else }}{{ .CommonLabels.alertname }}{{ end }}
+                text: >-
+                  {{ range .Alerts -}}
+                    *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
+
+                  {{ if ne .Annotations.summary ""}}*Summary:* {{ .Annotations.summary }} {{ else if ne .Annotations.message ""}}*Message:* {{ .Annotations.message }} {{ else if ne .Annotations.description ""}}*Description:* {{ .Annotations.description }}{{ end }}
+
+                  *Details:*
+                    {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+                    {{ end }}
+                  {{ end }}
+        route:
+          group_by: ['alertname', 'job']
+          group_wait: 30s
+          group_interval: 5m
+          repeat_interval: 6h
+          receiver: 'null'
+          routes:
+            - receiver: 'null'
+              match:
+                alertname: Watchdog
+            - receiver: 'mattermost'
+              match_re:
+                severity: critical|warning|error
+              continue: true
+        inhibit_rules:
+          - source_match:
+              severity: 'critical'
+            target_match:
+              severity: 'warning'
+            equal: ['alertname', 'namespace']
+      ingress:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "alert-box"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+        hosts:
+          - host: &host "alert-manager.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: "alert-manager-tls"
+
+      alertmanagerSpec:
+        replicas: 3
+        podAntiAffinity: hard
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: "longhorn-ssd"
+              resources:
+                requests:
+                  storage: 250Mi
+
+    nodeExporter:
+      serviceMonitor:
+        relabelings:
+          - action: replace
+            regex: (.*)
+            replacement: $1
+            sourceLabels: __meta_kubernetes_pod_node_name
+            targetLabel: kubernetes_node
+
+    kube-state-metrics:
+      metricLabelsAllowlist:
+        - "persistentvolumeclaims=[*]"
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels:
+                - __meta_kubernetes_pod_node_name
+              targetLabel: kubernetes_node
+
+    grafana:
+      enabled: false
+      forceDeployDashboards: true
+      sidecar:
+        dashboards:
+          multicluster:
+            etcd:
+              enabled: true
+
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabel: node
+            targetLabel: instance
+    kubeApiServer:
+      enabled: true
+    kubeControllerManager:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeProxy:
+      enabled: false
+    kubeEtcd:
+      enabled: false
+    prometheus:
+      ingress:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "monitor-eye"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+        hosts:
+          - host: &host "prometheus.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: "prometheus-tls"
+
+      thanosService:
+        enabled: false
+      thanosServiceMonitor:
+        enabled: false
+      # thanosIngress:
+      #   ingress:
+      #     enabled: false
+      #     ingressClassName: "traefik"
+      #     annotations:
+      #       cert-manager.io/cluster-issuer: "letsencrypt-production"
+      #       hajimari.io/enable: "true"
+      #       hajimari.io/icon: "magnify-scan"
+      #       traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      #       traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+      #     hosts:
+      #       - host: &host "thanos.${SECRET_DOMAIN}"
+      #         paths:
+      #           - path: /
+      #             pathType: Prefix
+      #     tls:
+      #       - hosts:
+      #           - *host
+      #         secretName: "thanos-tls"
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 1000Mi
+      prometheusSpec:
+        replicas: 3
+        replicaExternalLabelName: __replica__
+        # externalLabels:
+        #   cluster: ${CLUSTER_NAME}
+        podAntiAffinity: hard
+        retentionSize: "6GB"
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        retention: 2d
+        enableAdminAPI: true
+        walCompression: true
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: "longhorn-ssd"
+              resources:
+                requests:
+                  storage: 10Gi
+        # thanos:
+        #   image: quay.io/thanos/thanos:v0.26.0
+        #   # renovate: datasource=docker depName=quay.io/thanos/thanos
+        #   version: "v0.26.0"
+        #   objectStorageConfig:
+        #     name: thanos-objstore-secret
+        #     key: objstore.yml
+        # additionalScrapeConfigs:
+        # - job_name: 'node-exporter'
+        #   scrape_interval: 1m
+        #   scrape_timeout: 10s
+        #   honor_timestamps: true
+        #   static_configs:
+        #   - targets:
+        #     # # opnsense
+        #     # - 10.75.1.1:9100
+        #     # franxx nas
+        #     - 10.75.30.15:9100
+        # - job_name: 'minio-job'
+        #   scrape_interval: 1m
+        #   scrape_timeout: 10s
+        #   honor_timestamps: true
+        #   metrics_path: /minio/v2/metrics/cluster
+        #   static_configs:
+        #   - targets:
+        #     - 10.75.30.15:9000
+        # - job_name: "coredns"
+        #   scrape_interval: 1m
+        #   scrape_timeout: 10s
+        #   honor_timestamps: true
+        #   static_configs:
+        #   - targets:
+        #     - "${GATEWAY_IP}:9153"
