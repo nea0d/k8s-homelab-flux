@@ -78,10 +78,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
         hosts:
-          - host: &host "alert-manager.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
+          - &host "alert-manager.${SECRET_DOMAIN}"
         tls:
           - hosts:
               - *host
@@ -158,10 +155,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
         hosts:
-          - host: &host "prometheus.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
+          - &host "prometheus.${SECRET_DOMAIN}"
         tls:
           - hosts:
               - *host
@@ -182,10 +176,7 @@ spec:
       #       traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
       #       traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
       #     hosts:
-      #       - host: &host "thanos.${SECRET_DOMAIN}"
-      #         paths:
-      #           - path: /
-      #             pathType: Prefix
+      #       - &host "thanos.${SECRET_DOMAIN}"
       #     tls:
       #       - hosts:
       #           - *host
