@@ -49,13 +49,11 @@ spec:
         cert-manager.io/cluster-issuer: "letsencrypt-production"
         hajimari.io/enable: "true"
         hajimari.io/icon: "file-document-multiple"
+        hajimari.io/appName: "Longhorn"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
       hosts:
-        - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
-          paths:
-            - path: /
-              pathType: Prefix
+        - &host "lh.${SECRET_DOMAIN}"
       tls:
         - hosts:
             - *host

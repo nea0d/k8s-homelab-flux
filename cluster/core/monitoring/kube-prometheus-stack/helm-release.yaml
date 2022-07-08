@@ -73,6 +73,7 @@ spec:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "alert-box"
+          hajimari.io/appName: "Alert-Manager"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
         hosts:
@@ -132,31 +133,31 @@ spec:
     kubeApiServer:
       enabled: true
     kubeControllerManager:
-      enabled: false
+      enabled: true
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeScheduler:
-      enabled: false
+      enabled: true
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeProxy:
-      enabled: false
+      enabled: true
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeEtcd:
-      enabled: false
+      enabled: true
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
       service:
-        enabled: false
+        enabled: true
         port: 2381
         targetPort: 2381
     prometheus:
@@ -167,6 +168,7 @@ spec:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "monitor-eye"
+          hajimari.io/appName: "Prometheus"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
         hosts:
