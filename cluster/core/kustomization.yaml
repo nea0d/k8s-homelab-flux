@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - cluster-issuers
   - longhorn-system
+  - monitoring
