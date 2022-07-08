@@ -84,13 +84,13 @@ spec:
       alertmanagerSpec:
         replicas: 3
         podAntiAffinity: hard
-        storage:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: "longhorn-ssd"
-              resources:
-                requests:
-                  storage: 250Mi
+        # storage:
+        #   volumeClaimTemplate:
+        #     spec:
+        #       storageClassName: "longhorn-ssd"
+        #       resources:
+        #         requests:
+        #           storage: 250Mi
     nodeExporter:
       serviceMonitor:
         relabelings:
@@ -132,31 +132,31 @@ spec:
     kubeApiServer:
       enabled: true
     kubeControllerManager:
-      enabled: true
+      enabled: false
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeScheduler:
-      enabled: true
+      enabled: false
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeProxy:
-      enabled: true
+      enabled: false
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeEtcd:
-      enabled: true
+      enabled: false
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
       service:
-        enabled: true
+        enabled: false
         port: 2381
         targetPort: 2381
     prometheus:
@@ -215,13 +215,13 @@ spec:
         retention: 2d
         enableAdminAPI: true
         walCompression: true
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: "longhorn-ssd"
-              resources:
-                requests:
-                  storage: 10Gi
+        # storageSpec:
+        #   volumeClaimTemplate:
+        #     spec:
+        #       storageClassName: "longhorn-ssd"
+        #       resources:
+        #         requests:
+        #           storage: 10Gi
         # thanos:
         #   image: quay.io/thanos/thanos:v0.26.0
         #   # renovate: datasource=docker depName=quay.io/thanos/thanos
