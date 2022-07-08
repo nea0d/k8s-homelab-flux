@@ -52,9 +52,6 @@ spec:
         hajimari.io/appName: "Longhorn"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
-      hosts:
-        - &host "lh.${SECRET_DOMAIN}"
-      tls:
-        - hosts:
-            - *host
-          secretName: "longhorn-tls"
+      host: "lh.${SECRET_DOMAIN}"
+      tls: true
+      tlsSecret: "longhorn-tls"
