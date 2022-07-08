@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 36.5.0
+      version: 36.2.1
       sourceRef:
         kind: HelmRepository
         name: prometheus-community-charts
@@ -41,9 +41,7 @@ spec:
                 text: >-
                   {{ range .Alerts -}}
                     *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
-
                   {{ if ne .Annotations.summary ""}}*Summary:* {{ .Annotations.summary }} {{ else if ne .Annotations.message ""}}*Message:* {{ .Annotations.message }} {{ else if ne .Annotations.description ""}}*Description:* {{ .Annotations.description }}{{ end }}
-
                   *Details:*
                     {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
                     {{ end }}
@@ -83,7 +81,6 @@ spec:
           - hosts:
               - *host
             secretName: "alert-manager-tls"
-
       alertmanagerSpec:
         replicas: 3
         podAntiAffinity: hard
@@ -94,7 +91,6 @@ spec:
               resources:
                 requests:
                   storage: 250Mi
-
     nodeExporter:
       serviceMonitor:
         relabelings:
@@ -104,7 +100,6 @@ spec:
             sourceLabels:
               - __meta_kubernetes_pod_node_name
             targetLabel: kubernetes_node
-
     kube-state-metrics:
       metricLabelsAllowlist:
         - "persistentvolumeclaims=[*]"
@@ -118,7 +113,6 @@ spec:
               sourceLabels:
                 - __meta_kubernetes_pod_node_name
               targetLabel: kubernetes_node
-
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -127,7 +121,6 @@ spec:
           multicluster:
             etcd:
               enabled: true
-
     kubelet:
       enabled: true
       serviceMonitor:
@@ -162,7 +155,6 @@ spec:
           - hosts:
               - *host
             secretName: "prometheus-tls"
-
       thanosService:
         enabled: false
       thanosServiceMonitor:
