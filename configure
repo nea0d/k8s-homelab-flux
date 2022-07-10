@@ -56,11 +56,17 @@ main() {
             > "${PROJECT_DIR}/cluster/apps/networking/cloudflare-ddns/secret.sops.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/cluster/external-dns-secret.sops.yaml" \
             > "${PROJECT_DIR}/cluster/apps/networking/external-dns/secret.sops.yaml"
+        envsubst < "${PROJECT_DIR}/tmpl/cluster/longhorn-secret.sops.yaml" \
+            > "${PROJECT_DIR}/cluster/core/longhorn-system/secret.sops.yaml"
+        envsubst < "${PROJECT_DIR}/tmpl/cluster/grafana-secret.sops.yaml" \
+            > "${PROJECT_DIR}/cluster/core/monitoring/grafana/secret.sops.yaml"
         # encrypt cluster secrets
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/config/cluster-secrets.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/core/cluster-issuers/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/networking/cloudflare-ddns/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/networking/external-dns/secret.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/cluster/core/longhorn-system/secret.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/cluster/core/monitoring/grafana/secret.sops.yaml"
         # generate terraform secrets
         envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
             > "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"

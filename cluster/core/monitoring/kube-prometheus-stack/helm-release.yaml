@@ -85,13 +85,13 @@ spec:
       alertmanagerSpec:
         replicas: 3
         podAntiAffinity: hard
-        # storage:
-        #   volumeClaimTemplate:
-        #     spec:
-        #       storageClassName: "longhorn-ssd"
-        #       resources:
-        #         requests:
-        #           storage: 250Mi
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: "longhorn-ssd"
+              resources:
+                requests:
+                  storage: 250Mi
     nodeExporter:
       serviceMonitor:
         relabelings:
@@ -207,7 +207,7 @@ spec:
         replicas: 3
         replicaExternalLabelName: __replica__
         externalLabels:
-          cluster: "k8s-homelab-flux"
+          cluster: "${CLUSTER_NAME}"
         podAntiAffinity: hard
         retentionSize: "6GB"
         ruleSelectorNilUsesHelmValues: false
@@ -217,13 +217,13 @@ spec:
         retention: 2d
         enableAdminAPI: true
         walCompression: true
-        # storageSpec:
-        #   volumeClaimTemplate:
-        #     spec:
-        #       storageClassName: "longhorn-ssd"
-        #       resources:
-        #         requests:
-        #           storage: 10Gi
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: "longhorn-ssd"
+              resources:
+                requests:
+                  storage: 10Gi
         # thanos:
         #   image: quay.io/thanos/thanos:v0.26.0
         #   # renovate: datasource=docker depName=quay.io/thanos/thanos
@@ -231,29 +231,29 @@ spec:
         #   objectStorageConfig:
         #     name: thanos-objstore-secret
         #     key: objstore.yml
-        # additionalScrapeConfigs:
-        # - job_name: 'node-exporter'
-        #   scrape_interval: 1m
-        #   scrape_timeout: 10s
-        #   honor_timestamps: true
-        #   static_configs:
-        #   - targets:
-        #     # # opnsense
-        #     # - 10.75.1.1:9100
-        #     # franxx nas
-        #     - 10.75.30.15:9100
-        # - job_name: 'minio-job'
-        #   scrape_interval: 1m
-        #   scrape_timeout: 10s
-        #   honor_timestamps: true
-        #   metrics_path: /minio/v2/metrics/cluster
-        #   static_configs:
-        #   - targets:
-        #     - 10.75.30.15:9000
-        # - job_name: "coredns"
-        #   scrape_interval: 1m
-        #   scrape_timeout: 10s
-        #   honor_timestamps: true
-        #   static_configs:
-        #   - targets:
-        #     - "${GATEWAY_IP}:9153"
+        additionalScrapeConfigs:
+          - job_name: "coredns"
+            scrape_interval: 1m
+            scrape_timeout: 10s
+            honor_timestamps: true
+            static_configs:
+              - targets:
+                  - "${METALLB_K8S_GATEWAY_ADDR}:9153"
+          # - job_name: 'node-exporter'
+          #   scrape_interval: 1m
+          #   scrape_timeout: 10s
+          #   honor_timestamps: true
+          #   static_configs:
+          #   - targets:
+          #     # # opnsense
+          #     # - 10.75.1.1:9100
+          #     # franxx nas
+          #     - 10.75.30.15:9100
+          # - job_name: 'minio-job'
+          #   scrape_interval: 1m
+          #   scrape_timeout: 10s
+          #   honor_timestamps: true
+          #   metrics_path: /minio/v2/metrics/cluster
+          #   static_configs:
+          #   - targets:
+          #     - 10.75.30.15:9000
