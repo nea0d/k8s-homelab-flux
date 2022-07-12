@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 36.6.1
+      version: 36.6.2
       sourceRef:
         kind: HelmRepository
         name: prometheus-community-charts
@@ -133,33 +133,45 @@ spec:
     kubeApiServer:
       enabled: true
     kubeControllerManager:
-      enabled: true
+      enabled: false
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeScheduler:
-      enabled: true
+      enabled: false
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeProxy:
-      enabled: true
+      enabled: false
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeEtcd:
-      enabled: true
+      enabled: false
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
       service:
-        enabled: true
+        enabled: false
         port: 2381
         targetPort: 2381
+    prometheusOperator:
+      createCustomResource: true
+      prometheusConfigReloader:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 50Mi
+          limits:
+            cpu: 200m
+            memory: 100Mi
+      admissionWebhooks:
+        enabled: false
     prometheus:
       ingress:
         enabled: true
@@ -199,22 +211,22 @@ spec:
       #         secretName: "thanos-tls"
       resources:
         requests:
-          cpu: 10m
-          memory: 1500Mi
+          cpu: 25m
+          memory: 1000Mi
         limits:
           memory: 2000Mi
       prometheusSpec:
-        replicas: 3
-        replicaExternalLabelName: __replica__
-        externalLabels:
-          cluster: "${CLUSTER_NAME}"
-        podAntiAffinity: hard
-        retentionSize: "2GB"
+        replicas: 1
+        replicaExternalLabelName: replica
+        # externalLabels:
+        #  cluster: "${CLUSTER_NAME}"
+        # podAntiAffinity: hard
+        # retentionSize: "2GB"
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
-        retention: 2h
+        retention: 6h
         enableAdminAPI: true
         walCompression: true
         storageSpec:
