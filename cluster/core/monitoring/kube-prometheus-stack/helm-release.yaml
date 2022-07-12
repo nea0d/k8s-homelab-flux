@@ -200,7 +200,7 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 1000Mi
+          memory: 1500Mi
         limits:
           memory: 2000Mi
       prometheusSpec:
@@ -209,12 +209,12 @@ spec:
         externalLabels:
           cluster: "${CLUSTER_NAME}"
         podAntiAffinity: hard
-        retentionSize: "6GB"
+        retentionSize: "2GB"
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
-        retention: 2d
+        retention: 2h
         enableAdminAPI: true
         walCompression: true
         storageSpec:
