@@ -85,13 +85,13 @@ spec:
       alertmanagerSpec:
         replicas: 3
         podAntiAffinity: hard
-        storage:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: "longhorn-ssd"
-              resources:
-                requests:
-                  storage: 250Mi
+        # storage:
+        #   volumeClaimTemplate:
+        #     spec:
+        #       storageClassName: "longhorn-ssd"
+        #       resources:
+        #         requests:
+        #           storage: 250Mi
     nodeExporter:
       serviceMonitor:
         relabelings:
@@ -211,16 +211,16 @@ spec:
       #         secretName: "thanos-tls"
       resources:
         requests:
-          cpu: 25m
+          cpu: 500m
           memory: 1000Mi
         limits:
           memory: 2000Mi
       prometheusSpec:
-        replicas: 1
+        replicas: 3
+        podAntiAffinity: hard
         replicaExternalLabelName: replica
         # externalLabels:
         #  cluster: "${CLUSTER_NAME}"
-        # podAntiAffinity: hard
         # retentionSize: "2GB"
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
@@ -229,13 +229,13 @@ spec:
         retention: 6h
         enableAdminAPI: true
         walCompression: true
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: "longhorn-ssd"
-              resources:
-                requests:
-                  storage: 10Gi
+        # storageSpec:
+        #   volumeClaimTemplate:
+        #     spec:
+        #       storageClassName: "longhorn-ssd"
+        #       resources:
+        #         requests:
+        #           storage: 10Gi
         # thanos:
         #   image: quay.io/thanos/thanos:v0.26.0
         #   # renovate: datasource=docker depName=quay.io/thanos/thanos
