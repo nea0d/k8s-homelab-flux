@@ -1,5 +1,5 @@
 ---
-systemd_journal_system_max_use: 20M
+systemd_journal_system_max_use: 30M
 systemd_journal_system_max_file_size: 10M
 systemd_journal_system_max_rentention_sec: 3day
 systemd_journal_system_max_file_sec: 1day

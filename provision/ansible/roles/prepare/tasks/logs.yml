@@ -22,3 +22,15 @@
     name: systemd-journald
     state: restarted
   become: true
+
+- name: upload new rsyslog conf template
+  template:
+    src: 'rsyslog.conf.j2'
+    dest: '/etc/rsyslog.d/50-default.conf'
+  become: true # <-- unless you are connecting as root
+
+- name: restart rsyslog service
+  ansible.builtin.service:
+    name: rsyslog
+    state: restarted
+  become: true
