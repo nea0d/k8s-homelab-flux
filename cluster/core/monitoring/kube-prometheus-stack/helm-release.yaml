@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 36.6.2
+      version: 37.1.0
       sourceRef:
         kind: HelmRepository
         name: prometheus-community-charts
@@ -83,7 +83,7 @@ spec:
               - *host
             secretName: "alert-manager-tls"
       alertmanagerSpec:
-        replicas: 3
+        replicas: 1
         podAntiAffinity: hard
         # storage:
         #   volumeClaimTemplate:
@@ -160,18 +160,6 @@ spec:
         enabled: false
         port: 2381
         targetPort: 2381
-    prometheusOperator:
-      createCustomResource: true
-      prometheusConfigReloader:
-        resources:
-          requests:
-            cpu: 100m
-            memory: 50Mi
-          limits:
-            cpu: 200m
-            memory: 100Mi
-      admissionWebhooks:
-        enabled: false
     prometheus:
       ingress:
         enabled: true
@@ -211,17 +199,17 @@ spec:
       #         secretName: "thanos-tls"
       resources:
         requests:
-          cpu: 500m
-          memory: 1000Mi
-        limits:
+          cpu: 10m
           memory: 2000Mi
+        limits:
+          memory: 4000Mi
       prometheusSpec:
-        replicas: 3
+        replicas: 1
         podAntiAffinity: hard
-        replicaExternalLabelName: replica
-        # externalLabels:
-        #  cluster: "${CLUSTER_NAME}"
-        # retentionSize: "2GB"
+        replicaExternalLabelName: __replica__
+        externalLabels:
+        cluster: "${CLUSTER_NAME}"
+        # retentionSize: "5GB"
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false

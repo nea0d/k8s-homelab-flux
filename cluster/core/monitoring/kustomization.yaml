@@ -5,4 +5,4 @@ namespace: monitoring
 resources:
   # - grafana
   - namespace.yaml
-  # - kube-prometheus-stack
+  - kube-prometheus-stack
