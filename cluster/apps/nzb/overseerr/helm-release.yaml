@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: &app overseerr
-  namespace: downloads
+  namespace: nzb
 spec:
   interval: 5m
   chart:
