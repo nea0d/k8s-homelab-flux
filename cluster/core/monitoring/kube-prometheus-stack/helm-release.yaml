@@ -132,32 +132,33 @@ spec:
             targetLabel: instance
     kubeApiServer:
       enabled: true
+    # FIXME : dynamic master nodes IP via ansible vars
     kubeControllerManager:
-      enabled: false
+      enabled: true
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeScheduler:
-      enabled: false
+      enabled: true
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeProxy:
-      enabled: false
+      enabled: true
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeEtcd:
-      enabled: false
+      enabled: true
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
       service:
-        enabled: false
+        enabled: true
         port: 2381
         targetPort: 2381
     prometheus:

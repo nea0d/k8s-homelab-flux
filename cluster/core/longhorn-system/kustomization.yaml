@@ -7,3 +7,4 @@ resources:
   - helm-release.yaml
   - longhorn-ssd-storage-class.yaml
   - recurring-jobs.yaml
+  - secret.sops.yaml
