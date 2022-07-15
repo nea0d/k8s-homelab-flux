@@ -134,31 +134,31 @@ spec:
       enabled: true
     # FIXME : dynamic master nodes IP via ansible vars
     kubeControllerManager:
-      enabled: true
+      enabled: false
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeScheduler:
-      enabled: true
+      enabled: false
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeProxy:
-      enabled: true
+      enabled: false
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
     kubeEtcd:
-      enabled: true
+      enabled: false
       endpoints:
         - 10.10.99.111
         - 10.10.99.112
         - 10.10.99.113
       service:
-        enabled: true
+        enabled: false
         port: 2381
         targetPort: 2381
     prometheus:
