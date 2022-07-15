@@ -23,12 +23,12 @@ spec:
     remediation:
       retries: 5
   values:
-    persistence:
-      enabled: true
-      storageClassName: "longhorn"
-      size: 10Gi
-      accessModes:
-        - ReadWriteOnce
+    # persistence:
+    #   enabled: true
+    #   storageClassName: "longhorn"
+    #   size: 10Gi
+    #   accessModes:
+    #     - ReadWriteOnce
     env:
       GF_EXPLORE_ENABLED: true
       GF_PANELS_DISABLE_SANITIZE_HTML: true
