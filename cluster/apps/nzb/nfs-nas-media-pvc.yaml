@@ -1,0 +1,35 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-nas-media-pv
+spec:
+  capacity:
+    storage: 14Ti
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfs-nas-media
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+    - nolock
+    - intr
+    - nconnect=16
+  nfs:
+    path: /volume2/Media
+    server: "nas01.${SECRET_DOMAIN}"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-nas-media-pvc
+  namespace: nzb
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfs-nas-media
+  resources:
+    requests:
+      storage: 14Ti

@@ -83,11 +83,7 @@ spec:
         existingClaim: sonarr-config
       media:
         enabled: true
-        type: nfs
-        server: "nas01.${SECRET_DOMAIN}"
-        path: "/volume2/Media"
-        mountPath: /media
-        readOnly: true
+        existingClaim: nfs-nas-media-pvc
       # TODO : look at backup management
       # backup:
       #   enabled: true

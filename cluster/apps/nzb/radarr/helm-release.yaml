@@ -62,11 +62,7 @@ spec:
         existingClaim: radarr-config
       media:
         enabled: true
-        type: nfs
-        server: "nas01.${SECRET_DOMAIN}"
-        path: "/volume2/Media"
-        mountPath: /media
-        readOnly: true
+        existingClaim: nfs-nas-media-pvc
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568

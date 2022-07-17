@@ -57,9 +57,6 @@ spec:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "music-circle"
-          hajimari.io/group: "nzb"
         hosts:
           - host: *host
             paths:
@@ -74,11 +71,7 @@ spec:
         existingClaim: lidarr-config
       media:
         enabled: true
-        type: nfs
-        server: "nas01.${SECRET_DOMAIN}"
-        path: "/volume2/Media"
-        mountPath: /media
-        readOnly: true
+        existingClaim: nfs-nas-media-pvc
     # TODO : add ressources limits
     # resources:
     #   requests:
