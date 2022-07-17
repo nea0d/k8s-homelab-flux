@@ -77,11 +77,10 @@ spec:
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
       hosts:
-        - host: &host "gf.${SECRET_DOMAIN}" # FIXME : grafana instead of gf
+        - &host "gf.${SECRET_DOMAIN}" # FIXME : grafana instead of gf
       tls:
         - hosts:
             - *host
-          secretName: "grafana-tls"
     plugins:
       - natel-discrete-panel
       - pr0ps-trackmap-panel
