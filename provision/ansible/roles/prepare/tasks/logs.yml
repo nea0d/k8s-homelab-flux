@@ -11,7 +11,13 @@
 #     regexp: ^SystemMaxFileSize=
 #     line: SystemMaxFileSize={{ systemd_journal_system_max_file_size }}
 
-- name: upload new journald template
+- name: upload new logrotate conf template
+  template:
+    src: 'logrotate.conf.j2'
+    dest: '/etc/logrotate.conf'
+  become: true # <-- unless you are connecting as root
+
+- name: upload new journald conf template
   template:
     src: 'journald.conf.j2'
     dest: '/etc/systemd/journald.conf'

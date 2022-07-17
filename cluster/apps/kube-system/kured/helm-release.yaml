@@ -30,3 +30,8 @@ spec:
       logFormat: "json"
       rebootCommand: "/bin/systemctl reboot"
       timeZone: "${TIMEZONE}"
+  tolerations:
+    - effect: NoSchedule
+      operator: Exists
+    - effect: NoExecute
+      operator: Exists

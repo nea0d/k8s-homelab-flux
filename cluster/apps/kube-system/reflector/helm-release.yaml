@@ -26,3 +26,8 @@ spec:
     configuration:
       logging:
         minimumLevel: Debug
+  tolerations:
+    - effect: NoSchedule
+      operator: Exists
+    - effect: NoExecute
+      operator: Exists

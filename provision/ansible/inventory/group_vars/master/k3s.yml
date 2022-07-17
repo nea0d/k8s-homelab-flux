@@ -4,6 +4,8 @@
 
 # (bool) Specify if a host (or host group) are part of the control plane
 k3s_control_node: true
+k3s_node_taints:
+  - k3s-controlplane=true:NoSchedule
 
 # (dict) k3s settings for all control-plane nodes
 k3s_server:
