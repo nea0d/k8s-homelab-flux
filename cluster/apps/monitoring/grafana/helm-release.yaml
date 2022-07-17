@@ -29,7 +29,7 @@ spec:
       GF_LOG_FILTERS: rendering:debug
       GF_DATE_FORMATS_FULL_DATE: "DD MM YYYY hh:mm:ss a"
       GF_SECURITY_ALLOW_EMBEDDING: true
-      GF_SECURITY_COOKIE_SAMESITE: grafana
+      GF_SECURITY_COOKIE_SAMESITE: none
       DS_PROMETHEUS: Prometheus
       # GF_DISABLE_SANITIZE_HTML: true
       # GF_PANELS_DISABLE_SANITIZE_HTML: true
@@ -237,10 +237,10 @@ spec:
     replicas: 1
     persistence:
       enabled: false
-      # storageClassName: "longhorn"
-      # size: 10Gi
-      # accessModes:
-      #   - ReadWriteOnce
+      storageClassName: "longhorn"
+      size: 10Gi
+      accessModes:
+        - ReadWriteOnce
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:

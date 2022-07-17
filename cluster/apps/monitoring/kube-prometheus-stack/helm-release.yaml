@@ -85,13 +85,13 @@ spec:
       alertmanagerSpec:
         replicas: 1
         podAntiAffinity: hard
-        # storage:
-        #   volumeClaimTemplate:
-        #     spec:
-        #       storageClassName: "longhorn-ssd"
-        #       resources:
-        #         requests:
-        #           storage: 250Mi
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: "longhorn-ssd"
+              resources:
+                requests:
+                  storage: 250Mi
     nodeExporter:
       serviceMonitor:
         relabelings:
@@ -218,13 +218,13 @@ spec:
         retention: 6h
         enableAdminAPI: true
         walCompression: true
-        # storageSpec:
-        #   volumeClaimTemplate:
-        #     spec:
-        #       storageClassName: "longhorn-ssd"
-        #       resources:
-        #         requests:
-        #           storage: 10Gi
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: "longhorn-ssd"
+              resources:
+                requests:
+                  storage: 10Gi
         # thanos:
         #   image: quay.io/thanos/thanos:v0.26.0
         #   # renovate: datasource=docker depName=quay.io/thanos/thanos
