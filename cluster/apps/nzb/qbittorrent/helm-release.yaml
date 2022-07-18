@@ -115,6 +115,12 @@ spec:
         # -- Specify the VPN type. Valid options are openvpn or wireguard
         type: openvpn
 
+        # If the podSecurityContext is set to run as a different user, make sure to run the OpenVPN container as root.
+        # This is required for it to be able to read certain configuration files.
+        securityContext:
+          runAsGroup: 0
+          runAsUser: 0
+
         # -- OpenVPN specific configuration
         # @default -- See below
         openvpn:
