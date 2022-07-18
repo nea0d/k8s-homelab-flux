@@ -23,6 +23,8 @@ spec:
     remediation:
       retries: 5
   values:
+    deploymentStrategy:
+      type: Recreate
     env:
       GF_EXPLORE_ENABLED: true
       GF_PANELS_DISABLE_SANITIZE_HTML: true
