@@ -65,6 +65,7 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: lidarr-tls
     persistence:
       config:
         enabled: true

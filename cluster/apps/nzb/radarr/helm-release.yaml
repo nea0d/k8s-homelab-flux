@@ -41,6 +41,7 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: radarr-tls
       api:
         enabled: true
         ingressClassName: "traefik"
@@ -56,6 +57,7 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: radarr-api-tls
     persistence:
       config:
         enabled: true

@@ -57,6 +57,7 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: sonarr-tls
       api:
         enabled: true
         ingressClassName: "traefik"

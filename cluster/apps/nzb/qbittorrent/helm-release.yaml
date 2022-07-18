@@ -36,9 +36,9 @@ spec:
       setGateway: "true"
     service:
       main:
-      ports:
-        http:
-          port: 8080
+        ports:
+          http:
+            port: 8080
       bittorrent:
         enabled: true
         type: ClusterIP
@@ -67,6 +67,7 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: qbittorrent-tls
       api:
         enabled: true
         ingressClassName: "traefik"
@@ -82,6 +83,7 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: qbittorrent-api-tls
     persistence:
       config:
         enabled: true
