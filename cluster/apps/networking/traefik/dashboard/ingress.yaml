@@ -15,10 +15,10 @@ spec:
   ingressClassName: "traefik"
   tls:
     - hosts:
-        - "traefik.${SECRET_DOMAIN}"
+        - &host "tr.${SECRET_DOMAIN}" #FIXME : replace tr by traefik
       secretName: "traefik-dashboard-tls"
   rules:
-    - host: "traefik.${SECRET_DOMAIN}"
+    - host: *host
       http:
         paths:
           - path: /
