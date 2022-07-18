@@ -32,13 +32,28 @@ spec:
         matchNames:
           - default
           - longhorn-system
+          - media
           - monitoring
           - networking
-      name: "you"
+          - nzb
+      name: "Matt"
       customApps:
-        - name: Some External Cluster Service
-          url: http://192.168.1.100:5000
+        - name: FunkStation NAS
+          url: http://nas01.oxygn.dev:5000
           icon: test-tube
+          group: storage
+        - name: Proxmox VE
+          url: http://pve.oxygn.dev
+          icon: server
+          group: server
+        - name: Proxmox BS
+          url: http://pbs.oxygn.dev
+          icon: cloud-upload
+          group: server
+        - name: Graylog
+          url: http://graylog.oxygn.dev
+          icon: file-document-multiple
+          group: logs
       groups:
         - name: Communicate
           links:
