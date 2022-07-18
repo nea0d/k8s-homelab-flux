@@ -244,7 +244,7 @@ spec:
     replicas: 1
     persistence:
       enabled: true
-      storageClassName: "longhorn"
+      storageClassName: "longhorn-ssd"
       size: 10Gi
       accessModes:
         - ReadWriteOnce
