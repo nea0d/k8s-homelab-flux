@@ -30,7 +30,7 @@ spec:
   values:
     deployment:
       kind: Deployment
-      replicas: 1
+      replicas: 3
     service:
       enabled: true
       type: LoadBalancer
@@ -93,8 +93,25 @@ spec:
         cpu: 500m
       limits:
         memory: 500Mi
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/master
+                  operator: Exists
+            - matchExpressions:
+                - key: node-role.kubernetes.io/control-plane
+                  operator: Exists
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - *name
+            topologyKey: kubernetes.io/hostname
     tolerations:
       - effect: NoSchedule
-        operator: Exists
-      - effect: NoExecute
         operator: Exists

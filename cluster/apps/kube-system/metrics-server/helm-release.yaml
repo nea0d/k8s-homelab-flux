@@ -28,8 +28,16 @@ spec:
       - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
       - --kubelet-use-node-status-port
       - --metric-resolution=15s
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/master
+                  operator: Exists
+            - matchExpressions:
+                - key: node-role.kubernetes.io/control-plane
+                  operator: Exists
     tolerations:
       - effect: NoSchedule
-        operator: Exists
-      - effect: NoExecute
         operator: Exists

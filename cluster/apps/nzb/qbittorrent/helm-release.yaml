@@ -34,6 +34,20 @@ spec:
     hostname: *app
     podLabels:
       setGateway: "true"
+    service:
+      main:
+      ports:
+        http:
+          port: 8080
+      bittorrent:
+        enabled: true
+        type: ClusterIP
+        ports:
+          bittorrent:
+            enabled: true
+            port: 16881
+            protocol: TCP
+            targetPort: 16881
     ingress:
       main:
         enabled: true

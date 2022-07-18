@@ -35,8 +35,16 @@ spec:
       nameservers:
         - "1.1.1.1"
         - "9.9.9.9"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/master
+                  operator: Exists
+            - matchExpressions:
+                - key: node-role.kubernetes.io/control-plane
+                  operator: Exists
     tolerations:
       - effect: NoSchedule
-        operator: Exists
-      - effect: NoExecute
         operator: Exists

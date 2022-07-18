@@ -53,6 +53,7 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: overseerr-tls
     persistence:
       config:
         enabled: true
