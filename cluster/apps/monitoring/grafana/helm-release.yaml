@@ -229,7 +229,7 @@ spec:
         datasources:
           - name: Prometheus
             type: prometheus
-            url: http://kube-prometheus-stack-prometheus:9090
+            url: "http://prometheus.${SECRET_DOMAIN}"
             access: proxy
             isDefault: true
           - name: TeslaMate
