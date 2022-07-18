@@ -36,35 +36,35 @@ spec:
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: "natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel,natel-plotly-panel"
     admin:
       existingSecret: grafana-admin-creds
-    grafana.ini:
-      server:
-        root_url: "https://gf.${SECRET_DOMAIN}" # FIXME : grafana instead of gf
-      paths:
-        data: /var/lib/grafana/data
-        logs: /var/log/grafana
-        plugins: /var/lib/grafana/plugins
-        provisioning: /etc/grafana/provisioning
-      analytics:
-        check_for_updates: false
-      log:
-        mode: console
-      grafana_net:
-        url: https://grafana.net
-      # auth:
-      #   signout_redirect_url: "https://id.${SECRET_DOMAIN}/application/o/grafana/end-session/"
-      #   oauth_auto_login: true
-      auth.basic:
-        disable_login_form: false
-      # auth.generic_oauth:
-      #   enabled: true
-      #   name: 56k
-      #   client_id: "${SECRET_GRAFANA_OAUTH_CLIENT_ID}"
-      #   client_secret: "${SECRET_GRAFANA_OAUTH_CLIENT_SECRET}"
-      #   scopes: "openid email profile"
-      #   auth_url: https://id.${SECRET_DOMAIN}/application/o/authorize/
-      #   token_url: https://id.${SECRET_DOMAIN}/application/o/token/
-      #   api_url: https://id.${SECRET_DOMAIN}/application/o/userinfo/
-      #   role_attribute_path: "contains(groups[*], 'Grafana Admins') && 'Admin' || contains(groups[*], 'Grafana Editors') && 'Editor' || 'Viewer'"
+    # grafana.ini:
+    #   server:
+    #     root_url: "https://gf.${SECRET_DOMAIN}" # FIXME : grafana instead of gf
+    #   paths:
+    #     data: /var/lib/grafana/data
+    #     logs: /var/log/grafana
+    #     plugins: /var/lib/grafana/plugins
+    #     provisioning: /etc/grafana/provisioning
+    #   analytics:
+    #     check_for_updates: false
+    #   log:
+    #     mode: console
+    #   grafana_net:
+    #     url: https://grafana.net
+    #   # auth:
+    #   #   signout_redirect_url: "https://id.${SECRET_DOMAIN}/application/o/grafana/end-session/"
+    #   #   oauth_auto_login: true
+    #   auth.basic:
+    #     disable_login_form: false
+    #   # auth.generic_oauth:
+    #   #   enabled: true
+    #   #   name: 56k
+    #   #   client_id: "${SECRET_GRAFANA_OAUTH_CLIENT_ID}"
+    #   #   client_secret: "${SECRET_GRAFANA_OAUTH_CLIENT_SECRET}"
+    #   #   scopes: "openid email profile"
+    #   #   auth_url: https://id.${SECRET_DOMAIN}/application/o/authorize/
+    #   #   token_url: https://id.${SECRET_DOMAIN}/application/o/token/
+    #   #   api_url: https://id.${SECRET_DOMAIN}/application/o/userinfo/
+    #   #   role_attribute_path: "contains(groups[*], 'Grafana Admins') && 'Admin' || contains(groups[*], 'Grafana Editors') && 'Editor' || 'Viewer'"
     ingress:
       enabled: true
       ingressClassName: "traefik"
@@ -236,7 +236,7 @@ spec:
               sslmode: disable
     replicas: 1
     persistence:
-      enabled: false
+      enabled: true
       storageClassName: "longhorn"
       size: 10Gi
       accessModes:

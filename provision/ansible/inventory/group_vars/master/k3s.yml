@@ -9,7 +9,7 @@ k3s_control_node: true
 k3s_server:
   node-ip: "{{ ansible_host }}"
   node-taint:
-    - "node-role.kubernetes.io/k3s-controlplane=true:NoSchedule"
+    - "node-role.kubernetes.io/master:NoSchedule"
   tls-san:
     # kube-vip
     - "{{ kubevip_address }}"
