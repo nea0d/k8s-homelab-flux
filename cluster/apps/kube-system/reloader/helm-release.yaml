@@ -24,8 +24,3 @@ spec:
       retries: 5
   values:
     fullnameOverride: reloader
-  tolerations:
-    - effect: NoSchedule
-      operator: Exists
-    - effect: NoExecute
-      operator: Exists
