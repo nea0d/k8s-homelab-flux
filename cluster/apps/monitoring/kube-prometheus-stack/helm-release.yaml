@@ -182,22 +182,20 @@ spec:
         enabled: false
       thanosServiceMonitor:
         enabled: false
-      # thanosIngress:
-      #   ingress:
-      #     enabled: false
-      #     ingressClassName: "traefik"
-      #     annotations:
-      #       cert-manager.io/cluster-issuer: "letsencrypt-production"
-      #       hajimari.io/enable: "true"
-      #       hajimari.io/icon: "magnify-scan"
-      #       traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-      #       traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
-      #     hosts:
-      #       - &host "thanos.${SECRET_DOMAIN}"
-      #     tls:
-      #       - hosts:
-      #           - *host
-      #         secretName: "thanos-tls"
+      thanosIngress:
+        ingress:
+          enabled: true
+          ingressClassName: "traefik"
+          annotations:
+            cert-manager.io/cluster-issuer: "letsencrypt-production"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+            traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+          hosts:
+            - &host "thanos-sidecar.${SECRET_DOMAIN}"
+          tls:
+            - hosts:
+                - *host
+              secretName: "thanos-sidecar-tls"
       resources:
         requests:
           cpu: 10m
