@@ -27,7 +27,7 @@ spec:
     defaultSettings:
       allowRecurringJobWhileVolumeDetached: true
       backupTarget: ${SECRET_LONGHORN_BACKUP_TARGET}
-      # backupTargetCredentialSecret: longhorn-backup # Uncomment only if using s3 backup target
+      backupTargetCredentialSecret: longhorn-backup # Uncomment only if using s3 backup target
       defaultDataPath: ${SECRET_LONGHORN_STORAGE_MOUNT_PATH}
       defaultReplicaCount: 2
       defaultLonghornStaticStorageClass: longhorn-static
