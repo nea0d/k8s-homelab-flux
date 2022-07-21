@@ -59,18 +59,19 @@ main() {
         envsubst < "${PROJECT_DIR}/tmpl/cluster/longhorn-secret.sops.yaml" \
             > "${PROJECT_DIR}/cluster/core/longhorn-system/secret.sops.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/cluster/grafana-secret.sops.yaml" \
-            > "${PROJECT_DIR}/cluster/core/monitoring/grafana/secret.sops.yaml"
+            > "${PROJECT_DIR}/cluster/apps/monitoring/grafana/secret.sops.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/cluster/vpn-config-secret.sops.yaml" \
             > "${PROJECT_DIR}/cluster/apps/nzb/qbittorrent/vpn-config-secret.sops.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/cluster/vpn-auth-secret.sops.yaml" \
             > "${PROJECT_DIR}/cluster/apps/nzb/qbittorrent/vpn-auth-secret.sops.yaml"
+
         # encrypt cluster secrets
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/config/cluster-secrets.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/core/cluster-issuers/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/networking/cloudflare-ddns/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/networking/external-dns/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/core/longhorn-system/secret.sops.yaml"
-        sops --encrypt --in-place "${PROJECT_DIR}/cluster/core/monitoring/grafana/secret.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/monitoring/grafana/secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/nzb/qbittorrent/vpn-config-secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/nzb/qbittorrent/vpn-auth-secret.sops.yaml"
         # generate terraform secrets

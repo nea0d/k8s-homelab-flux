@@ -10,4 +10,5 @@ resources:
   - monitoring
   - networking
   - nzb
+  - storage
   # - system-upgrade

@@ -36,6 +36,7 @@ spec:
           - monitoring
           - networking
           - nzb
+          - storage
       name: "Matt"
       customApps:
         - name: FunkStation NAS
