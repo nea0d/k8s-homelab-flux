@@ -179,9 +179,9 @@ spec:
               - *host
             secretName: "prometheus-tls"
       thanosService:
-        enabled: false
+        enabled: true
       thanosServiceMonitor:
-        enabled: false
+        enabled: true
       thanosIngress:
         ingress:
           enabled: true
