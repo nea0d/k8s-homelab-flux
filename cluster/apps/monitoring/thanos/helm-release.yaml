@@ -71,9 +71,9 @@ spec:
       extraFlags:
         - "--compact.concurrency"
         - "4"
-      retentionResolutionRaw: 1d
-      retentionResolution5m: 1d
-      retentionResolution1h: 1d
+      retentionResolutionRaw: 14d
+      retentionResolution5m: 14d
+      retentionResolution1h: 14d
       ingress:
         enabled: true
         hostname: &host "thanos-compactor.${SECRET_DOMAIN}"
