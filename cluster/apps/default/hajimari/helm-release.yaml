@@ -40,21 +40,25 @@ spec:
       name: "Matt"
       customApps:
         - name: FunkStation NAS
-          url: http://nas01.oxygn.dev:5000
+          url: https://nas01.oxygn.dev:5000
           icon: test-tube
           group: storage
         - name: Proxmox VE
-          url: http://pve.oxygn.dev
+          url: https://pve.oxygn.dev
           icon: server
           group: server
         - name: Proxmox BS
-          url: http://pbs.oxygn.dev
+          url: https://pbs.oxygn.dev
           icon: cloud-upload
           group: server
         - name: Graylog
-          url: http://graylog.oxygn.dev
+          url: https://graylog.oxygn.dev
           icon: file-document-multiple
           group: logs
+        - name: Home assistant
+          url: https://ha.oxygn.dev
+          icon: home-assistant
+          group: home
       groups:
         - name: Communicate
           links:

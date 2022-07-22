@@ -5,8 +5,11 @@ resources:
   - namespace.yaml
   - nfs-nas-media-pvc.yaml
   - lidarr
+  - nzbget
+  - organizr
   - overseerr
   - prowlarr
   - qbittorrent
   - radarr
+  - readarr
   - sonarr
