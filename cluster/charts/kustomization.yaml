@@ -6,6 +6,7 @@ resources:
   - emberstack-charts.yaml
   - external-dns-charts.yaml
   - grafana-charts.yaml
+  - gpu-operator-charts.yaml
   - hajimari-charts.yaml
   - jetstack-charts.yaml
   - k8s-at-home-charts.yaml
