@@ -12,6 +12,7 @@ resources:
   - k8s-at-home-charts.yaml
   - k8s-gateway-charts.yaml
   - longhorn-charts.yaml
+  - mattermost-charts.yaml
   - metallb-charts.yaml
   - metrics-server-charts.yaml
   - prometheus-community-charts.yaml
