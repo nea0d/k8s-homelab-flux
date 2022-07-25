@@ -30,7 +30,9 @@ spec:
       defaultEnable: false
       namespaceSelector:
         matchNames:
+          - communication
           - default
+          - home
           - longhorn-system
           - media
           - monitoring
