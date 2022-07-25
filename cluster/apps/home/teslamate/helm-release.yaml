@@ -1,0 +1,77 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app teslamate
+  namespace: home
+spec:
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: teslamate
+      version: 7.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    global:
+      nameOverride: *app
+    image:
+      repository: teslamate/teslamate
+      tag: 1.27.1
+    env:
+      TZ: "${TIMEZONE}"
+
+    persistence:
+      import:
+        enabled: false
+        mountPath: /opt/app/import
+
+    postgresql:
+      enabled: true
+      image:
+        repository: postgres
+        tag: '14.2'
+      postgresqlUsername: "${SECRET_TESLAMATE_DB_USERNAME}"
+      postgresqlDatabase: "${SECRET_TESLAMATE_DBNAME}"
+      postgresqlPassword: "${SECRET_TESLAMATE_DB_PASSWORD}"
+      postgresqlDataDir: "/data/pgdata"
+      persistence:
+        enabled: true
+        existingClaim: "teslamate-db-v1"
+        mountPath: "/data/"
+      shmVolume:
+        enabled: false
+      volumePermissions:
+        enabled: false
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "car-connected"
+          hajimari.io/group: "home"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: teslamate-tls

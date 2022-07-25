@@ -236,11 +236,11 @@ spec:
           - name: TeslaMate
             type: postgres
             access: proxy
-            url: http://teslamate-postgresql:5432
-            database: teslamate
-            user: teslamate
+            url: http://teslamate-postgresql.home:5432
+            database: "${SECRET_TESLAMATE_DBNAME}"
+            user: "${SECRET_TESLAMATE_DB_USERNAME}"
             secureJsonData:
-              password: "tesla123$" #FIXME : review credentials
+              password: "${SECRET_TESLAMATE_DB_PASSWORD}"
             jsonData:
               postgresVersion: 1000
               sslmode: disable
