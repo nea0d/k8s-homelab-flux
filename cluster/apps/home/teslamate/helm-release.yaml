@@ -31,6 +31,7 @@ spec:
       tag: 1.27.1
     env:
       TZ: "${TIMEZONE}"
+      ENCRYPTION_KEY: "${SECRET_TESLAMATE_ENCRYPTION_KEY}"
 
     persistence:
       import:
