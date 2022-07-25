@@ -51,8 +51,11 @@ spec:
         mountPath: "/data/"
       shmVolume:
         enabled: false
+        sizeLimit: "1Gi"
       volumePermissions:
-        enabled: false
+        enabled: true
+        containerSecurityContext:
+          runAsUser: 0
 
     ingress:
       main:
@@ -74,3 +77,8 @@ spec:
           - hosts:
               - *host
             secretName: teslamate-tls
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
