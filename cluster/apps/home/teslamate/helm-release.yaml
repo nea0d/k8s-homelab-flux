@@ -51,11 +51,11 @@ spec:
         mountPath: "/data"
       primary:
         podSecurityContext:
-        enabled: true
-        fsGroup: 1001
-      containerSecurityContext:
-        enabled: true
-        runAsUser: 0
+          enabled: true
+          fsGroup: 1001
+        containerSecurityContext:
+          enabled: true
+          runAsUser: 0
       shmVolume:
         enabled: false
         sizeLimit: "1Gi"
