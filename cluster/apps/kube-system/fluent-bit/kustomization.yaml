@@ -7,6 +7,3 @@ resources:
   - config.yaml
   - graylog-daemonset.yaml
   - service-account.yaml
-labels:
-  - pairs:
-      kustomize.toolkit.fluxcd.io/prune: disabled
