@@ -30,6 +30,7 @@ spec:
     env:
       TZ: "${TIMEZONE}"
       ENCRYPTION_KEY: "${SECRET_TESLAMATE_ENCRYPTION_KEY}"
+      DISABLE_MQTT: "true" # Otherwise app crashes at launch because MQTT_HOST is not set
 
     persistence:
       import:
