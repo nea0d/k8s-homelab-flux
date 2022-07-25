@@ -24,8 +24,6 @@ spec:
     remediation:
       retries: 5
   values:
-    global:
-      nameOverride: *app
     image:
       repository: teslamate/teslamate
       tag: 1.27.1
@@ -68,7 +66,7 @@ spec:
           hajimari.io/icon: "car-connected"
           hajimari.io/group: "home"
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "teslamate.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
