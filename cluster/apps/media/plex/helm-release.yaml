@@ -22,12 +22,9 @@ spec:
   upgrade:
     remediation:
       retries: 5
-  # TODO : add nvidia gpu management
-  # dependsOn:
-  #   - name: intel-gpu-plugin
-  #     namespace: kube-system
-  #   - name: node-feature-discovery
-  #     namespace: kube-system
+  dependsOn:
+    - name: gpu-operator
+      namespace: gpu-operator-system
   values:
     global:
       nameOverride: *app
@@ -117,8 +114,9 @@ spec:
         - 44
         - 109
 
-    # TODO : add nvidia gpu management
     # affinity with GPU
+    nodeSelector:
+      accelerator: nvidia-gpu
     # affinity:
     #   nodeAffinity:
     #     requiredDuringSchedulingIgnoredDuringExecution:
@@ -128,11 +126,11 @@ spec:
     #               operator: In
     #               values:
     #                 - "true"
-    # resources:
-    #   requests:
-    #     nvidia.com/gpu: 1
-    #     cpu: 200m
-    #     memory: 256Mi
-    #   limits:
-    #     nvidia.com/gpu: 1
-    #     memory: 4096Mi
+    resources:
+      requests:
+        nvidia.com/gpu: 1
+        cpu: 200m
+        memory: 256Mi
+      limits:
+        nvidia.com/gpu: 1
+        memory: 4096Mi
