@@ -50,13 +50,13 @@ spec:
         enabled: true
         existingClaim: "teslamate-db-v1"
         mountPath: "/data/"
-      # primary:
-      #   podSecurityContext:
-      #     enabled: true
-      #     fsGroup: 1001
-      #   containerSecurityContext:
-      #     enabled: true
-      #     runAsUser: 0
+      primary:
+        podSecurityContext:
+          enabled: true
+          fsGroup: 1001
+        containerSecurityContext:
+          enabled: true
+          runAsUser: 0
       # shmVolume:
       #   enabled: false
       #   sizeLimit: "1Gi"
