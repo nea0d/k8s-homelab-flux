@@ -58,7 +58,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: tautulli-config
+        existingClaim: tautulli-config-v1
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568

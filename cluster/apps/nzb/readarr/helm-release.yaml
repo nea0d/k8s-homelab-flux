@@ -61,7 +61,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: readarr-config
+        existingClaim: readarr-config-v1
       media:
         enabled: true
         existingClaim: nfs-nas-media-pvc

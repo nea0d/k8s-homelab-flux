@@ -57,7 +57,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: overseerr-config
+        existingClaim: overseerr-config-v1
         mountPath: /app/config
     podSecurityContext:
       runAsUser: 568

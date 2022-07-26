@@ -56,7 +56,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: organizr-config
+        existingClaim: organizr-config-v1
         mountPath: /config
 
     # podSecurityContext:

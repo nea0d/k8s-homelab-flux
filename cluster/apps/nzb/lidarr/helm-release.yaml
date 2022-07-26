@@ -69,7 +69,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: lidarr-config
+        existingClaim: lidarr-config-v1
       media:
         enabled: true
         existingClaim: nfs-nas-media-pvc

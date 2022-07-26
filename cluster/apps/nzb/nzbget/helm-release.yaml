@@ -43,7 +43,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: nzbget-config
+        existingClaim: nzbget-config-v1
       media:
         enabled: true
         existingClaim: nfs-nas-media-pvc
