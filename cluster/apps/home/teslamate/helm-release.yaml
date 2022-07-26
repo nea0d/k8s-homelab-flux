@@ -31,6 +31,14 @@ spec:
       TZ: "${TIMEZONE}"
       # Encrypts Tesla Token
       ENCRYPTION_KEY: "${SECRET_TESLAMATE_ENCRYPTION_KEY}"
+      # -- Postgres database hostname
+      DATABASE_HOST: 'teslamate-postgresql'
+      # -- Postgres database user name
+      DATABASE_USER: "${SECRET_TESLAMATE_DB_USERNAME}"
+      # -- Postgres database password
+      DATABASE_PASS: "${SECRET_TESLAMATE_DB_PASSWORD}"
+      # -- Postgres database password
+      DATABASE_NAME: "${SECRET_TESLAMATE_DBNAME}"
       # Disables the MQTT feature if `true`
       DISABLE_MQTT: "true" # Otherwise app crashes at launch because MQTT_HOST is not set
 
@@ -93,8 +101,8 @@ spec:
               - *host
             secretName: teslamate-tls
 
-    podSecurityContext:
-      runAsUser: 1001
-      runAsGroup: 0
-      fsGroup: 1001
-      fsGroupChangePolicy: "OnRootMismatch"
+    # podSecurityContext:
+    #   runAsUser: 1001
+    #   runAsGroup: 0
+    #   fsGroup: 1001
+    #   fsGroupChangePolicy: "OnRootMismatch"
