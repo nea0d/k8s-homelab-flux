@@ -50,13 +50,13 @@ spec:
         enabled: true
         existingClaim: "teslamate-db-v1"
         mountPath: "/data/"
-      primary:
-        podSecurityContext:
-          enabled: true
-          fsGroup: 1001
-        containerSecurityContext:
-          enabled: true
-          runAsUser: 0
+      # primary:
+      #   podSecurityContext:
+      #     enabled: true
+      #     fsGroup: 1001
+      #   containerSecurityContext:
+      #     enabled: true
+      #     runAsUser: 0
       # shmVolume:
       #   enabled: false
       #   sizeLimit: "1Gi"
@@ -86,8 +86,8 @@ spec:
               - *host
             secretName: teslamate-tls
 
-    # podSecurityContext:
-    #   runAsUser: 568
-    #   runAsGroup: 568
-    #   fsGroup: 568
-    #   fsGroupChangePolicy: "OnRootMismatch"
+    podSecurityContext:
+      runAsUser: 1001
+      runAsGroup: 0
+      fsGroup: 1001
+      fsGroupChangePolicy: "OnRootMismatch"
