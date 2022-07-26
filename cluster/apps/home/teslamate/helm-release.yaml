@@ -29,7 +29,17 @@ spec:
       tag: 1.27.1
     env:
       TZ: "${TIMEZONE}"
+      # Encrypts Tesla Token
       ENCRYPTION_KEY: "${SECRET_TESLAMATE_ENCRYPTION_KEY}"
+      # -- Postgres database hostname
+      DATABASE_HOST: '{{ include "common.names.fullname" .}}-postgresql'
+      # -- Postgres database user name
+      DATABASE_USER: "{{ .Values.postgresql.postgresqlUsername }}"
+      # -- Postgres database password
+      DATABASE_PASS: "{{ .Values.postgresql.postgresqlPassword }}"
+      # -- Postgres database password
+      DATABASE_NAME: "{{ .Values.postgresql.postgresqlDatabase }}"
+      # -- Disables the MQTT feature if `true`
       DISABLE_MQTT: "true" # Otherwise app crashes at launch because MQTT_HOST is not set
 
     persistence:
@@ -42,6 +52,8 @@ spec:
       image:
         repository: postgres
         tag: '14.2'
+      env:
+        POSTGRESQL_VOLUME_DIR: "/data"
       postgresqlUsername: "${SECRET_TESLAMATE_DB_USERNAME}"
       postgresqlDatabase: "${SECRET_TESLAMATE_DBNAME}"
       postgresqlPassword: "${SECRET_TESLAMATE_DB_PASSWORD}"
@@ -60,7 +72,7 @@ spec:
       volumePermissions:
         enabled: true
         containerSecurityContext:
-          runAsUser: 1001
+          runAsUser: 0
 
     ingress:
       main:
