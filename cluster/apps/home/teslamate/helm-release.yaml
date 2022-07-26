@@ -49,21 +49,21 @@ spec:
       persistence:
         enabled: true
         existingClaim: "teslamate-db-v1"
-        mountPath: "/data"
-      primary:
-        podSecurityContext:
-          enabled: true
-          fsGroup: 1001
-        containerSecurityContext:
-          enabled: true
-          runAsUser: 0
-      shmVolume:
-        enabled: false
-        sizeLimit: "1Gi"
-      volumePermissions:
-        enabled: true
-        containerSecurityContext:
-          runAsUser: 0
+        mountPath: "/data/"
+      # primary:
+      #   podSecurityContext:
+      #     enabled: true
+      #     fsGroup: 1001
+      #   containerSecurityContext:
+      #     enabled: true
+      #     runAsUser: 0
+      # shmVolume:
+      #   enabled: false
+      #   sizeLimit: "1Gi"
+      # volumePermissions:
+      #   enabled: true
+      #   containerSecurityContext:
+      #     runAsUser: 0
 
     ingress:
       main:
@@ -85,6 +85,7 @@ spec:
           - hosts:
               - *host
             secretName: teslamate-tls
+
     # podSecurityContext:
     #   runAsUser: 568
     #   runAsGroup: 568
