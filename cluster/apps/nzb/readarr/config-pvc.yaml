@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: readarr-config
+  name: readarr-config-v1
   namespace: nzb
 spec:
   accessModes:

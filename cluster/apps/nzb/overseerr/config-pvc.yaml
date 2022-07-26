@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: overseerr-config
+  name: overseerr-config-v1
   namespace: nzb
 spec:
   accessModes:
