@@ -2,7 +2,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - db-pvc.yaml
   - dashboard
+  - db-pvc.yaml
   - helm-release.yaml
   - grafana-datasource.yaml
