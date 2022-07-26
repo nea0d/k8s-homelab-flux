@@ -32,7 +32,7 @@ spec:
     mysql:
       mysqlUser: "${SECRET_MATTERMOST_MYSQL_USERNAME}"
       mysqlPassword: "${SECRET_MATTERMOST_MYSQL_PASSWORD}"
-      mysqlRootPassword: ${SECRET_MATTERMOST_MYSQL_PASSWORD}"
+      mysqlRootPassword: ${SECRET_MATTERMOST_MYSQL_ROOT_PASSWORD}"
       mysqlDatabase: ${SECRET_MATTERMOST_MYSQL_DBNAME}"
 
       persistence:
