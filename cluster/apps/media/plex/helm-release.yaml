@@ -71,7 +71,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: plex-config
+        existingClaim: plex-config-v1
       transcode:
         enabled: true
         type: emptyDir
