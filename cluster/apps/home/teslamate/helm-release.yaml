@@ -31,18 +31,13 @@ spec:
       TZ: "${TIMEZONE}"
       # Encrypts Tesla Token
       ENCRYPTION_KEY: "${SECRET_TESLAMATE_ENCRYPTION_KEY}"
-      # -- Postgres database hostname
-      DATABASE_HOST: '{{ include "common.names.fullname" .}}-postgresql'
-      # -- Postgres database user name
-      DATABASE_USER: "{{ .Values.postgresql.postgresqlUsername }}"
-      # -- Postgres database password
-      DATABASE_PASS: "{{ .Values.postgresql.postgresqlPassword }}"
-      # -- Postgres database password
-      DATABASE_NAME: "{{ .Values.postgresql.postgresqlDatabase }}"
-      # -- Disables the MQTT feature if `true`
+      # Disables the MQTT feature if `true`
       DISABLE_MQTT: "true" # Otherwise app crashes at launch because MQTT_HOST is not set
 
     persistence:
+      config:
+        enabled: true
+        existingClaim: teslamate-config-v1
       import:
         enabled: false
         mountPath: /opt/app/import
@@ -52,16 +47,19 @@ spec:
       image:
         repository: postgres
         tag: '14.2'
-      env:
-        POSTGRESQL_VOLUME_DIR: "/data"
       postgresqlUsername: "${SECRET_TESLAMATE_DB_USERNAME}"
       postgresqlDatabase: "${SECRET_TESLAMATE_DBNAME}"
       postgresqlPassword: "${SECRET_TESLAMATE_DB_PASSWORD}"
       postgresqlDataDir: "/data/pgdata"
-      persistence:
-        enabled: true
-        existingClaim: "teslamate-db-v1"
-        mountPath: "/data"
+      primary:
+        persistence:
+          enabled: true
+          existingClaim: teslamate-db-v1
+          mountPath: "/data/"
+      shmVolume:
+        enabled: false
+      volumePermissions:
+        enabled: false
       # primary:
       #   podSecurityContext:
       #     enabled: true
@@ -69,10 +67,10 @@ spec:
       #   containerSecurityContext:
       #     enabled: true
       #     runAsUser: 0
-      volumePermissions:
-        enabled: true
-        containerSecurityContext:
-          runAsUser: 0
+      # volumePermissions:
+      #   enabled: true
+      #   containerSecurityContext:
+      #     runAsUser: 0
 
     ingress:
       main:
