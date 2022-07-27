@@ -28,7 +28,7 @@ spec:
       nameOverride: *app
     image:
       repository: hkotel/mealie
-      tag: frontend-v1.0.0beta-2
+      tag: v0.5.6
     env:
       TZ: "${TIMEZONE}"
       DB_TYPE: sqlite
