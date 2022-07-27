@@ -40,7 +40,7 @@ spec:
       existingSecret: grafana-admin-creds
     grafana.ini:
       server:
-        root_url: "https://gf.${SECRET_DOMAIN}" # FIXME : grafana instead of gf
+        root_url: "https://grafana.${SECRET_DOMAIN}"
       paths:
         data: /var/lib/grafana/data
         logs: /var/log/grafana
@@ -82,7 +82,7 @@ spec:
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
       hosts:
-        - &host "gf.${SECRET_DOMAIN}" # FIXME : grafana instead of gf
+        - &host "grafana.${SECRET_DOMAIN}"
       tls:
         - hosts:
             - *host

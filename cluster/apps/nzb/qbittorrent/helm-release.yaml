@@ -127,7 +127,7 @@ spec:
 
           # -- Optionally specify an existing secret that contains the credentials.
           # Credentials should be stored under the `VPN_AUTH` key
-          authSecret: vpn-auth-secret # FIXME : create conf file
+          authSecret: vpn-auth-secret
 
         # -- All variables specified here will be added to the vpn sidecar container
         # See the documentation of the VPN image for all config values
