@@ -25,7 +25,7 @@ spec:
       retries: 5
   values:
     global:
-      nameOverride: *app
+      nameOverride: mealie
     image:
       repository: hkotel/mealie
       tag: v0.5.6
@@ -53,6 +53,7 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: mealie-tls
 
     persistence:
       config:
