@@ -53,6 +53,7 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: mealie-tls
 
     persistence:
       config:
