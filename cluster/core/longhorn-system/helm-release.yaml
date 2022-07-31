@@ -18,18 +18,18 @@ spec:
       interval: 5m
   values:
     persistence:
-      defaultClassReplicaCount: 2
+      defaultClassReplicaCount: 3
       defaultClass: false
       defaultFsType: ext4
       defaultDataLocality: best-effort # disabled otherwise
-      reclaimPolicy: Delete
+      reclaimPolicy: Retain
       migratable: false
     defaultSettings:
       allowRecurringJobWhileVolumeDetached: true
       backupTarget: ${SECRET_LONGHORN_BACKUP_TARGET}
       backupTargetCredentialSecret: longhorn-backup # Uncomment only if using s3 backup target
       defaultDataPath: ${SECRET_LONGHORN_STORAGE_MOUNT_PATH}
-      defaultReplicaCount: 2
+      defaultReplicaCount: 3
       defaultLonghornStaticStorageClass: longhorn-static
       createDefaultDiskLabeledNodes: true
       replicaSoftAntiAffinity: false

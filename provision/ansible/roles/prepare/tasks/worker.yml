@@ -1,7 +1,7 @@
 ---
 - name: Creates volumes directory
   file:
-    path: /mnt/volumes
+    path: "{{ volumes_mount_path }}"
     state: directory
     owner: root
     group: root
