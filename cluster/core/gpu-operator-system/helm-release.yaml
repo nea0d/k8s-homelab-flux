@@ -43,4 +43,4 @@ spec:
       plugin:
         env:
           - name: WITH_WORKLOAD
-            value: "true"
+            value: "false"
