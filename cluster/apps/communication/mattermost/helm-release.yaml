@@ -40,24 +40,23 @@ spec:
         existingClaim: mattermost-mysql-v1
 
     ingress:
-      main:
-        enabled: true
-        ingressClassName: "traefik"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-cloudflare-only@kubernetescrd"
-          external-dns/is-public: "true"
-          external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "slack"
-          hajimari.io/group: "communication"
-        hosts:
-          - &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
-        tls:
-          - hosts:
-              - *host
-            secretName: mattermost-tls
+      enabled: true
+      ingressClassName: "traefik"
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        traefik.ingress.kubernetes.io/router.middlewares: "networking-cloudflare-only@kubernetescrd"
+        external-dns/is-public: "true"
+        external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "slack"
+        hajimari.io/group: "communication"
+      hosts:
+        - &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+      tls:
+        - hosts:
+            - *host
+          secretName: mattermost-tls
 
     configJSON:
       ServiceSettings:
