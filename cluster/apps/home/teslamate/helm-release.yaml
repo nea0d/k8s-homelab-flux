@@ -43,9 +43,6 @@ spec:
       DISABLE_MQTT: "true" # Otherwise app crashes at launch because MQTT_HOST is not set
 
     persistence:
-      config:
-        enabled: true
-        existingClaim: teslamate-config-v1
       import:
         enabled: false
         mountPath: /opt/app/import
