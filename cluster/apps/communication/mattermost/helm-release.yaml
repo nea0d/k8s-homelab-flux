@@ -52,7 +52,7 @@ spec:
         hajimari.io/icon: "slack"
         hajimari.io/group: "communication"
       hosts:
-        - &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        - &host "mattermost.${SECRET_DOMAIN}"
       tls:
         - hosts:
             - *host
@@ -60,7 +60,7 @@ spec:
 
     configJSON:
       ServiceSettings:
-        SiteURL: "https://{{.Release.Name}}.${SECRET_DOMAIN}"
+        SiteURL: "https://mattermost.${SECRET_DOMAIN}"
       TeamSettings:
         SiteName: "Mattermost on Oxygn"
 
