@@ -20,7 +20,7 @@ spec:
               #   - secretRef:
               #       name: *app
               command:
-                - "/bin/bash"
+                - "/bin/sh"
                 - -c
               args:
                 - "envsubst < /config/recyclarr.yaml > /shared/recyclarr.yaml"
