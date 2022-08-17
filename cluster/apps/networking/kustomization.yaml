@@ -9,4 +9,3 @@ resources:
   - metallb
   - k8s-gateway
   - traefik
-  - traefik-hub
