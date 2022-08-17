@@ -1,0 +1,30 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: traefik-hub-crd-source
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: https://github.com/traefik/hub-helm-chart.git
+  ref:
+    # renovate: registryUrl=https://helm.traefik.io/hub chart=hub-agent
+    tag: v0.10.0
+  ignore: |
+    # exclude all
+    /*
+    # path to crds
+    !/hub-agent/crds/
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: traefik-hub-crds
+  namespace: flux-system
+spec:
+  interval: 30m
+  prune: false
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: traefik-hub-crd-source
