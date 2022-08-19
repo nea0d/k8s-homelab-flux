@@ -54,6 +54,7 @@ spec:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-cloudflare-only@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.tls: true
           traefik.ingress.kubernetes.io/service.serversscheme: "https"
           traefik.ingress.kubernetes.io/ssl-redirect: "true"
           traefik.ingress.kubernetes.io/ssl-proxy-headers: "X-Forwarded-Proto:https"
