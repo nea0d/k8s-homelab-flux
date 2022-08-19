@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: thanos
-      version: 11.1.2
+      version: 11.1.4
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
@@ -22,7 +22,12 @@ spec:
   upgrade:
     remediation:
       retries: 5
+  maxHistory: 3
   dependsOn:
+    - name: traefik
+      namespace: networking
+    - name: longhorn
+      namespace: longhorn-system
     - name: kube-prometheus-stack
       namespace: monitoring
   values:
@@ -70,7 +75,7 @@ spec:
       enabled: true
       extraFlags:
         - "--compact.concurrency"
-        - "4"
+        - "1"
       retentionResolutionRaw: 14d
       retentionResolution5m: 14d
       retentionResolution1h: 14d
