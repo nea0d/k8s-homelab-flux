@@ -55,6 +55,8 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-cloudflare-only@kubernetescrd"
           traefik.ingress.kubernetes.io/protocol: "https"
+          traefik.ingress.kubernetes.io/ssl-redirect: "true"
+          traefik.ingress.kubernetes.io/ssl-proxy-headers: "X-Forwarded-Proto:https"
           external-dns/is-public: "true"
           external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
           hajimari.io/enable: "true"
