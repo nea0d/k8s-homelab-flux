@@ -33,7 +33,7 @@ spec:
       tag: v1.27.1.5916-6b0e31a64
     env:
       TZ: "${TIMEZONE}"
-      ADVERTISE_IP: "http://${METALLB_PLEX_ADDR}:32400/"
+      ADVERTISE_IP: "https://${METALLB_PLEX_ADDR}:32400/"
       PLEX_CLAIM: "${SECRET_PLEX_CLAIM}"
       ALLOWED_NETWORKS: "10.0.0.0/8,172.16.0.0/16,192.168.0.0/16"
       NVIDIA_VISIBLE_DEVICES: "all"
