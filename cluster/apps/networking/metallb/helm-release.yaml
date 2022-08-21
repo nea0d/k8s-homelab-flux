@@ -9,10 +9,10 @@ spec:
   chart:
     spec:
       chart: metallb
-      version: 4.0.2
+      version: 0.13.4
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: metallb-charts
         namespace: flux-system
   install:
     createNamespace: true
@@ -21,8 +21,13 @@ spec:
   upgrade:
     remediation:
       retries: 5
-  maxHistory: 3
   values:
+    configInline:
+      address-pools:
+        - name: default
+          protocol: layer2
+          addresses:
+            - "${METALLB_LB_RANGE}"
     tolerations:
       - effect: NoSchedule
         operator: Exists
