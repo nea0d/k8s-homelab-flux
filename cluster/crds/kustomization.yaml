@@ -5,5 +5,6 @@ resources:
   - cert-manager
   - gpu-operator-system
   - kube-prometheus-stack
+  - metallb-crds
   - system-upgrade-controller
   - traefik
