@@ -9,6 +9,7 @@
     ":enablePreCommit",
     ":automergeDigest",
     ":automergeBranchPush",
+    "config:base", ":rebaseStalePrs",
     "github>nea0d/k8s-homelab-flux//.github/renovate/allowedVersions.json5",
     "github>nea0d/k8s-homelab-flux//.github/renovate/autoMerge.json5",
     "github>nea0d/k8s-homelab-flux//.github/renovate/commitMessage.json5",
@@ -18,11 +19,15 @@
     "github>nea0d/k8s-homelab-flux//.github/renovate/semanticCommits.json5"
   ],
   "repositories": ["nea0d/k8s-homelab-flux"],
+  "timezone": "Europe/Paris",
+  "schedule": ["after 10pm every weekday", "before 5am every weekday", "every weekend"],
+  "assignees": ["nea0d"]
   "onboarding": false,
   "requireConfig": false,
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
+  "rollbackPrs": true, 
   "commitBodyTable": true,
   "ignorePaths": ["archive/**"],
   "pre-commit": {
