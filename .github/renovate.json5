@@ -1,20 +1,30 @@
 {
   "enabled": true,
-  "semanticCommits": "enabled",
-  "dependencyDashboard": true,
+  "extends": [
+    "config:base",
+    "docker:enableMajor",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":enablePreCommit",
+    ":automergeDigest",
+    ":automergeBranchPush",
+    "github>nea0d/k8s-homelab-flux//.github/renovate/allowedVersions.json5",
+    "github>nea0d/k8s-homelab-flux//.github/renovate/autoMerge.json5",
+    "github>nea0d/k8s-homelab-flux//.github/renovate/commitMessage.json5",
+    "github>nea0d/k8s-homelab-flux//.github/renovate/groups.json5",
+    "github>nea0d/k8s-homelab-flux//.github/renovate/labels.json5",
+    "github>nea0d/k8s-homelab-flux//.github/renovate/manualMergeRequired.json5",
+    "github>nea0d/k8s-homelab-flux//.github/renovate/semanticCommits.json5"
+  ],
+  "repositories": ["nea0d/k8s-homelab-flux"],
+  "onboarding": false,
+  "requireConfig": false,
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
-  "schedule": ["every weekend"],
-  "major": {
-    "dependencyDashboardApproval": true
-  },
-  "packageRules": [
-    {
-      "matchPackagePatterns": ["^metallb"],
-      "dependencyDashboardApproval": true
-    }
-  ],
+  "commitBodyTable": true,
+  "ignorePaths": ["archive/**"],
   "pre-commit": {
     "enabled": true
   },

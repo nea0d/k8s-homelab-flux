@@ -1,0 +1,7 @@
+{
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^metallb"],
+      "dependencyDashboardApproval": true
+    }
+}
