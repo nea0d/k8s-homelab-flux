@@ -6,6 +6,15 @@
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
   "schedule": ["every weekend"],
+  "major": {
+    "dependencyDashboardApproval": true
+  },
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^metallb"],
+      "dependencyDashboardApproval": true
+    }
+  ],
   "pre-commit": {
     "enabled": true
   },
