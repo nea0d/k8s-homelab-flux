@@ -12,7 +12,6 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
     traefik.ingress.kubernetes.io/router.tls: "true"
-    traefik.ingress.kubernetes.io/service.serversscheme: "https"
     traefik.ingress.kubernetes.io/ssl-proxy-headers: "X-Forwarded-Proto:https"
     hajimari.io/enable: "true"
     hajimari.io/icon: "backup-restore"
