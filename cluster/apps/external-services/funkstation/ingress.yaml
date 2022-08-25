@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: &app pve
+  name: &app funkstation
   namespace: external-services
   labels:
     app.kubernetes.io/name: *app
@@ -12,14 +12,14 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
     traefik.ingress.kubernetes.io/router.tls: "true"
-    # traefik.ingress.kubernetes.io/ssl-proxy-headers: "X-Forwarded-Proto:https"
+    traefik.ingress.kubernetes.io/ssl-proxy-headers: "X-Forwarded-Proto:https"
     hajimari.io/enable: "true"
-    hajimari.io/icon: "server"
-    hajimari.io/group: "networking"
+    hajimari.io/icon: "nas"
+    hajimari.io/group: "storage"
 spec:
   ingressClassName: "traefik"
   rules:
-    - host: &host "pve.${SECRET_DOMAIN}"
+    - host: &host "funkstation.${SECRET_DOMAIN}"
       http:
         paths:
           - path: /
@@ -28,9 +28,8 @@ spec:
               service:
                 name: *app
                 port:
-                  name:
                   number: 443
   tls:
     - hosts:
         - *host
-      secretName: pve-tls
+      secretName: funkstation-tls
