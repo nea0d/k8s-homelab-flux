@@ -29,7 +29,7 @@ spec:
               service:
                 name: *app
                 port:
-                  number: 8006
+                  number: 443
   tls:
     - hosts:
         - *host
