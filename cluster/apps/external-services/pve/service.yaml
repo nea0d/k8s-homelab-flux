@@ -8,6 +8,8 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
 spec:
+  type: ExternalName
+  externalName: pve.${SECRET_PRIVATE_DOMAIN}.
   ports:
     - name: http
       port: &port 8006
