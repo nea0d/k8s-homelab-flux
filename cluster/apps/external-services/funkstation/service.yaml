@@ -9,12 +9,11 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     traefik.ingress.kubernetes.io/service.passhostheader: "true"
-    traefik.ingress.kubernetes.io/service.serversscheme: "https"
 spec:
   type: ExternalName
   externalName: funkstation.${SECRET_PRIVATE_DOMAIN}.
   ports:
-    - name: https
-      port: 443
+    - name: http
+      port: 80
       protocol: TCP
-      targetPort: 5001
+      targetPort: 5000

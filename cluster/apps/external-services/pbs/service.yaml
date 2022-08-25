@@ -7,7 +7,7 @@ metadata:
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
-    annotations:
+  annotations:
     traefik.ingress.kubernetes.io/service.passhostheader: "true"
     traefik.ingress.kubernetes.io/service.serversscheme: "https"
 spec:
