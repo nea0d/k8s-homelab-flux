@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: &app pve
-  namespace: networking
+  namespace: external-services
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app

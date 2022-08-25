@@ -5,6 +5,7 @@ resources:
   - longhorn-system
   - communication
   - default
+  - external-services
   - flux-system
   - home
   - kube-system

@@ -2,16 +2,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: &app pve
-  namespace: networking
+  name: &app unifi
+  namespace: external-services
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
 spec:
   type: ExternalName
-  externalName: pve.${SECRET_PRIVATE_DOMAIN}.
+  externalName: unifi.${SECRET_PRIVATE_DOMAIN}.
   ports:
     - name: http
-      port: &port 8006
+      port: &port 443
       protocol: TCP
       targetPort: *port
