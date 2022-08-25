@@ -1,0 +1,36 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: &app pbs
+  namespace: external-services
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/service.serversscheme: "https"
+    traefik.ingress.kubernetes.io/ssl-proxy-headers: "X-Forwarded-Proto:https"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "backup-restore"
+    hajimari.io/group: "storage"
+spec:
+  ingressClassName: "traefik"
+  rules:
+    - host: &host "pbs.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: *app
+                port:
+                  number: 8007
+  tls:
+    - hosts:
+        - *host
+      secretName: pbs-tls
