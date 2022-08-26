@@ -28,7 +28,6 @@ spec:
               service:
                 name: *app
                 port:
-                  name:
                   number: 443
   tls:
     - hosts:
