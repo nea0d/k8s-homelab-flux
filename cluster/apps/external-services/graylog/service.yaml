@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     traefik.ingress.kubernetes.io/service.passhostheader: "true"
-    traefik.ingress.kubernetes.io/service.serversscheme: "https"
+    # traefik.ingress.kubernetes.io/service.serversscheme: "https"
 spec:
   type: ExternalName
   externalName: graylog.${SECRET_PRIVATE_DOMAIN}.

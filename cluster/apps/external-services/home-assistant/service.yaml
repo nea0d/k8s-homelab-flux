@@ -13,7 +13,7 @@ spec:
   type: ExternalName
   externalName: ha.${SECRET_PRIVATE_DOMAIN}.
   ports:
-    - name: http
-      port: 80
+    - name: https
+      port: 443
       protocol: TCP
       targetPort: 8123
