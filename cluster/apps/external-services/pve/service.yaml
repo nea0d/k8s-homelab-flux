@@ -14,7 +14,7 @@ spec:
   type: ExternalName
   externalName: pve.${SECRET_PRIVATE_DOMAIN}.
   ports:
-    - name: https
+    - name: https-web
       port: 443
       protocol: TCP
       targetPort: 8006
