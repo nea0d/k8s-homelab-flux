@@ -11,9 +11,9 @@ metadata:
     traefik.ingress.kubernetes.io/service.passhostheader: "true"
 spec:
   type: ExternalName
-  externalName: ha.${SECRET_PRIVATE_DOMAIN}.
+  externalName: ha.iot.${SECRET_DOMAIN}.
   ports:
-    - name: https
-      port: 443
+    - name: ha-http
+      port: 8123
       protocol: TCP
       targetPort: 8123

@@ -9,12 +9,11 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     traefik.ingress.kubernetes.io/service.passhostheader: "true"
-    # traefik.ingress.kubernetes.io/service.serversscheme: "https"
 spec:
   type: ExternalName
   externalName: pbs.${SECRET_PRIVATE_DOMAIN}.
   ports:
-    - name: https
-      port: 443
+    - name: pbs-https
+      port: 8007
       protocol: TCP
       targetPort: 8007

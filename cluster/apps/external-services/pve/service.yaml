@@ -9,12 +9,11 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     traefik.ingress.kubernetes.io/service.passhostheader: "true"
-    traefik.ingress.kubernetes.io/service.serversscheme: "https"
 spec:
   type: ClusterIP
   clusterIP: None
   ports:
     - name: pve-https
-      port: 443
+      port: 8006
       protocol: TCP
       targetPort: 8006

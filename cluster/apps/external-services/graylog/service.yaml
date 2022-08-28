@@ -9,12 +9,11 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     traefik.ingress.kubernetes.io/service.passhostheader: "true"
-    # traefik.ingress.kubernetes.io/service.serversscheme: "https"
 spec:
   type: ExternalName
   externalName: graylog.${SECRET_PRIVATE_DOMAIN}.
   ports:
-    - name: https
-      port: 443
+    - name: graylog-https
+      port: 9001
       protocol: TCP
       targetPort: 9001

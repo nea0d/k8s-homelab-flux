@@ -19,7 +19,7 @@ metadata:
 spec:
   ingressClassName: "traefik"
   rules:
-    - host: &host "graylog.${SECRET_DOMAIN}"
+    - host: &host "graylog.${SECRET_DOMAIN}."
       http:
         paths:
           - path: /
@@ -28,7 +28,7 @@ spec:
               service:
                 name: *app
                 port:
-                  number: 443
+                  number: 9001
   tls:
     - hosts:
         - *host
