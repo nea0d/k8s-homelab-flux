@@ -17,7 +17,7 @@ metadata:
 spec:
   ingressClassName: "traefik"
   rules:
-    - host: &host "ha.${SECRET_DOMAIN}."
+    - host: &host "ha.${SECRET_DOMAIN}"
       http:
         paths:
           - path: /
