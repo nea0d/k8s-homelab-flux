@@ -24,3 +24,17 @@
     fstype: ext4
     state: mounted
   when: volumes_mount_src not in mounted_devices
+
+# Blacklist sd[x] devices from multipath conf (cf. https://longhorn.io/kb/troubleshooting-volume-with-multipath/)
+- name: upload new multipathd conf template
+  template:
+    src: 'multipath.conf.j2'
+    dest: '/etc/multipath.conf'
+  become: true # <-- unless you are connecting as root
+
+# Restart multipathd service to apply new conf
+- name: restart multipathd service
+  ansible.builtin.service:
+    name: multipathd
+    state: restarted
+  become: true
