@@ -11,6 +11,7 @@ spec:
   version: "v1.24.4+k3s1"
   serviceAccountName: system-upgrade
   concurrency: 1
+  cordon: true
   nodeSelector:
     matchExpressions:
       - {key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}
