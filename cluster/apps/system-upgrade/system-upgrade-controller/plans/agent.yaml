@@ -14,12 +14,11 @@ spec:
   cordon: true
   drain:
     force: true
-    skipWaitForDeleteTimeout: 60 # 1.18+ (honor pod disruption budgets up to 60 seconds per pod then moves on)
   nodeSelector:
     matchExpressions:
       - {key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}
   prepare:
     image: rancher/k3s-upgrade
-    args: ["prepare"] # "k3s-server" : a check is already made in "prepare" to check that the masters are already upgraded
+    args: ["prepare", "k3s-server"]
   upgrade:
     image: rancher/k3s-upgrade
