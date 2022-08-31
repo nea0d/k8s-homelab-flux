@@ -25,9 +25,8 @@ spec:
           - path: /
             pathType: Prefix
             backend:
-              service:
-                name: *app
-                port: "https-pve"
+              serviceName: *app
+              servicePort: https-pve
   tls:
     - hosts:
         - *host
