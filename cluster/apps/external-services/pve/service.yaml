@@ -8,12 +8,16 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
   annotations:
-    traefik.ingress.kubernetes.io/service.passhostheader: "true"
+    traefik.ingress.kubernetes.io/service.passhostheader: "false"
 spec:
   type: ExternalName
   externalName: pve.${SECRET_PRIVATE_DOMAIN}.
   ports:
     - name: pve-https
+      port: 8006
+      protocol: TCP
+      targetPort: 8006
+    - name: https
       port: 443
       protocol: TCP
       targetPort: 8006
