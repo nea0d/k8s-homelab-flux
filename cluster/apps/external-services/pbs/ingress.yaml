@@ -27,8 +27,7 @@ spec:
             backend:
               service:
                 name: *app
-                port:
-                  number: 443
+                port: "pbs-https"
   tls:
     - hosts:
         - *host

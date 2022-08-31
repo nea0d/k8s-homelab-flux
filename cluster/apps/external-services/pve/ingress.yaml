@@ -27,8 +27,7 @@ spec:
             backend:
               service:
                 name: *app
-                port:
-                  number: 8006
+                port: "https-pve"
   tls:
     - hosts:
         - *host
