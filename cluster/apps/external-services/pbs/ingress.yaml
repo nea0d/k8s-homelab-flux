@@ -28,7 +28,7 @@ spec:
               service:
                 name: *app
                 port:
-                  name: "pbs-https"
+                  name: "https-pbs"
   tls:
     - hosts:
         - *host

@@ -13,7 +13,7 @@ spec:
   type: ExternalName
   externalName: pbs.${SECRET_PRIVATE_DOMAIN}.
   ports:
-    - name: pbs-https
-      port: 443
+    - name: https-pbs
+      port: 8007
       protocol: TCP
       targetPort: 8007
