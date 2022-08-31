@@ -10,10 +10,10 @@ metadata:
   annotations:
     traefik.ingress.kubernetes.io/service.passhostheader: "true"
 spec:
-  type: ClusterIP
-  clusterIP: None
+  type: ExternalName
+  externalName: pve.${SECRET_PRIVATE_DOMAIN}.
   ports:
     - name: pve-https
-      port: 8006
+      port: 443
       protocol: TCP
       targetPort: 8006

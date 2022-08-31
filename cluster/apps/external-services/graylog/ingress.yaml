@@ -28,7 +28,7 @@ spec:
               service:
                 name: *app
                 port:
-                  number: 9001
+                  number: 9000
   tls:
     - hosts:
         - *host

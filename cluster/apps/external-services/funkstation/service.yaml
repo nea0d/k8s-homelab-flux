@@ -13,7 +13,7 @@ spec:
   type: ExternalName
   externalName: funkstation.${SECRET_PRIVATE_DOMAIN}.
   ports:
-    - name: nas-https
-      port: 5001
+    - name: nas-http
+      port: 5000
       protocol: TCP
-      targetPort: 5001
+      targetPort: 5000
