@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - cert-manager
+  - descheduler
   - fluent-bit
   - kube-vip
   # - kured
