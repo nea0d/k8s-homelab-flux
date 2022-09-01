@@ -2,41 +2,41 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: cloudflare-ddns
+  name: &app cloudflare-ddns
   namespace: networking
 spec:
-  schedule: "0 * * * *"
-  concurrencyPolicy: "Forbid"
-  successfulJobsHistoryLimit: 3
-  failedJobsHistoryLimit: 5
+  schedule: "@hourly"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
   jobTemplate:
     spec:
-      backoffLimit: 3
-      ttlSecondsAfterFinished: 300
+      ttlSecondsAfterFinished: 3600
       template:
         spec:
-          restartPolicy: Never
+          automountServiceAccountToken: false
+          restartPolicy: OnFailure
           containers:
-            - name: cloudflare-ddns
-              image: ghcr.io/k8s-at-home/kubectl:v1.25.0
+            - name: *app
+              image: ghcr.io/onedr0p/kubernetes-kubectl:1.25.0@sha256:94ef8af361238220e5858fae7a55e9d3dfa6006f3fc74167cf5790ec921d3661
               envFrom:
                 - secretRef:
-                    name: cloudflare-ddns
+                    name: *app
               command:
                 - "/bin/bash"
-                - "/app/cloudflare-ddns.sh"
+                - &scriptPath "/app/cloudflare-ddns.sh"
               volumeMounts:
-                - name: cloudflare-ddns
-                  mountPath: /app/cloudflare-ddns.sh
-                  subPath: cloudflare-ddns.sh
+                - name: *app
+                  mountPath: *scriptPath
+                  subPath: &scriptName cloudflare-ddns.sh
                   readOnly: true
           volumes:
-            - name: cloudflare-ddns
+            - name: *app
               projected:
                 defaultMode: 0775
                 sources:
                   - configMap:
-                      name: cloudflare-ddns
+                      name: *app
                       items:
-                        - key: cloudflare-ddns.sh
-                          path: cloudflare-ddns.sh
+                        - key: *scriptName
+                          path: *scriptName
