@@ -8,13 +8,12 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: kah-common-chart
-      version: 1.2.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 15m
   install:
     createNamespace: true
     remediation:
@@ -26,7 +25,7 @@ spec:
     global:
       nameOverride: *app
     controller:
-      replicas: 1
+      replicas: 3
       strategy: RollingUpdate
     image:
       repository: docker.io/jmalloc/echo-server
@@ -37,7 +36,7 @@ spec:
           http:
             port: &port 8080
     probes:
-      liveness:
+      liveness: &probes
         enabled: true
         custom: true
         spec:
@@ -48,26 +47,9 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 1
           failureThreshold: 3
-      readiness:
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /health
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
+      readiness: *probes
       startup:
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /health
-            port: *port
-          failureThreshold: 30
-          periodSeconds: 10
+        enabled: false
     ingress:
       main:
         enabled: true
@@ -89,9 +71,16 @@ spec:
           - hosts:
               - *host
             secretName: "echo-server-tls"
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: *app
     resources:
       requests:
-        cpu: 50m
-        memory: 64Mi
+        cpu: 5m
+        memory: 10Mi
       limits:
-        memory: 96Mi
+        memory: 50Mi
