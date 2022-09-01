@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: external-dns-charts
         namespace: flux-system
-      interval: 15m
   install:
     createNamespace: true
     remediation:
@@ -23,8 +22,8 @@ spec:
     remediation:
       retries: 5
   values:
-    interval: 5m
-    logLevel: debug
+    interval: 2m
+    # logLevel: debug
     provider: cloudflare
     env:
       - name: CF_API_EMAIL
@@ -53,8 +52,3 @@ spec:
         cpu: 25m
       limits:
         memory: 250Mi
-    tolerations:
-      - effect: NoSchedule
-        operator: Exists
-      - effect: NoExecute
-        operator: Exists
