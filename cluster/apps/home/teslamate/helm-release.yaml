@@ -8,14 +8,12 @@ spec:
   interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: teslamate
-      version: 7.1.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 15m
   install:
     createNamespace: true
     remediation:
@@ -23,6 +21,7 @@ spec:
   upgrade:
     remediation:
       retries: 5
+  maxHistory: 3
   values:
     image:
       repository: teslamate/teslamate
@@ -41,12 +40,10 @@ spec:
       DATABASE_NAME: "${SECRET_TESLAMATE_DBNAME}"
       # Disables the MQTT feature if `true`
       DISABLE_MQTT: "true" # Otherwise app crashes at launch because MQTT_HOST is not set
-
     persistence:
       import:
         enabled: false
         mountPath: /opt/app/import
-
     postgresql:
       enabled: true
       image:
@@ -65,18 +62,6 @@ spec:
         enabled: false
       volumePermissions:
         enabled: false
-      # primary:
-      #   podSecurityContext:
-      #     enabled: true
-      #     fsGroup: 1001
-      #   containerSecurityContext:
-      #     enabled: true
-      #     runAsUser: 0
-      # volumePermissions:
-      #   enabled: true
-      #   containerSecurityContext:
-      #     runAsUser: 0
-
     ingress:
       main:
         enabled: true
@@ -97,9 +82,3 @@ spec:
           - hosts:
               - *host
             secretName: teslamate-tls
-
-    # podSecurityContext:
-    #   runAsUser: 1001
-    #   runAsGroup: 0
-    #   fsGroup: 1001
-    #   fsGroupChangePolicy: "OnRootMismatch"

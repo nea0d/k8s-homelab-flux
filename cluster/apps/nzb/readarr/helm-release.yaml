@@ -5,23 +5,37 @@ metadata:
   name: readarr
   namespace: nzb
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: readarr
-      version: 6.4.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  maxHistory: 3
   values:
     image:
-      repository: ghcr.io/k8s-at-home/readarr
-      tag: v0.1.1.1352
+      repository: ghcr.io/onedr0p/readarr-nightly
+      tag: 0.1.1.1409@sha256:00a1098977f6d77dabdad2ba8a65937a45098cd7f41285441cf74994813d5c8f
     env:
       TZ: "${TIMEZONE}"
+      READARR__INSTANCE_NAME: Readarr
+      READARR__PORT: &port 80
+      READARR__LOG_LEVEL: info
+    service:
+      main:
+        ports:
+          http:
+            port: *port
     ingress:
       main:
         enabled: true
@@ -70,45 +84,16 @@ spec:
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 100
     resources:
       requests:
-        cpu: 500m
-        memory: 250M
+        cpu: 10m
+        memory: 250Mi
       limits:
-        memory: 1000M
+        memory: 1000Mi
     prometheus:
       podMonitor:
         enabled: true
         interval: 3m
         scrapeTimeout: 1m30s
-    # TODO : check exportarr
-    # additionalContainers:
-    #   exportarr:
-    #     name: exportarr
-    #     image: ghcr.io/onedr0p/exportarr:v0.6.1
-    #     imagePullPolicy: IfNotPresent
-    #     args: ["exportarr", "radarr"]
-    #     env:
-    #     - name: PORT
-    #       value: "32123"
-    #     - name: URL
-    #       value: "http://localhost"
-    #     - name: CONFIG
-    #       value: "/config/config.xml"
-    #     - name: ENABLE_UNKNOWN_QUEUE_ITEMS
-    #       value: "true"
-    #     - name: ENABLE_ADDITIONAL_METRICS
-    #       value: "true"
-    #     ports:
-    #     - name: exportarr
-    #       containerPort: 32123
-    #     volumeMounts:
-    #     - name: config
-    #       mountPath: /config
-    #       readOnly: true
-    #     resources:
-    #       requests:
-    #         cpu: 100m
-    #         memory: 60M
-    #       limits:
-    #         memory: 100M

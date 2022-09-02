@@ -8,13 +8,12 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: kah-common-chart
-      version: 1.2.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 15m
   install:
     createNamespace: true
     remediation:
@@ -23,11 +22,9 @@ spec:
     remediation:
       retries: 5
   values:
-    global:
-      nameOverride: *app
     image:
       repository: quay.io/minio/minio
-      tag: RELEASE.2022-07-17T15-43-14Z
+      tag: RELEASE.2022-07-30T05-21-40Z
     env:
       TZ: "${TIMEZONE}"
       MINIO_PROMETHEUS_AUTH_TYPE: "public"
@@ -94,7 +91,6 @@ spec:
       config:
         enabled: true
         existingClaim: minio-nfs
-        # existingClaim: minio-config
         mountPath: /data
     podAnnotations:
       secret.reloader.stakater.com/reload: *app

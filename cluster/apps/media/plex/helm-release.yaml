@@ -8,14 +8,12 @@ spec:
   interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: plex
-      version: 6.4.3
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 15m
   install:
     createNamespace: true
     remediation:
@@ -32,11 +30,9 @@ spec:
     - name: gpu-operator
       namespace: gpu-operator-system
   values:
-    global:
-      nameOverride: *app
     image:
-      repository: ghcr.io/k8s-at-home/plex
-      tag: v1.28.1.6104-788f82488
+      repository: ghcr.io/onedr0p/plex
+      tag: 1.28.2.6151-914ddd2b3@sha256:9ebd0ad09ab22676770ed8eb150b73147bf8936e4bcf56128945371e44c9b198
     env:
       TZ: "${TIMEZONE}"
       ADVERTISE_IP: "https://{{ .Release.Name }}.${SECRET_DOMAIN}:443" #"https://${METALLB_PLEX_ADDR}:32400/"
@@ -53,9 +49,9 @@ spec:
         loadBalancerIP: "${METALLB_PLEX_ADDR}"
         externalTrafficPolicy: Local
         ports:
-          http:
+          - name: https-plex
             port: 32400
-            #targetPort: 32400
+            targetPort: 32400
             protocol: TCP
     ingress:
       main:
@@ -65,10 +61,6 @@ spec:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-cloudflare-only@kubernetescrd"
-          # traefik.ingress.kubernetes.io/router.tls: "true"
-          # traefik.ingress.kubernetes.io/service.serversscheme: "https"
-          # traefik.ingress.kubernetes.io/ssl-redirect: "true"
-          # traefik.ingress.kubernetes.io/ssl-proxy-headers: "X-Forwarded-Proto:https"
           external-dns/is-public: "true"
           external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
           hajimari.io/enable: "true"
@@ -79,6 +71,11 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                backend:
+                  service:
+                    name: main
+                    port:
+                      name: "https-plex"
         tls:
           - hosts:
               - *host
@@ -127,6 +124,7 @@ spec:
       # render:x:109:
       supplementalGroups:
         - 44
+        - 100
         - 109
 
     # affinity with GPU

@@ -23,8 +23,6 @@ spec:
     remediation:
       retries: 5
   values:
-    global:
-      nameOverride: *app
     image:
       repository: mattermost/mattermost-team-edition
       tag: 7.2.0@sha256:4c888860392d800a6c3efabb26173ddc401bed46139007a4d116f1c91b5914a4

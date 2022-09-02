@@ -5,17 +5,15 @@ metadata:
   name: &app mealie-alpha
   namespace: home
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: mealie
-      version: 4.2.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
   install:
     createNamespace: true
     remediation:
@@ -23,9 +21,8 @@ spec:
   upgrade:
     remediation:
       retries: 5
+  maxHistory: 3
   values:
-    global:
-      nameOverride: *app
     image:
       repository: hkotel/mealie
       tag: v0.5.6

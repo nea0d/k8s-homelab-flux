@@ -5,37 +5,35 @@ metadata:
   name: &app nzbget
   namespace: nzb
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      chart: nzbget
-      version: 12.4.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
   install:
     createNamespace: true
-    remediation: # perform remediation when helm install fails
+    remediation:
       retries: 5
   upgrade:
-    remediation: # perform remediation when helm upgrade fails
+    remediation:
       retries: 5
-      remediateLastFailure: true # remediate the last failure, when no retries remain
-    cleanupOnFail: true
+  maxHistory: 3
   values:
-    global:
-      nameOverride: *app
     image:
-      repository: ghcr.io/k8s-at-home/nzbget
-      tag: "v21.1"
+      repository: ghcr.io/onedr0p/nzbget
+      tag: 21.1@sha256:9aa8a5e8f2a80495df248fb4d7cd39429d36cdd6f60a1505d3dbaddf9b05ff57
 
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 100
 
     env:
       TZ: "${TIMEZONE}"
