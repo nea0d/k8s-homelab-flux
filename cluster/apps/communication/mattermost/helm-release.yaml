@@ -45,12 +45,12 @@ spec:
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         traefik.ingress.kubernetes.io/router.middlewares: "networking-cloudflare-only@kubernetescrd"
         external-dns/is-public: "true"
-        external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
+        external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_PUBLIC_DOMAIN}"
         hajimari.io/enable: "true"
         hajimari.io/icon: "slack"
         hajimari.io/group: "communication"
       hosts:
-        - &host "mattermost.${SECRET_DOMAIN}"
+        - &host "mattermost.${SECRET_PUBLIC_DOMAIN}"
       tls:
         - hosts:
             - *host
@@ -58,7 +58,7 @@ spec:
 
     configJSON:
       ServiceSettings:
-        SiteURL: "https://mattermost.${SECRET_DOMAIN}"
+        SiteURL: "https://mattermost.${SECRET_PUBLIC_DOMAIN}"
       TeamSettings:
         SiteName: "Mattermost on Oxygn"
 

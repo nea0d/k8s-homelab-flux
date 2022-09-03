@@ -53,7 +53,7 @@ spec:
         hajimari.io/group: "storage"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
-      host: "longhorn.${SECRET_DOMAIN}"
+      host: "longhorn.${SECRET_PUBLIC_DOMAIN}"
       path: "/"
       tls: true
       tlsSecret: "longhorn-tls"

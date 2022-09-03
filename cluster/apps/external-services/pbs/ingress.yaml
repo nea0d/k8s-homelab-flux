@@ -19,7 +19,7 @@ metadata:
 spec:
   ingressClassName: "traefik"
   rules:
-    - host: &host "pbs.${SECRET_DOMAIN}"
+    - host: &host "pbs.${SECRET_PUBLIC_DOMAIN}"
       http:
         paths:
           - path: /

@@ -41,7 +41,7 @@ spec:
           hajimari.io/icon: "clipboard-play-multiple"
           hajimari.io/group: "nzb"
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

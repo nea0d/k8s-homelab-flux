@@ -29,7 +29,7 @@ spec:
     env:
       TZ: "${TIMEZONE}"
       RADARR__PORT: &port 80
-      RADARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
+      RADARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
       RADARR__LOG_LEVEL: info
     service:
       main:
@@ -48,7 +48,7 @@ spec:
           hajimari.io/icon: "filmstrip"
           hajimari.io/group: "nzb"
         hosts:
-          - host: &host "radarr.${SECRET_DOMAIN}"
+          - host: &host "radarr.${SECRET_PUBLIC_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

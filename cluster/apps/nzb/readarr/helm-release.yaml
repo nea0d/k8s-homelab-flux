@@ -48,7 +48,7 @@ spec:
           hajimari.io/icon: "book-open-variant"
           hajimari.io/group: "nzb"
         hosts:
-          - host: &host "readarr.${SECRET_DOMAIN}"
+          - host: &host "readarr.${SECRET_PUBLIC_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

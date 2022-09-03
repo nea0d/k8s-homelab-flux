@@ -18,7 +18,7 @@ spec:
     - nconnect=16
   nfs:
     path: /volume2/Media
-    server: "nas01.${SECRET_DOMAIN}"
+    server: "nas01.${SECRET_PRIVATE_DOMAIN}"
 
 ---
 apiVersion: v1

@@ -15,7 +15,7 @@ spec:
   ingressClassName: "traefik"
   tls:
     - hosts:
-        - &host "traefik.${SECRET_DOMAIN}"
+        - &host "traefik.${SECRET_PUBLIC_DOMAIN}"
       secretName: "traefik-dashboard-tls"
   rules:
     - host: *host

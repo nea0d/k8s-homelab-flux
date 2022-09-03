@@ -30,7 +30,7 @@ spec:
       TZ: "${TIMEZONE}"
       SONARR__INSTANCE_NAME: Sonarr
       SONARR__PORT: &port 80
-      SONARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
+      SONARR__APPLICATION_URL: "https://{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
       SONARR__LOG_LEVEL: info
     service:
       main:
@@ -49,7 +49,7 @@ spec:
           hajimari.io/icon: "television-box"
           hajimari.io/group: "nzb"
         hosts:
-          - host: &host "sonarr.${SECRET_DOMAIN}"
+          - host: &host "sonarr.${SECRET_PUBLIC_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

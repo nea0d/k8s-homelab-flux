@@ -19,7 +19,7 @@ metadata:
 spec:
   ingressClassName: "traefik"
   rules:
-    - host: &host "funkstation.${SECRET_DOMAIN}"
+    - host: &host "funkstation.${SECRET_PUBLIC_DOMAIN}"
       http:
         paths:
           - path: /
