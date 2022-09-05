@@ -64,7 +64,7 @@ spec:
           mode: udp
           inputs:
             - journal_logs
-          endpoint: graylog.${SECRET_PRIVATE_DOMAIN}:12201
+          address: graylog.${SECRET_PRIVATE_DOMAIN}:12201
           encoding:
             codec: gelf
         graylog_kubernetes:
@@ -72,7 +72,7 @@ spec:
           mode: udp
           inputs:
             - kubernetes_logs_remap
-          endpoint: graylog.${SECRET_PRIVATE_DOMAIN}:12201
+          address: graylog.${SECRET_PRIVATE_DOMAIN}:12201
           encoding:
             codec: gelf
         # loki_journal:
