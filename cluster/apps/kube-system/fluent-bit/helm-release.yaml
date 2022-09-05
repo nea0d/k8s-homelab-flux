@@ -130,7 +130,7 @@ spec:
         [OUTPUT]
             Name                    gelf
             Match                   *
-            Host                    "graylog.${SECRET_PRIVATE_DOMAIN}"
+            Host                    graylog.${SECRET_PRIVATE_DOMAIN}
             Port                    12201
             Mode                    udp
             Gelf_Short_Message_Key  log
