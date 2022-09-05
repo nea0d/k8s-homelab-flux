@@ -103,8 +103,8 @@ spec:
             Name               tail
             Tag                kube.*
             Path               /var/log/containers/*.log
-            Parser             docker
-            DB                 /var/log/flb_graylog.db
+            Parser             cri
+            DB                 /var/log/flb_kube.db
             DB.Sync            Normal
             Docker_Mode        On
             Buffer_Chunk_Size  512KB
@@ -119,12 +119,24 @@ spec:
             Name                kubernetes
             Match               kube.*
             Merge_Log           On
-            Merge_Log_Key       log
+            Merge_Log_Trim      On
             Keep_Log            Off
             K8S-Logging.Parser  On
             K8S-Logging.Exclude Off
             Annotations         Off
             Labels              On
+        [FILTER]
+            Name          nest
+            Match         kube.*
+            Operation     lift
+            Nested_under  kubernetes
+            Add_prefix    kubernetes_
+        [FILTER]
+            Name          nest
+            Match         kube.*
+            Operation     lift
+            Nested_under  kubernetes_labels
+            Add_prefix    kubernetes_labels_
       ## https://docs.fluentbit.io/manual/pipeline/outputs
       outputs: |
         [OUTPUT]
@@ -139,20 +151,21 @@ spec:
       ## https://docs.fluentbit.io/manual/pipeline/parsers
       customParsers: |
         [PARSER]
-            Name   json
+            Name        json
+            Format      json
+            Time_Key    time
+            Time_Format %d/%b/%Y:%H:%M:%S %z
+            Time_Keep   Off
+        [PARSER]
+            Name docker
             Format json
             Time_Key time
-            Time_Format %d/%b/%Y:%H:%M:%S %z
+            Time_Format %Y-%m-%dT%H:%M:%S.%L
+            Time_Keep Off
         [PARSER]
-            Name         docker
-            Format       json
-            Time_Key     time
-            Time_Format  %Y-%m-%dT%H:%M:%S.%L
-            Time_Keep    On
-        [PARSER]
-            Name        syslog
+            Name        cri
             Format      regex
-            Regex       ^\<(?<pri>[0-9]+)\>(?<time>[^ ]* {1,2}[^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*)(?:\[(?<pid>[0-9]+)\])?(?:[^\:]*\:)? *(?<message>.*)$
+            Regex       ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<log>.*)$
             Time_Key    time
-            Time_Format %b %d %H:%M:%S
+            Time_Format %Y-%m-%dT%H:%M:%S.%L%z
     logLevel: info
