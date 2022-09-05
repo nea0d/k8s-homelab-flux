@@ -11,7 +11,7 @@ spec:
   storageClassName: minio-nfs
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: "nas01.${SECRET_PUBLIC_DOMAIN}"
+    server: "nas01.${SECRET_PRIVATE_DOMAIN}"
     path: /volume1/Minio
   mountOptions:
     - nfsvers=4.1
