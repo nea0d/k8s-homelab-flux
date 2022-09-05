@@ -8,12 +8,14 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: app-template
-      version: 0.1.1
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: teslamate
+      version: 7.1.2
       sourceRef:
         kind: HelmRepository
-        name: bjw-s-charts
+        name: k8s-at-home-charts
         namespace: flux-system
+      interval: 15m
   install:
     createNamespace: true
     remediation:
@@ -76,7 +78,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
           hajimari.io/enable: "true"
-          hajimari.io/icon: "car-connected"
+          hajimari.io/icon: "car-electric"
           hajimari.io/group: "home"
         hosts:
           - host: &host "teslamate.${SECRET_PUBLIC_DOMAIN}"
