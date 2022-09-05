@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: &app funkstation
+  name: &app nas01
   namespace: external-services
   labels:
     app.kubernetes.io/name: *app
@@ -19,7 +19,7 @@ metadata:
 spec:
   ingressClassName: "traefik"
   rules:
-    - host: &host "funkstation.${SECRET_PUBLIC_DOMAIN}"
+    - host: &host "nas01.${SECRET_PUBLIC_DOMAIN}"
       http:
         paths:
           - path: /
@@ -32,4 +32,4 @@ spec:
   tls:
     - hosts:
         - *host
-      secretName: funkstation-tls
+      secretName: nas01-tls

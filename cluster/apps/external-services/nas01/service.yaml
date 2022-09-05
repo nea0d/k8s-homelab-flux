@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: &app funkstation
+  name: &app nas01
   namespace: external-services
   labels:
     app.kubernetes.io/name: *app
@@ -11,7 +11,7 @@ metadata:
     traefik.ingress.kubernetes.io/service.passhostheader: "true"
 spec:
   type: ExternalName
-  externalName: funkstation.${SECRET_PRIVATE_DOMAIN}.
+  externalName: nas01.${SECRET_PRIVATE_DOMAIN}.
   ports:
     - name: nas-http
       port: 5000
