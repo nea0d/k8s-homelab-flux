@@ -26,7 +26,6 @@ spec:
     image:
       repository: ghcr.io/onedr0p/nzbget
       tag: 21.1@sha256:4b001c2a7da7cce258d8a9d3ba00506847f81a400f77db937cda8b79071bd5d1
-
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568
@@ -34,10 +33,8 @@ spec:
       fsGroupChangePolicy: "OnRootMismatch"
       supplementalGroups:
         - 100
-
     env:
       TZ: "${TIMEZONE}"
-
     persistence:
       config:
         enabled: true
@@ -45,7 +42,11 @@ spec:
       media:
         enabled: true
         existingClaim: nfs-nas-media-pvc
-
+    service:
+      main:
+        ports:
+          http:
+            port: 6789
     ingress:
       main:
         enabled: true
