@@ -133,8 +133,8 @@ spec:
         [OUTPUT]
             Name                    gelf
             Match                   *
-            Host                      syslog.oxygn.dev
-            Port                       12201
+            Host                    "graylog.${SECRET_PRIVATE_DOMAIN}"
+            Port                    12201
             Mode                    udp
             Gelf_Short_Message_Key  log
       ## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/upstream-servers
