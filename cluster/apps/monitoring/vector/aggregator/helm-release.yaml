@@ -65,7 +65,7 @@ spec:
           inputs:
             - journal_logs
             - kubernetes_logs_remap
-          address: graylog.${SECRET_PRIVATE_DOMAIN}:12201
+          address: 10.10.10.40:12201
           encoding:
             codec: gelf
         # loki_journal:
