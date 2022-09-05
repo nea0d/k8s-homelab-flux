@@ -6,7 +6,7 @@ resources:
   - cert-manager
   - coredns-autoscaler
   - descheduler
-  - fluent-bit
+  # - fluent-bit
   - kube-vip
   # - kured
   - metrics-server
