@@ -59,18 +59,11 @@ spec:
       # Sinks
       #
       sinks:
-        graylog_journal:
+        graylog:
           type: socket
           mode: udp
           inputs:
             - journal_logs
-          address: graylog.${SECRET_PRIVATE_DOMAIN}:12201
-          encoding:
-            codec: gelf
-        graylog_kubernetes:
-          type: socket
-          mode: udp
-          inputs:
             - kubernetes_logs_remap
           address: graylog.${SECRET_PRIVATE_DOMAIN}:12201
           encoding:
