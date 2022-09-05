@@ -47,7 +47,6 @@ spec:
       main:
         annotations:
           traefik.ingress.kubernetes.io/service.passhostheader: "true"
-          traefik.ingress.kubernetes.io/service.serversscheme: "https"
         type: LoadBalancer
         loadBalancerIP: "${METALLB_PLEX_ADDR}"
         externalTrafficPolicy: Local
