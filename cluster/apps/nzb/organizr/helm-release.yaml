@@ -28,7 +28,11 @@ spec:
       tag: latest
     env:
       TZ: "${TIMEZONE}"
-
+    service:
+      main:
+        ports:
+          http:
+            port: 80
     ingress:
       main:
         enabled: true
