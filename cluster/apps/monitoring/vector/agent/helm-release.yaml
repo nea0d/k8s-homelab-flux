@@ -49,19 +49,22 @@ spec:
             pod_name: "pod_name"
       # Sinks
       sinks:
-        loki_journal_sink:
+        graylog_journal_sink:
           type: vector
           inputs:
             - journal_logs
-          address: vector-aggregator:6000
+          address: vector-aggregator.monitoring:6000
           version: "2"
-        loki_kubernetes_sink:
+        graylog_kubernetes_sink:
           type: vector
           inputs:
             - kubernetes_logs
-          address: vector-aggregator:6010
+          address: vector-aggregator.monitoring:6010
           version: "2"
     service:
       enabled: false
     securityContext:
       privileged: true
+    tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
