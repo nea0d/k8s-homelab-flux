@@ -105,13 +105,11 @@ spec:
             Path               /var/log/containers/*.log
             Parser             cri
             DB                 /var/log/flb_kube.db
-            DB.Sync            Normal
-            Docker_Mode        On
             Buffer_Chunk_Size  512KB
             Buffer_Max_Size    5M
             Rotate_Wait        30
-            Mem_Buf_Limit      30MB
-            Skip_Long_Lines    On
+            Mem_Buf_Limit 5MB
+            Skip_Long_Lines On
             Refresh_Interval   10
       ## https://docs.fluentbit.io/manual/pipeline/filters
       filters: |
@@ -145,7 +143,7 @@ spec:
             Host                    graylog.${SECRET_PRIVATE_DOMAIN}
             Port                    12201
             Mode                    udp
-            Gelf_Short_Message_Key  log
+            Gelf_Short_Message_Key  message
       ## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/upstream-servers
       upstream: {}
       ## https://docs.fluentbit.io/manual/pipeline/parsers
@@ -163,9 +161,10 @@ spec:
             Time_Format %Y-%m-%dT%H:%M:%S.%L
             Time_Keep Off
         [PARSER]
-            Name        cri
-            Format      regex
-            Regex       ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<log>.*)$
+            # http://rubular.com/r/tjUt3Awgg4
+            Name cri
+            Format regex
+            Regex ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<message>.*)$
             Time_Key    time
             Time_Format %Y-%m-%dT%H:%M:%S.%L%z
     logLevel: info
