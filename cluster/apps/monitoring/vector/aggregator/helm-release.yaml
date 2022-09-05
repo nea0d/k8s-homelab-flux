@@ -67,14 +67,6 @@ spec:
           endpoint: graylog.${SECRET_PRIVATE_DOMAIN}:12201
           encoding:
             codec: gelf
-          batch:
-            max_bytes: 2049000
-          out_of_order_action: accept
-          remove_label_fields: true
-          remove_timestamp: true
-          labels:
-            hostname: >-
-              {{`{{ host }}`}}
         graylog_kubernetes:
           type: socket
           mode: udp
@@ -83,18 +75,6 @@ spec:
           endpoint: graylog.${SECRET_PRIVATE_DOMAIN}:12201
           encoding:
             codec: gelf
-          batch:
-            max_bytes: 2049000
-          out_of_order_action: accept
-          remove_label_fields: true
-          remove_timestamp: true
-          labels:
-            app: >-
-              {{`{{ custom_app_name }}`}}
-            namespace: >-
-              {{`{{ kubernetes.pod_namespace }}`}}
-            node: >-
-              {{`{{ kubernetes.pod_node_name }}`}}
         # loki_journal:
         #   type: loki
         #   inputs:
