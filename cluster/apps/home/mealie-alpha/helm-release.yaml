@@ -29,6 +29,11 @@ spec:
     env:
       TZ: "${TIMEZONE}"
       DB_TYPE: sqlite
+    service:
+      main:
+        ports:
+          http:
+            port: 80
     ingress:
       main:
         enabled: true
