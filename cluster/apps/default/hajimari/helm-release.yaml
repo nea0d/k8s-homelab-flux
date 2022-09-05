@@ -32,6 +32,7 @@ spec:
         matchNames:
           - communication
           - default
+          - external-services
           - home
           - longhorn-system
           - media
@@ -41,26 +42,26 @@ spec:
           - storage
       name: "Matt"
       customApps:
-        - name: FunkStation NAS
-          url: https://nas01.oxygn.dev:5000
-          icon: test-tube
-          group: storage
-        - name: Proxmox VE
-          url: https://pve.oxygn.dev
-          icon: server
-          group: server
-        - name: Proxmox BS
-          url: https://pbs.oxygn.dev
-          icon: cloud-upload
-          group: server
-        - name: Graylog
-          url: https://graylog.oxygn.dev
-          icon: file-document-multiple
-          group: logs
-        - name: Home assistant
-          url: https://ha.oxygn.dev
-          icon: home-assistant
-          group: home
+        # - name: NAS
+        #   url: "https://nas01.${SECRET_PUBLIC_DOMAIN}:5000"
+        #   icon: test-tube
+        #   group: storage
+        # - name: Proxmox VE
+        #   url: "https://pve.${SECRET_PUBLIC_DOMAIN}"
+        #   icon: server
+        #   group: server
+        # - name: Proxmox BS
+        #   url: "https://pbs.${SECRET_PUBLIC_DOMAIN}"
+        #   icon: cloud-upload
+        #   group: server
+        # - name: Graylog
+        #   url: "https://graylog.${SECRET_PUBLIC_DOMAIN}"
+        #   icon: file-document-multiple
+        #   group: logs
+        # - name: Home assistant
+        #   url: "https://ha.${SECRET_PUBLIC_DOMAIN}"
+        #   icon: home-assistant
+        #   group: home
       groups:
         - name: Communicate
           links:
