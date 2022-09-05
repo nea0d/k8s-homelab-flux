@@ -41,16 +41,15 @@ spec:
       NVIDIA_VISIBLE_DEVICES: "all"
       NVIDIA_DRIVER_CAPABILITIES: "all"
     controller:
-      type: statefulset
+      type: deployment
       replicas: 1
     service:
       main:
         type: LoadBalancer
         loadBalancerIP: "${METALLB_PLEX_ADDR}"
         externalTrafficPolicy: Local
-        ports:
-          - name: https-plex
-            port: 32400
+        https-plex:
+          - port: 32400
             targetPort: 32400
             protocol: TCP
     ingress:
