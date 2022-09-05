@@ -43,7 +43,7 @@ spec:
       name: "Matt"
       customApps:
         # - name: NAS
-        #   url: "https://nas01.${SECRET_PUBLIC_DOMAIN}:5000"
+        #   url: "https://nas01.${SECRET_PUBLIC_DOMAIN}"
         #   icon: test-tube
         #   group: storage
         # - name: Proxmox VE

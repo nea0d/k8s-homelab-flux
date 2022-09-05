@@ -93,21 +93,21 @@ spec:
       media:
         enabled: true
         type: nfs
-        server: "nas01.${SECRET_PUBLIC_DOMAIN}"
+        server: "nas01.${SECRET_PRIVATE_DOMAIN}"
         path: "/volume2/Media"
         mountPath: /media
         readOnly: true
       pictures:
         enabled: true
         type: nfs
-        server: "nas01.${SECRET_PUBLIC_DOMAIN}"
+        server: "nas01.${SECRET_PRIVATE_DOMAIN}"
         path: "/volume2/Pictures"
         mountPath: /pictures
         readOnly: true
       videos:
         enabled: true
         type: nfs
-        server: "nas01.${SECRET_PUBLIC_DOMAIN}"
+        server: "nas01.${SECRET_PRIVATE_DOMAIN}"
         path: "/volume2/Videos"
         mountPath: /videos
         readOnly: true
