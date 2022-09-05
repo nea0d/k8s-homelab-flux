@@ -27,7 +27,6 @@ spec:
       repository: timberio/vector
       tag: 0.24.0-debian
     role: Stateless-Aggregator
-    replicas: 3
     customConfig:
       data_dir: /vector-data-dir
       api:
@@ -102,21 +101,22 @@ spec:
         #       {{`{{ kubernetes.pod_namespace }}`}}
         #     node: >-
         #       {{`{{ kubernetes.pod_node_name }}`}}
+    replicas: 1
     service:
       enabled: true
       type: LoadBalancer
-    affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: app.kubernetes.io/component
-                    operator: In
-                    values:
-                      - Stateless-Aggregator
-              topologyKey: kubernetes.io/hostname
+    # affinity:
+    #   podAntiAffinity:
+    #     preferredDuringSchedulingIgnoredDuringExecution:
+    #       - weight: 100
+    #         podAffinityTerm:
+    #           labelSelector:
+    #             matchExpressions:
+    #               - key: app.kubernetes.io/component
+    #                 operator: In
+    #                 values:
+    #                   - Stateless-Aggregator
+    #           topologyKey: kubernetes.io/hostname
   postRenderers:
     - kustomize:
         patchesJson6902:
@@ -127,7 +127,7 @@ spec:
               - op: add
                 path: /spec/externalIPs
                 value:
-                  - "10.10.99.108"
+                  - "${METALLB_VECTOR_ADDR}"
               - op: replace
                 path: /spec/externalTrafficPolicy
                 value: Local
