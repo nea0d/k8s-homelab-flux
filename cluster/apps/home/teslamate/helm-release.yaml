@@ -40,6 +40,11 @@ spec:
       DATABASE_NAME: "${SECRET_TESLAMATE_DBNAME}"
       # Disables the MQTT feature if `true`
       DISABLE_MQTT: "true" # Otherwise app crashes at launch because MQTT_HOST is not set
+    service:
+      main:
+        ports:
+          http:
+            port: 4000
     persistence:
       import:
         enabled: false
