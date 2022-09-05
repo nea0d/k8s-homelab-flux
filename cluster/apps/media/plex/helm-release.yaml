@@ -45,18 +45,16 @@ spec:
       replicas: 1
     service:
       main:
+        annotations:
+          traefik.ingress.kubernetes.io/service.passhostheader: "true"
+          traefik.ingress.kubernetes.io/service.serversscheme: "https"
         type: LoadBalancer
         loadBalancerIP: "${METALLB_PLEX_ADDR}"
         externalTrafficPolicy: Local
         ports:
           http:
-            - port: 32400
-              targetPort: 32400
-              protocol: TCP
-          https-plex:
-            - port: 32400
-              targetPort: 32400
-              protocol: TCP
+            port: 32400
+            protocol: HTTPS
     ingress:
       main:
         enabled: true
@@ -75,11 +73,6 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-                backend:
-                  service:
-                    name: main
-                    port:
-                      name: "https-plex"
         tls:
           - hosts:
               - *host
