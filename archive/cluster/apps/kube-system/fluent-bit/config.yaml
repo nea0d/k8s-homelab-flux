@@ -51,8 +51,8 @@ data:
         [OUTPUT]
             Name                    gelf
             Match                   *
-            Host                      syslog.oxygn.dev
-            Port                       12201
+            Host                    "syslog.${SECRET_PRIVATE_DOMAIN}"
+            Port                    12201
             Mode                    udp
             Gelf_Short_Message_Key  log
     parsers.conf: |
