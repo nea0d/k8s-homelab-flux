@@ -37,3 +37,4 @@ spec:
       accessModes: ReadWriteOnce
       reclaimPolicy: Retain
       allowVolumeExpansion: true
+      volumeBindingMode: WaitForFirstConsumer
