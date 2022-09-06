@@ -9,7 +9,7 @@ resources:
   - organizr
   - overseerr
   - prowlarr
-  # - qbittorrent
+  - qbittorrent
   - radarr
   - readarr
   - sonarr
