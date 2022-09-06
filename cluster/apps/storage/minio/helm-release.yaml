@@ -64,7 +64,7 @@ spec:
                   - ReadWriteOnce
                 resources:
                   requests:
-                    storage: 10Gi
+                    storage: 200Gi
         buckets:
           - name: longhorn-backup
         prometheusOperator: true
