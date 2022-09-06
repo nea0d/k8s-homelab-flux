@@ -5,15 +5,17 @@ metadata:
   name: &app qbittorrent
   namespace: nzb
 spec:
-  interval: 15m
+  interval: 5m
   chart:
     spec:
-      chart: app-template
-      version: 0.1.1
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: qbittorrent
+      version: 13.5.2
       sourceRef:
         kind: HelmRepository
-        name: bjw-s-charts
+        name: k8s-at-home-charts
         namespace: flux-system
+      interval: 5m
   install:
     createNamespace: true
     remediation:
@@ -21,15 +23,14 @@ spec:
   upgrade:
     remediation:
       retries: 5
-  maxHistory: 3
   values:
+    global:
+      nameOverride: *app
     image:
-      repository: ghcr.io/onedr0p/qbittorrent
-      tag: 4.4.3.1@sha256:cea2a1647727f49582ca3d517bc45d53d00abe211fc667c429020f042635ea34
+      repository: ghcr.io/k8s-at-home/qbittorrent
+      tag: v4.4.2
     env:
       TZ: "${TIMEZONE}"
-      QBITTORRENT__PORT: &port 8080
-      QBITTORRENT__BT_PORT: &port-bt 16881
     hostname: *app
     podLabels:
       setGateway: "true"
@@ -37,16 +38,16 @@ spec:
       main:
         ports:
           http:
-            port: *port
+            port: 8080
       bittorrent:
         enabled: true
         type: ClusterIP
         ports:
           bittorrent:
             enabled: true
-            port: *port-bt
+            port: 16881
             protocol: TCP
-            targetPort: *port-bt
+            targetPort: 16881
     ingress:
       main:
         enabled: true
@@ -59,7 +60,7 @@ spec:
           hajimari.io/icon: "cloud-download"
           hajimari.io/group: "nzb"
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -95,14 +96,13 @@ spec:
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups:
-        - 100
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
-      limits:
-        memory: 6000Mi
+    #TODO : add ressources limits
+    # resources:
+    #   requests:
+    #     cpu: 500m
+    #     memory: 1000Mi
+    #   limits:
+    #     memory: 6000Mi
     addons:
 
       # -- The common chart supports adding a VPN add-on. It can be configured under this key.
