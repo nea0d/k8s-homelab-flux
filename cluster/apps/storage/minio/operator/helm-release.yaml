@@ -2,15 +2,15 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app minio
+  name: &app minio-operator
   namespace: storage
 spec:
   interval: 15m
   chart:
     spec:
       # renovate: registryUrl=https://operator.min.io/
-      chart: minio-operator
-      version: 4.4.28
+      chart: operator
+      version: 4.4.9
       sourceRef:
         kind: HelmRepository
         name: minio-charts
@@ -49,27 +49,3 @@ spec:
           - hosts:
               - *host-console
             secretName: "minio-console-tls"
-
-    tenants:
-      - name: pool-longhorn
-        namespace: longhorn-system
-        pools:
-          - servers: 1
-            volumeClaimTemplate:
-              metadata:
-                name: data
-              spec:
-                storageClassName: nfs-k8s-storage
-                accessModes:
-                  - ReadWriteOnce
-                resources:
-                  requests:
-                    storage: 200Gi
-        buckets:
-          - name: longhorn-backup
-        prometheusOperator: true
-        secrets:
-          enabled: true
-          name: minio-longhorn-root
-          accessKey: ${SECRET_S3_ACCESS_KEY}
-          secretKey: ${SECRET_S3_ACCESS_KEY}

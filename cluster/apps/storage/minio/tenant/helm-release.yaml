@@ -1,0 +1,50 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app minio-tenant-longhorn
+  namespace: longhorn-system
+spec:
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://operator.min.io/
+      chart: tenant
+      version: 4.4.9
+      sourceRef:
+        kind: HelmRepository
+        name: minio-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  maxHistory: 3
+  dependsOn:
+    - name: minio-operator
+      namespace: storage
+  values:
+    tenant:
+      name: pool-longhorn
+      pools:
+        - servers: 1
+          volumeClaimTemplate:
+            metadata:
+              name: data
+            spec:
+              storageClassName: nfs-k8s-storage
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 200Gi
+      buckets:
+        - name: longhorn-backup
+      prometheusOperator: true
+    secrets:
+      name: minio-longhorn-root
+      accessKey: ${SECRET_S3_ACCESS_KEY}
+      secretKey: ${SECRET_S3_ACCESS_KEY}
