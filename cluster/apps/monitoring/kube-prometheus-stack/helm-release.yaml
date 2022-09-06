@@ -136,27 +136,27 @@ spec:
     kubeControllerManager:
       enabled: true
       endpoints:
-        - 10.10.99.111
-        - 10.10.99.112
-        - 10.10.99.113
+        - ${CLUSTER_HOST_MASTER_ADDR_1}
+        - ${CLUSTER_HOST_MASTER_ADDR_2}
+        - ${CLUSTER_HOST_MASTER_ADDR_3}
     kubeScheduler:
       enabled: true
       endpoints:
-        - 10.10.99.111
-        - 10.10.99.112
-        - 10.10.99.113
+        - ${CLUSTER_HOST_MASTER_ADDR_1}
+        - ${CLUSTER_HOST_MASTER_ADDR_2}
+        - ${CLUSTER_HOST_MASTER_ADDR_3}
     kubeProxy:
       enabled: true
       endpoints:
-        - 10.10.99.111
-        - 10.10.99.112
-        - 10.10.99.113
+        - ${CLUSTER_HOST_MASTER_ADDR_1}
+        - ${CLUSTER_HOST_MASTER_ADDR_2}
+        - ${CLUSTER_HOST_MASTER_ADDR_3}
     kubeEtcd:
       enabled: true
       endpoints:
-        - 10.10.99.111
-        - 10.10.99.112
-        - 10.10.99.113
+        - ${CLUSTER_HOST_MASTER_ADDR_1}
+        - ${CLUSTER_HOST_MASTER_ADDR_2}
+        - ${CLUSTER_HOST_MASTER_ADDR_3}
       service:
         enabled: true
         port: 2381
@@ -228,9 +228,9 @@ spec:
           image: quay.io/thanos/thanos:v0.28.0
           # renovate: datasource=docker depName=quay.io/thanos/thanos
           version: "v0.28.0"
-          objectStorageConfig:
-            name: thanos-objstore-secret
-            key: objstore.yml
+          # objectStorageConfig:
+          #   name: thanos-objstore-secret
+          #   key: objstore.yml
         additionalScrapeConfigs:
           - job_name: "coredns"
             scrape_interval: 1m

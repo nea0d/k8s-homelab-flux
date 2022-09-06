@@ -56,98 +56,98 @@ spec:
     queryFrontend:
       enabled: false
     bucketweb:
-      enabled: true
-      replicaCount: 1
-      podAntiAffinityPreset: hard
-      ingress:
-        enabled: true
-        hostname: &host "thanos-bucketweb.${SECRET_PUBLIC_DOMAIN}"
-        ingressClassName: "traefik"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
-        tls: true
-        extraTls:
-          - hosts:
-              - *host
+      enabled: false
+      # replicaCount: 1
+      # podAntiAffinityPreset: hard
+      # ingress:
+      #   enabled: true
+      #   hostname: &host "thanos-bucketweb.${SECRET_PUBLIC_DOMAIN}"
+      #   ingressClassName: "traefik"
+      #   annotations:
+      #     cert-manager.io/cluster-issuer: "letsencrypt-production"
+      #     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      #     traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+      #   tls: true
+      #   extraTls:
+      #     - hosts:
+      #         - *host
     compactor:
-      enabled: true
-      extraFlags:
-        - "--compact.concurrency"
-        - "1"
-      retentionResolutionRaw: 14d
-      retentionResolution5m: 14d
-      retentionResolution1h: 14d
-      ingress:
-        enabled: true
-        hostname: &host "thanos-compactor.${SECRET_PUBLIC_DOMAIN}"
-        ingressClassName: "traefik"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
-        tls: true
-        extraTls:
-          - hosts:
-              - *host
-      persistence:
-        enabled: true
-        storageClass: "longhorn-ssd"
-        size: 10Gi
+      enabled: false
+      # extraFlags:
+      #   - "--compact.concurrency"
+      #   - "1"
+      # retentionResolutionRaw: 14d
+      # retentionResolution5m: 14d
+      # retentionResolution1h: 14d
+      # ingress:
+      #   enabled: true
+      #   hostname: &host "thanos-compactor.${SECRET_PUBLIC_DOMAIN}"
+      #   ingressClassName: "traefik"
+      #   annotations:
+      #     cert-manager.io/cluster-issuer: "letsencrypt-production"
+      #     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      #     traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+      #   tls: true
+      #   extraTls:
+      #     - hosts:
+      #         - *host
+      # persistence:
+      #   enabled: true
+      #   storageClass: "longhorn-ssd"
+      #   size: 10Gi
     storegateway:
-      enabled: true
-      replicaCount: 1
-      podAntiAffinityPreset: hard
-      ingress:
-        enabled: true
-        hostname: &host "thanos-storegateway.${SECRET_PUBLIC_DOMAIN}"
-        ingressClassName: "traefik"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
-        tls: true
-        extraTls:
-          - hosts:
-              - *host
-      persistence:
-        enabled: true
-        storageClass: "longhorn-ssd"
-        size: 5Gi
+      enabled: false
+      # replicaCount: 1
+      # podAntiAffinityPreset: hard
+      # ingress:
+      #   enabled: true
+      #   hostname: &host "thanos-storegateway.${SECRET_PUBLIC_DOMAIN}"
+      #   ingressClassName: "traefik"
+      #   annotations:
+      #     cert-manager.io/cluster-issuer: "letsencrypt-production"
+      #     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      #     traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+      #   tls: true
+      #   extraTls:
+      #     - hosts:
+      #         - *host
+      # persistence:
+      #   enabled: true
+      #   storageClass: "longhorn-ssd"
+      #   size: 5Gi
     ruler:
-      enabled: true
-      replicaCount: 1
-      podAntiAffinityPreset: hard
-      dnsDiscovery:
-        enabled: true
-      alertmanagers:
-        - http://kube-prometheus-stack-alertmanager.monitoring:9093
-      clusterName: "${CLUSTER_NAME}"
-      extraFlags:
-        - "--web.prefix-header=X-Forwarded-Prefix"
-      config: |-
-        groups:
-          - name: "PrometheusWatcher"
-            rules:
-              - alert: "PrometheusDown"
-                expr: absent(up{job="kube-prometheus-stack-prometheus"})
-      ingress:
-        enabled: true
-        hostname: &host "thanos-ruler.${SECRET_PUBLIC_DOMAIN}"
-        ingressClassName: "traefik"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
-        tls: true
-        extraTls:
-          - hosts:
-              - *host
-      persistence:
-        enabled: true
-        storageClass: "longhorn-ssd"
-        size: 5Gi
+      enabled: false
+      # replicaCount: 1
+      # podAntiAffinityPreset: hard
+      # dnsDiscovery:
+      #   enabled: true
+      # alertmanagers:
+      #   - http://kube-prometheus-stack-alertmanager.monitoring:9093
+      # clusterName: "${CLUSTER_NAME}"
+      # extraFlags:
+      #   - "--web.prefix-header=X-Forwarded-Prefix"
+      # config: |-
+      #   groups:
+      #     - name: "PrometheusWatcher"
+      #       rules:
+      #         - alert: "PrometheusDown"
+      #           expr: absent(up{job="kube-prometheus-stack-prometheus"})
+      # ingress:
+      #   enabled: true
+      #   hostname: &host "thanos-ruler.${SECRET_PUBLIC_DOMAIN}"
+      #   ingressClassName: "traefik"
+      #   annotations:
+      #     cert-manager.io/cluster-issuer: "letsencrypt-production"
+      #     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      #     traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+      #   tls: true
+      #   extraTls:
+      #     - hosts:
+      #         - *host
+      # persistence:
+      #   enabled: true
+      #   storageClass: "longhorn-ssd"
+      #   size: 5Gi
     metrics:
       enabled: true
       serviceMonitor:
