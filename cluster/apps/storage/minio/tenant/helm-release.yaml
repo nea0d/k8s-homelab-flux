@@ -28,21 +28,15 @@ spec:
       namespace: storage
   values:
     tenant:
-      name: pool-longhorn
+      name: minio-longhorn
       pools:
         - servers: 1
-          volumeClaimTemplate:
-            metadata:
-              name: data
-            spec:
-              storageClassName: nfs-k8s-storage
-              accessModes:
-                - ReadWriteOnce
-              resources:
-                requests:
-                  storage: 200Gi
+          volumesPerServer: 1
+          name: pool-longhorn
+          storageClassName: nfs-k8s-storage
+          size: 200Gi
       buckets:
-        - name: longhorn-backup
+        - "longhorn-backup"
       prometheusOperator: true
     secrets:
       name: minio-longhorn-root
