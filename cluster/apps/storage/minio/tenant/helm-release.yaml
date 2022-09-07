@@ -41,5 +41,5 @@ spec:
       prometheusOperator: true
     secrets:
       name: minio-longhorn-root
-      accessKey: ${SECRET_S3_ACCESS_KEY}
-      secretKey: ${SECRET_S3_SECRET_KEY}
+      accessKey: ${SECRET_MINIO_ROOT_USERNAME}
+      secretKey: ${SECRET_MINIO_ROOT_PASSWORD}
