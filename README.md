@@ -1,12 +1,12 @@
 # k8s home cluster
 
-    A single [k3s](https://k3s.io) cluster deployed with [Ansible](https://www.ansible.com) and [Terraform](https://www.terraform.io) backed by [Flux](https://toolkit.fluxcd.io/) and [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/).
-    Template from [k8s-at-home](https://github.com/onedr0p/flux-cluster-template).
-    Promoting Infrastrcture As Code to deploy and manage all my home kubernetes cluster.
+A single [k3s](https://k3s.io) cluster deployed with [Ansible](https://www.ansible.com) and [Terraform](https://www.terraform.io) backed by [Flux](https://toolkit.fluxcd.io/) and [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/).
+Template from [k8s-at-home](https://github.com/onedr0p/flux-cluster-template).
+Promoting Infrastrcture As Code to deploy and manage all my home kubernetes cluster.
 
 ### 💻 Systems
 
-    - 3 master nodes and 3 worker nodes provisioned by [Terraform](https://www.terraform.io) running on Proxmox VE, with a fresh install of Ubuntu 20.04 LTS
+- 3 master nodes and 3 worker nodes provisioned by [Terraform](https://www.terraform.io) running on Proxmox VE, with a fresh install of Ubuntu 20.04 LTS
 
 ### 🔧 Workstation Tools
 
