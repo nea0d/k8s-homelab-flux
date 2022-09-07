@@ -36,7 +36,8 @@ spec:
           storageClassName: nfs-k8s-storage
           size: 200Gi
       buckets:
-        - "longhorn-backup"
+        - name: "longhorn-backup"
+          region: "us-east-1"
       prometheusOperator: true
     secrets:
       name: minio-longhorn-root
