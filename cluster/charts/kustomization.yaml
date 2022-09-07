@@ -7,7 +7,6 @@ resources:
   - descheduler-charts.yaml
   - emberstack-charts.yaml
   - external-dns-charts.yaml
-  - fluent-bit-charts.yaml
   - grafana-charts.yaml
   - gpu-operator-charts.yaml
   - hajimari-charts.yaml
