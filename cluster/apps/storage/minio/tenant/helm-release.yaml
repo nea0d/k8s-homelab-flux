@@ -57,38 +57,37 @@ spec:
                 requests:
                   storage: 1Gi
     ingress:
-      console: 
+      console:
         enabled: true
-          ingressClassName: "traefik"
-          annotations:
-            cert-manager.io/cluster-issuer: "letsencrypt-production"
-            hajimari.io/enable: "true"
-            hajimari.io/icon: "bucket"
-            hajimari.io/group: "storage"
-            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-            traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
-          host: &host-console "minio.${SECRET_PUBLIC_DOMAIN}"
-          tls:
-            - hosts:
-                - *host-console
-              secretName: "minio-console-tls"
-      api: 
+        ingressClassName: "traefik"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "bucket"
+          hajimari.io/group: "storage"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+        host: &host-console "minio.${SECRET_PUBLIC_DOMAIN}"
+        tls:
+          - hosts:
+              - *host-console
+            secretName: "minio-console-tls"
+      api:
         enabled: true
-          ingressClassName: "traefik"
-          annotations:
-            cert-manager.io/cluster-issuer: "letsencrypt-production"
-            hajimari.io/enable: "true"
-            hajimari.io/icon: "bucket"
-            hajimari.io/group: "storage"
-            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-            traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
-          host: &host-api "s3.${SECRET_PUBLIC_DOMAIN}"
-          tls:
-            - hosts:
-                - *host-api
-              secretName: "minio-api-tls"
+        ingressClassName: "traefik"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "bucket"
+          hajimari.io/group: "storage"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+        host: &host-api "s3.${SECRET_PUBLIC_DOMAIN}"
+        tls:
+          - hosts:
+              - *host-api
+            secretName: "minio-api-tls"
     secrets:
       name: minio-longhorn-root
       accessKey: ${SECRET_MINIO_ROOT_USERNAME}
       secretKey: ${SECRET_MINIO_ROOT_PASSWORD}
-    
