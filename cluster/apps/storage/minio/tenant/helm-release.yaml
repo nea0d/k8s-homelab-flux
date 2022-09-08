@@ -30,15 +30,15 @@ spec:
     tenant:
       name: minio-tenant-main
       pools:
-        - servers: 3
-          volumesPerServer: 2
+        - servers: 1
+          volumesPerServer: 1
           name: pool-main
           storageClassName: nfs-k8s-storage
-          size: 100Gi
+          size: 1Ti
       buckets:
         - name: "longhorn-backup"
           region: "us-east-1"
-      prometheusOperator: true
+      prometheusOperator: false
       metrics:
         enabled: true
         port: 9000
