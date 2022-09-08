@@ -31,10 +31,10 @@ spec:
       name: minio-tenant-main
       pools:
         - servers: 3
-          volumesPerServer: 1
+          volumesPerServer: 2
           name: pool-main
           storageClassName: nfs-k8s-storage
-          size: 300Gi
+          size: 100Gi
       buckets:
         - name: "longhorn-backup"
           region: "us-east-1"
@@ -88,6 +88,6 @@ spec:
               - *host-api
             secretName: "minio-api-tls"
     secrets:
-      name: minio-longhorn-root
+      name: minio-tenant-root
       accessKey: ${SECRET_MINIO_ROOT_USERNAME}
       secretKey: ${SECRET_MINIO_ROOT_PASSWORD}
