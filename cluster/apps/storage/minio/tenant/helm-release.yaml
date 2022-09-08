@@ -30,11 +30,11 @@ spec:
     tenant:
       name: minio-tenant-main
       pools:
-        - servers: 1
-          volumesPerServer: 1
+        - servers: 3
+          volumesPerServer: 2
           name: pool-main
           storageClassName: nfs-k8s-storage
-          size: 1Ti
+          size: 200Gi
       buckets:
         - name: "longhorn-backup"
           region: "us-east-1"
