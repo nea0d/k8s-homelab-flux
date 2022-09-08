@@ -2,8 +2,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app minio-tenant-longhorn
-  namespace: longhorn-system
+  name: &app minio-tenants
+  namespace: storage
 spec:
   interval: 15m
   chart:
@@ -28,18 +28,67 @@ spec:
       namespace: storage
   values:
     tenant:
-      name: minio-longhorn
+      name: minio-tenant-main
       pools:
-        - servers: 1
+        - servers: 3
           volumesPerServer: 1
-          name: pool-longhorn
+          name: pool-main
           storageClassName: nfs-k8s-storage
-          size: 200Gi
+          size: 300Gi
       buckets:
         - name: "longhorn-backup"
           region: "us-east-1"
       prometheusOperator: true
+      metrics:
+        enabled: true
+        port: 9000
+        protocol: http
+      prometheus:
+        diskCapacityGB: 1
+        storageClassName: longhorn-ssd
+      log:
+        db:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: longhorn-ssd
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 1Gi
+    ingress:
+      console: 
+        enabled: true
+          ingressClassName: "traefik"
+          annotations:
+            cert-manager.io/cluster-issuer: "letsencrypt-production"
+            hajimari.io/enable: "true"
+            hajimari.io/icon: "bucket"
+            hajimari.io/group: "storage"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+            traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+          host: &host-console "minio.${SECRET_PUBLIC_DOMAIN}"
+          tls:
+            - hosts:
+                - *host-console
+              secretName: "minio-console-tls"
+      api: 
+        enabled: true
+          ingressClassName: "traefik"
+          annotations:
+            cert-manager.io/cluster-issuer: "letsencrypt-production"
+            hajimari.io/enable: "true"
+            hajimari.io/icon: "bucket"
+            hajimari.io/group: "storage"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+            traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+          host: &host-api "s3.${SECRET_PUBLIC_DOMAIN}"
+          tls:
+            - hosts:
+                - *host-api
+              secretName: "minio-api-tls"
     secrets:
       name: minio-longhorn-root
       accessKey: ${SECRET_MINIO_ROOT_USERNAME}
       secretKey: ${SECRET_MINIO_ROOT_PASSWORD}
+    
