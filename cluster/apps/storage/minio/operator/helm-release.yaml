@@ -53,17 +53,4 @@ spec:
           value: "${SECRET_MINIO_ROOT_PASSWORD}"
     console:
       ingress:
-        enabled: true
-        ingressClassName: "traefik"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "bucket"
-          hajimari.io/group: "storage"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
-        host: &host-console "minio.${SECRET_PUBLIC_DOMAIN}"
-        tls:
-          - hosts:
-              - *host-console
-            secretName: "minio-console-tls"
+        enabled: false
