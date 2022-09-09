@@ -1,20 +1,50 @@
 ---
-systemd_journal_system_max_use: 30M
-systemd_journal_system_max_file_size: 10M
+systemd_journal_system_max_use: 20M
+systemd_journal_system_max_file_size: 5M
 systemd_journal_system_max_rentention_sec: 3day
 systemd_journal_system_max_file_sec: 1day
 
 logrotate_scripts:
+  - name: allvarlogs
+    path: /var/log/*.log
+    options:
+      - rotate 2
+      - daily
+      - dateext
+      - maxsize 10M
+      - missingok
+      - compress
+      - copytruncate
+      - dateformat -%Y%m%d-%s
+      - create 0644 root root
+
+  - name: allpodlogs
+    path: /var/log/pods/*/*/*.log
+    options:
+      - rotate 2
+      - daily
+      - copytruncate
+      - missingok
+      - notifempty
+      - compress
+      - maxsize 5M
+      - dateext
+      - dateformat -%Y%m%d-%s
+      - create 0644 root root
+
   - name: rsyslog
     path: /var/log/syslog
     options:
       - maxsize 5M
-      - rotate 3
+      - rotate 2
       - daily
       - missingok
       - notifempty
       - delaycompress
+      - copytruncate
       - compress
+      - dateext
+      - dateformat -%Y%m%d-%s
     scripts:
       postrotate: /usr/lib/rsyslog/rsyslog-rotate
 
@@ -33,12 +63,16 @@ logrotate_scripts:
       - /var/log/debug
       - /var/log/messages
     options:
-      - rotate 3
+      - maxsize 1M
+      - rotate 2
       - daily
       - missingok
       - notifempty
+      - copytruncate
       - compress
       - delaycompress
       - sharedscripts
+      - dateext
+      - dateformat -%Y%m%d-%s
     scripts:
       postrotate: /usr/lib/rsyslog/rsyslog-rotate
