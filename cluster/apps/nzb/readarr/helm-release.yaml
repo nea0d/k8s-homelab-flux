@@ -78,7 +78,10 @@ spec:
         existingClaim: readarr-config-v1
       media:
         enabled: true
-        existingClaim: nfs-nas-media-pvc
+        type: nfs
+        server: "nas01.${SECRET_PRIVATE_DOMAIN}"
+        path: /volume2/Media
+        mountPath: /media
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568

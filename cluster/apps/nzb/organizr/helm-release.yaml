@@ -53,13 +53,11 @@ spec:
           - hosts:
               - *host
             secretName: organizr-tls
-
     persistence:
       config:
         enabled: true
         existingClaim: organizr-config-v1
         mountPath: /config
-
     resources:
       requests:
         cpu: 100m
