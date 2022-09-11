@@ -53,7 +53,7 @@ spec:
         ports:
           http:
             port: &port 32400
-            # protocol: HTTPS
+            protocol: HTTPS
     ingress:
       main:
         enabled: true
