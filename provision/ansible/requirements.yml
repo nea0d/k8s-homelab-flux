@@ -10,7 +10,7 @@ collections:
     version: 2.6.1
 roles:
   - src: xanmanning.k3s
-    version: v3.2.0
+    version: v3.3.0
   - src: chzerv.log2ram
   - src: nickhammond.logrotate
     version: v0.0.5
