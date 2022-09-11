@@ -26,15 +26,6 @@ spec:
     image:
       repository: ghcr.io/onedr0p/nzbget
       tag: 21.1@sha256:4b001c2a7da7cce258d8a9d3ba00506847f81a400f77db937cda8b79071bd5d1
-    env:
-      TZ: "${TIMEZONE}"
-      NZBGET__INSTANCE_NAME: Nzbget
-      NZBGET__PORT: &port 80
-    service:
-      main:
-        ports:
-          http:
-            port: *port
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568
@@ -42,6 +33,8 @@ spec:
       fsGroupChangePolicy: "OnRootMismatch"
       supplementalGroups:
         - 100
+    env:
+      TZ: "${TIMEZONE}"
     persistence:
       config:
         enabled: true
@@ -52,6 +45,11 @@ spec:
         server: "nas01.${SECRET_PRIVATE_DOMAIN}"
         path: /volume2/Media
         mountPath: /media
+    service:
+      main:
+        ports:
+          http:
+            port: 6789
     ingress:
       main:
         enabled: true
@@ -74,7 +72,7 @@ spec:
             secretName: nzbget-tls
     resources:
       requests:
-        cpu: 10m
-        memory: 256M
+        cpu: 22m
+        memory: 588M
       limits:
-        memory: 1024M
+        memory: 1265M
