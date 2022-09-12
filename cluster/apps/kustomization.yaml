@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - longhorn-system
   - communication
+  - databases
   - default
   - external-services
   - flux-system

@@ -1,0 +1,18 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+  namespace: databases
+  annotations:
+    kyverno.io/ignore: "true"
+spec:
+  instances: 1
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 20Gi
+    storageClass: longhorn-ssd
+  superuserSecret:
+    name: postgres-superuser
+  monitoring:
+    enablePodMonitor: true

@@ -66,6 +66,8 @@ main() {
             > "${PROJECT_DIR}/cluster/apps/nzb/qbittorrent/vpn-auth-secret.sops.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/cluster/thanos-objstore-secret.sops.yaml" \
             > "${PROJECT_DIR}/cluster/apps/monitoring/thanos/secret.sops.yaml"
+        envsubst < "${PROJECT_DIR}/tmpl/cluster/postgres-secret.sops.yaml" \
+            > "${PROJECT_DIR}/cluster/apps/databases/postgres/secret.sops.yaml"
 
         # encrypt cluster secrets
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/config/cluster-secrets.sops.yaml"
@@ -77,6 +79,8 @@ main() {
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/nzb/qbittorrent/vpn-config-secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/nzb/qbittorrent/vpn-auth-secret.sops.yaml"
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/monitoring/thanos/secret.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/databases/postgres/secret.sops.yaml"
+
         # generate terraform secrets
         envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
             > "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
