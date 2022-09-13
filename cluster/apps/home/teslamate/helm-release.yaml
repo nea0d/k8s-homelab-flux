@@ -8,14 +8,12 @@ spec:
   interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: teslamate
-      version: 7.1.2
+      chart: app-template
+      version: 0.1.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 15m
   install:
     createNamespace: true
     remediation:
@@ -51,24 +49,6 @@ spec:
       import:
         enabled: false
         mountPath: /opt/app/import
-    postgresql:
-      enabled: false
-      image:
-        repository: postgres
-        tag: '14.5'
-      postgresqlUsername: "${SECRET_TESLAMATE_DB_USERNAME}"
-      postgresqlDatabase: "${SECRET_TESLAMATE_DBNAME}"
-      postgresqlPassword: "${SECRET_TESLAMATE_DB_PASSWORD}"
-      postgresqlDataDir: "/data/pgdata"
-      primary:
-        persistence:
-          enabled: true
-          existingClaim: teslamate-db-v1
-          mountPath: "/data/"
-      shmVolume:
-        enabled: false
-      volumePermissions:
-        enabled: false
     ingress:
       main:
         enabled: true
