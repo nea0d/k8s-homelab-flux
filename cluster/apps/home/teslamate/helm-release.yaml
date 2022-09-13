@@ -22,6 +22,9 @@ spec:
     remediation:
       retries: 5
   maxHistory: 3
+  dependsOn:
+    - name: postgres
+      namespace: databases
   values:
     image:
       repository: teslamate/teslamate
