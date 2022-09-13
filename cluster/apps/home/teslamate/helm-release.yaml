@@ -33,7 +33,7 @@ spec:
       # Encrypts Tesla Token
       ENCRYPTION_KEY: "${SECRET_TESLAMATE_ENCRYPTION_KEY}"
       # -- Postgres database hostname
-      DATABASE_HOST: 'teslamate-postgresql'
+      DATABASE_HOST: 'postgres-rw.databases'
       # -- Postgres database user name
       DATABASE_USER: "${SECRET_TESLAMATE_DB_USERNAME}"
       # -- Postgres database password
@@ -52,7 +52,7 @@ spec:
         enabled: false
         mountPath: /opt/app/import
     postgresql:
-      enabled: true
+      enabled: false
       image:
         repository: postgres
         tag: '14.5'
