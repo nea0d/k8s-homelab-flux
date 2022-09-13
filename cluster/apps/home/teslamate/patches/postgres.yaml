@@ -11,8 +11,12 @@ spec:
         image: ghcr.io/onedr0p/postgres-initdb:14.5
         env:
           - name: POSTGRES_HOST
-            value: postgres-rw.databases
+            value: "postgres-rw.databases.svc.cluster.local"
           - name: POSTGRES_DB
             value: "${SECRET_TESLAMATE_DBNAME}"
+          - name: POSTGRES_USER
+            value: "${SECRET_TESLAMATE_DB_USERNAME}"
+          - name: POSTGRES_PASSWORD
+            value: "${SECRET_TESLAMATE_DB_PASSWORD}"
           - name: POSTGRES_SUPER_PASS
-            value: ${SECRET_POSTGRES_SUPER_PASSWORD}
+            value: "${SECRET_POSTGRES_SUPER_PASSWORD}"
