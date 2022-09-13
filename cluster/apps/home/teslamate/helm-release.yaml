@@ -33,7 +33,7 @@ spec:
       # Encrypts Tesla Token
       ENCRYPTION_KEY: "${SECRET_TESLAMATE_ENCRYPTION_KEY}"
       # -- Postgres database hostname
-      DATABASE_HOST: 'postgres-rw.databases'
+      DATABASE_HOST: 'postgres-rw.databases.svc.cluster.local:5432'
       # -- Postgres database user name
       DATABASE_USER: "${SECRET_TESLAMATE_DB_USERNAME}"
       # -- Postgres database password
