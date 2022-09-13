@@ -18,5 +18,7 @@ spec:
             value: "${SECRET_TESLAMATE_DB_USERNAME}"
           - name: POSTGRES_PASSWORD
             value: "${SECRET_TESLAMATE_DB_PASSWORD}"
+          - name: POSTGRES_SUPER_USER
+            value: "${SECRET_POSTGRES_SUPER_USERNAME}"
           - name: POSTGRES_SUPER_PASS
             value: "${SECRET_POSTGRES_SUPER_PASSWORD}"
