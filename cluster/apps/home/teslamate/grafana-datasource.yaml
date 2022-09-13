@@ -13,9 +13,9 @@ data:
     - name: TeslaMate
       type: postgres
       access: proxy
-      url: teslamate-postgresql.home:5432
-      database: "${SECRET_TESLAMATE_DB_USERNAME}"
-      user: "${SECRET_TESLAMATE_DBNAME}"
+      url: postgres-ro.databases.svc.cluster.local:5432
+      database: "${SECRET_TESLAMATE_DBNAME}"
+      user: "${SECRET_TESLAMATE_DB_USERNAME}"
       secureJsonData:
         password: "${SECRET_TESLAMATE_DB_PASSWORD}"
       jsonData:
