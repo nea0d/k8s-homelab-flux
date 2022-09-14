@@ -27,41 +27,10 @@ spec:
       repository: ghcr.io/toboshii/hajimari
       tag: v0.2.0
     hajimari:
-      defaultEnable: false
-      namespaceSelector:
-        matchNames:
-          - communication
-          - default
-          - external-services
-          - home
-          - longhorn-system
-          - media
-          - monitoring
-          - networking
-          - nzb
-          - storage
+      defaultEnable: true
       name: "Matt"
-      customApps:
-        # - name: NAS
-        #   url: "https://nas01.${SECRET_PUBLIC_DOMAIN}"
-        #   icon: test-tube
-        #   group: storage
-        # - name: Proxmox VE
-        #   url: "https://pve.${SECRET_PUBLIC_DOMAIN}"
-        #   icon: server
-        #   group: server
-        # - name: Proxmox BS
-        #   url: "https://pbs.${SECRET_PUBLIC_DOMAIN}"
-        #   icon: cloud-upload
-        #   group: server
-        # - name: Graylog
-        #   url: "https://graylog.${SECRET_PUBLIC_DOMAIN}"
-        #   icon: file-document-multiple
-        #   group: logs
-        # - name: Home assistant
-        #   url: "https://ha.${SECRET_PUBLIC_DOMAIN}"
-        #   icon: home-assistant
-        #   group: home
+      # customApps:
+        # - default # namespace name
       groups:
         - name: Communicate
           links:
