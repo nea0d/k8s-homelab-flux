@@ -92,15 +92,6 @@ spec:
               resources:
                 requests:
                   storage: 250Mi
-    nodeExporter:
-      serviceMonitor:
-        relabelings:
-          - action: replace
-            regex: (.*)
-            replacement: $1
-            sourceLabels:
-              - __meta_kubernetes_pod_node_name
-            targetLabel: kubernetes_node
     kube-state-metrics:
       metricLabelsAllowlist:
         - "persistentvolumeclaims=[*]"
@@ -132,7 +123,6 @@ spec:
             targetLabel: instance
     kubeApiServer:
       enabled: true
-    # FIXME : dynamic master nodes IP via ansible vars
     kubeControllerManager:
       enabled: true
       endpoints:
@@ -239,21 +229,3 @@ spec:
             static_configs:
               - targets:
                   - "${METALLB_K8S_GATEWAY_ADDR}:9153"
-          # - job_name: 'node-exporter'
-          #   scrape_interval: 1m
-          #   scrape_timeout: 10s
-          #   honor_timestamps: true
-          #   static_configs:
-          #   - targets:
-          #     # # opnsense
-          #     # - 10.75.1.1:9100
-          #     # franxx nas
-          #     - 10.75.30.15:9100
-          # - job_name: 'minio-job'
-          #   scrape_interval: 1m
-          #   scrape_timeout: 10s
-          #   honor_timestamps: true
-          #   metrics_path: /minio/v2/metrics/cluster
-          #   static_configs:
-          #   - targets:
-          #     - 10.75.30.15:9000
