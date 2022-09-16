@@ -53,6 +53,7 @@ spec:
         extraTls:
           - hosts:
               - *host
+            secretName: thanos-query-tls
     queryFrontend:
       enabled: false
     bucketweb:
@@ -71,6 +72,7 @@ spec:
       #   extraTls:
       #     - hosts:
       #         - *host
+      #       secretName: thanos-bucketweb-tls
     compactor:
       enabled: false
       # extraFlags:
@@ -91,6 +93,7 @@ spec:
       #   extraTls:
       #     - hosts:
       #         - *host
+      #       secretName: thanos-compactor-tls
       # persistence:
       #   enabled: true
       #   storageClass: "longhorn-ssd"
@@ -111,6 +114,7 @@ spec:
       #   extraTls:
       #     - hosts:
       #         - *host
+      #       secretName: thanos-storegateway-tls
       # persistence:
       #   enabled: true
       #   storageClass: "longhorn-ssd"
@@ -144,6 +148,7 @@ spec:
       #   extraTls:
       #     - hosts:
       #         - *host
+      #       secretName: thanos-ruler-tls
       # persistence:
       #   enabled: true
       #   storageClass: "longhorn-ssd"
