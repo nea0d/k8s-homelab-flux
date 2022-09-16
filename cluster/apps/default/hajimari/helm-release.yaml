@@ -27,10 +27,17 @@ spec:
       repository: ghcr.io/toboshii/hajimari
       tag: v0.2.0
     hajimari:
-      defaultEnable: true
+      defaultEnable: false
+      namespaceSelector:
+        any: true
+        # matchNames:
+        #   - default
       name: "Matt"
-      # customApps:
-        # - default # namespace name
+      customApps:
+        # - name: NAS
+        #   url: "https://nas01.${SECRET_PUBLIC_DOMAIN}"
+        #   icon: test-tube
+        #   group: storage
       groups:
         - name: Communicate
           links:
