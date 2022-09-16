@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-datasource
+  name: grafana-datasource-teslamate
   namespace: home
   labels:
     grafana_datasource: "true"
 data:
-  ha-datasource.yaml: |-
+  grafana-datasource-teslamate.yaml: |-
     apiVersion: 1
     datasources:
     - name: TeslaMate

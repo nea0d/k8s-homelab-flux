@@ -58,5 +58,6 @@ generatorOptions:
   disableNameSuffixHash: true
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
+    grafana_folder: "teslamate"
   labels:
     grafana_dashboard: "true"

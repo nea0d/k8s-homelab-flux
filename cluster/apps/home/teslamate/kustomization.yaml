@@ -6,5 +6,6 @@ resources:
   - db-pvc.yaml
   - helm-release.yaml
   - grafana-datasource.yaml
+  - grafana-plugin.yaml
 patchesStrategicMerge:
   - patches/postgres.yaml
