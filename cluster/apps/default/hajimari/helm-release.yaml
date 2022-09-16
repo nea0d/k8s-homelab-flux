@@ -33,11 +33,11 @@ spec:
         # matchNames:
         #   - default
       name: "Matt"
-      customApps:
-        # - name: NAS
-        #   url: "https://nas01.${SECRET_PUBLIC_DOMAIN}"
-        #   icon: test-tube
-        #   group: storage
+      # customApps:
+      #   - name: NAS
+      #     url: "https://nas01.${SECRET_PUBLIC_DOMAIN}"
+      #     icon: test-tube
+      #     group: storage
       groups:
         - name: Communicate
           links:
