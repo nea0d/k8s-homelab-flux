@@ -328,12 +328,12 @@ setup_github_deploy_key() {
             printf "%s\n" "$(cat ./tmpl/cluster/github-deploy-key | sed 's/^/    /')"
             printf "  known_hosts: |\n"
             printf "%s\n" "$(curl --silent https://api.github.com/meta | jq --raw-output '"github.com "+.ssh_keys[]' | sed 's/^/    /')"
-        } > "${PROJECT_DIR}/cluster/flux/flux-system/github-deploy-key.sops.yaml"
+        } > "${PROJECT_DIR}/cluster/flux/flux-system/secret.sops.yaml"
 
-        sops --encrypt --in-place "${PROJECT_DIR}/cluster/flux/flux-system/github-deploy-key.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/cluster/flux/flux-system/secret.sops.yaml"
 
-        if [[ $(yq eval --no-doc 'contains({"resources": ["github-deploy-key.sops.yaml"]})' "${PROJECT_DIR}/cluster/flux/flux-system/kustomization.yaml") == false ]]; then
-            yq --inplace '.resources += [ "github-deploy-key.sops.yaml" ]' "${PROJECT_DIR}/cluster/flux/flux-system/kustomization.yaml"
+        if [[ $(yq eval --no-doc 'contains({"resources": ["secret.sops.yaml"]})' "${PROJECT_DIR}/cluster/flux/flux-system/kustomization.yaml") == false ]]; then
+            yq --inplace '.resources += [ "secret.sops.yaml" ]' "${PROJECT_DIR}/cluster/flux/flux-system/kustomization.yaml"
         fi
     fi
 }
