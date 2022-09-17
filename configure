@@ -332,9 +332,10 @@ setup_github_deploy_key() {
 
         sops --encrypt --in-place "${PROJECT_DIR}/cluster/flux/flux-system/secret.sops.yaml"
 
-        if [[ $(yq eval --no-doc 'contains({"resources": ["secret.sops.yaml"]})' "${PROJECT_DIR}/cluster/flux/flux-system/kustomization.yaml") == false ]]; then
-            yq --inplace '.resources += [ "secret.sops.yaml" ]' "${PROJECT_DIR}/cluster/flux/flux-system/kustomization.yaml"
-        fi
+        #FIXME : flux does not decrypt the sops secret before applying
+        #if [[ $(yq eval --no-doc 'contains({"resources": ["secret.sops.yaml"]})' "${PROJECT_DIR}/cluster/flux/flux-system/kustomization.yaml") == false ]]; then
+        #    yq --inplace '.resources += [ "secret.sops.yaml" ]' "${PROJECT_DIR}/cluster/flux/flux-system/kustomization.yaml"
+        #fi
     fi
 }
 
