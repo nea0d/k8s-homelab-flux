@@ -8,7 +8,9 @@ spec:
   interval: 10m
   ref:
     branch: main
-  url: ${BOOTSTRAP_GIT_REPOSITORY}
+  url: "ssh://git@${BOOTSTRAP_GIT_REPOSITORY}"
+  secretRef:
+    name: github-deploy-key
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization

@@ -94,6 +94,7 @@ main() {
         # generate ansible hosts file and secrets
         generate_ansible_hosts
         generate_ansible_host_secrets
+        setup_github_deploy_key
         setup_github_webhook
         success
     fi
@@ -291,12 +292,50 @@ verify_git_repository() {
 
     export GIT_TERMINAL_PROMPT=0
     pushd "$(mktemp -d)" >/dev/null 2>&1
-    [ "$(git ls-remote "${BOOTSTRAP_GIT_REPOSITORY}" 2> /dev/null)" ] || {
-        _log "ERROR" "Unable to find the remote Git repository '${BOOTSTRAP_GIT_REPOSITORY}'"
+    [ "$(git ls-remote https://"${BOOTSTRAP_GIT_REPOSITORY}".git 2> /dev/null)" ] || {
+        _log "ERROR" "Unable to find the remote Git repository https://'${BOOTSTRAP_GIT_REPOSITORY}'.git"
         exit 1
     }
     popd >/dev/null 2>&1
     export GIT_TERMINAL_PROMPT=1
+}
+
+setup_github_deploy_key() {
+
+    if [[ "${BOOTSTRAP_GIT_REPOSITORY_AUTH_METHOD}" == "ssh" ]]; then
+
+        FILE="./tmpl/cluster/github-deploy-key"
+        if [[ ! -f "$FILE" ]]; then
+            ssh-keygen -t ecdsa -b 521 -C "github-deploy-key" -f ./tmpl/cluster/github-deploy-key -q -P ""
+        fi
+
+        GITHUB_DEPLOY_PRIVATE_KEY="$(cat ./tmpl/cluster/github-deploy-key)"
+        GITHUB_DEPLOY_PUBLIC_KEY="$(cat ./tmpl/cluster/github-deploy-key.pub)"
+
+        _log "INFO" "Using GitHub deploy public key '${GITHUB_DEPLOY_PUBLIC_KEY}' for Flux"
+        _log "INFO" "Go to 'https://${BOOTSTRAP_GIT_REPOSITORY}/settings/keys/new' and paste the public key + allow write access"
+
+        {
+            printf "# yamllint disable\n"
+            printf -- "---\n"
+            printf "apiVersion: v1\n"
+            printf "kind: Secret\n"
+            printf "metadata:\n"
+            printf "  name: github-deploy-key\n"
+            printf "  namespace: flux-system\n"
+            printf "stringData:\n"
+            printf "  identity: |\n"
+            printf "%s\n" "$(cat ./tmpl/cluster/github-deploy-key | sed 's/^/    /')"
+            printf "  known_hosts: |\n"
+            printf "%s\n" "$(curl --silent https://api.github.com/meta | jq --raw-output '"github.com "+.ssh_keys[]' | sed 's/^/    /')"
+        } > "${PROJECT_DIR}/cluster/flux/flux-system/github-deploy-key.sops.yaml"
+
+        sops --encrypt --in-place "${PROJECT_DIR}/cluster/flux/flux-system/github-deploy-key.sops.yaml"
+
+        if [[ $(yq eval --no-doc 'contains({"resources": ["github-deploy-key.sops.yaml"]})' "${PROJECT_DIR}/cluster/flux/flux-system/kustomization.yaml") == false ]]; then
+            yq --inplace '.resources += [ "github-deploy-key.sops.yaml" ]' "${PROJECT_DIR}/cluster/flux/flux-system/kustomization.yaml"
+        fi
+    fi
 }
 
 setup_github_webhook() {
@@ -310,15 +349,15 @@ setup_github_webhook() {
         export BOOTSTRAP_FLUX_GITHUB_WEBHOOK_SECRET="${WEBHOOK_SECRET}"
         _log "INFO" "Using GitHub Token '${WEBHOOK_SECRET}' for Flux"
 
-        cp -rf  "${PROJECT_DIR}/tmpl/cluster/flux-system/webhooks" "${PROJECT_DIR}/cluster/apps/flux-system"
+        cp -rf  "${PROJECT_DIR}/tmpl/cluster/flux-system/webhooks" "${PROJECT_DIR}/cluster/core/flux-system"
 
         envsubst < "${PROJECT_DIR}/tmpl/cluster/flux-system/webhooks/github/secret.sops.yaml" \
-            > "${PROJECT_DIR}/cluster/apps/flux-system/webhooks/github/secret.sops.yaml"
+            > "${PROJECT_DIR}/cluster/core/flux-system/webhooks/github/secret.sops.yaml"
 
-        sops --encrypt --in-place "${PROJECT_DIR}/cluster/apps/flux-system/webhooks/github/secret.sops.yaml"
+        sops --encrypt --in-place "${PROJECT_DIR}/cluster/core/flux-system/webhooks/github/secret.sops.yaml"
 
-        if [[ $(yq eval --no-doc 'contains({"resources": ["webhooks"]})' "${PROJECT_DIR}/cluster/apps/flux-system/kustomization.yaml") == false ]]; then
-            yq --inplace '.resources += [ "webhooks" ]' "${PROJECT_DIR}/cluster/apps/flux-system/kustomization.yaml"
+        if [[ $(yq eval --no-doc 'contains({"resources": ["webhooks"]})' "${PROJECT_DIR}/cluster/core/flux-system/kustomization.yaml") == false ]]; then
+            yq --inplace '.resources += [ "webhooks" ]' "${PROJECT_DIR}/cluster/core/flux-system/kustomization.yaml"
         fi
     fi
 }
