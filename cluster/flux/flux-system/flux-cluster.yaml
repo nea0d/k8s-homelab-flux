@@ -8,9 +8,10 @@ spec:
   interval: 10m
   ref:
     branch: main
-  url: "ssh://git@github.com/nea0d/k8s-homelab-flux"
-  secretRef:
-    name: github-deploy-key
+  url: "https://github.com/nea0d/k8s-homelab-flux"
+  #url: "ssh://git@github.com/nea0d/k8s-homelab-flux"
+  #secretRef:
+  #  name: github-deploy-key
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
