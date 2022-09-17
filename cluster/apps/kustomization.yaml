@@ -7,7 +7,6 @@ resources:
   - databases
   - default
   - external-services
-  - flux-system
   - home
   - kube-system
   - media
