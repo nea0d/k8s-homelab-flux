@@ -20,7 +20,7 @@ spec:
     operator:
       repository: nvcr.io/nvidia
       image: gpu-operator
-      # defaultRuntime: "containerd"
+      defaultRuntime: "containerd"
     driver:
       enabled: true
     nfd:
@@ -43,4 +43,4 @@ spec:
       plugin:
         env:
           - name: WITH_WORKLOAD
-            value: "false"
+            value: "true"
