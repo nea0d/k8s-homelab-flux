@@ -8,7 +8,6 @@ spec:
   interval: 10m
   ref:
     branch: main
-  #url: "https://github.com/nea0d/k8s-homelab-flux"
   url: "ssh://git@github.com/nea0d/k8s-homelab-flux"
   secretRef:
     name: github-deploy-key
