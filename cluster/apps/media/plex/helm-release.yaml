@@ -23,6 +23,8 @@ spec:
       retries: 5
   maxHistory: 3
   dependsOn:
+    - name: metallb
+      namespace: networking
     - name: traefik
       namespace: networking
     - name: longhorn
