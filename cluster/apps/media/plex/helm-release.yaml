@@ -8,20 +8,12 @@ spec:
   interval: 15m
   chart:
     spec:
-      # chart: app-template
-      # version: 0.2.1
-      # sourceRef:
-      #   kind: HelmRepository
-      #   name: bjw-s-charts
-      #   namespace: flux-system
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: plex
-      version: 6.4.3
+      chart: app-template
+      version: 0.2.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 15m
   install:
     createNamespace: true
     remediation:
@@ -128,10 +120,9 @@ spec:
       # $ cat /etc/group | grep "video\|render"
       # video:x:44:
       # render:x:109:
-      supplementalGroups:
-        - 44
-        - 100
-        - 109
+      # supplementalGroups:
+      #   - 44
+      #   - 100
 
     # affinity with GPU
     affinity:
@@ -143,6 +134,7 @@ spec:
                   operator: In
                   values:
                     - "true"
+    runtimeClassName: nvidia
     resources:
       requests:
         nvidia.com/gpu: 1
