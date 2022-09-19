@@ -1,0 +1,40 @@
+[plugins.opt]
+  path = "{{ .NodeConfig.Containerd.Opt }}"
+
+[plugins.cri]
+  stream_server_address = "127.0.0.1"
+  stream_server_port = "10010"
+  enable_selinux = false
+
+{{- if .IsRunningInUserNS }}
+  disable_cgroup = true
+  disable_apparmor = true
+  restrict_oom_score_adj = true
+{{end}}
+
+{{- if .NodeConfig.AgentConfig.PauseImage }}
+  sandbox_image = "{{ .NodeConfig.AgentConfig.PauseImage }}"
+{{end}}
+
+{{- if not .NodeConfig.NoFlannel }}
+[plugins.cri.cni]
+  bin_dir = "{{ .NodeConfig.AgentConfig.CNIBinDir }}"
+  conf_dir = "{{ .NodeConfig.AgentConfig.CNIConfDir }}"
+{{end}}
+
+[plugins.cri.containerd]
+  snapshotter = "overlayfs"
+  disable_snapshot_annotations = true
+
+[plugins.cri.containerd.runtimes.runc]
+  runtime_type = "io.containerd.runc.v2"
+
+[plugins.cri.containerd.runtimes."nvidia"]
+  runtime_type = "io.containerd.runc.v2"
+[plugins.cri.containerd.runtimes."nvidia".options]
+  BinaryName = "/usr/local/nvidia/toolkit/nvidia-container-runtime"
+
+[plugins.cri.containerd.runtimes."nvidia-experimental"]
+  runtime_type = "io.containerd.runc.v2"
+[plugins.cri.containerd.runtimes."nvidia-experimental".options]
+  BinaryName = "/usr/local/nvidia/toolkit/nvidia-container-runtime-experimental"

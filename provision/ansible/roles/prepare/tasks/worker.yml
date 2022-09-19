@@ -38,3 +38,10 @@
     name: multipathd
     state: restarted
   become: true
+
+# Add nvidia runtime to all worker nodes (with only be used if a nvidia GPU is detected on the node)
+- name: upload new containerd config.toml.tmpl conf template
+  template:
+    src: 'containerd-config.toml.tmpl.j2'
+    dest: '/var/lib/rancher/k3s/agent/etc/containerd/config.toml.tmpl'
+  become: true # <-- unless you are connecting as root
