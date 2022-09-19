@@ -39,6 +39,7 @@ spec:
       PLEX_CLAIM: "${SECRET_PLEX_CLAIM}"
       ALLOWED_NETWORKS: "10.0.0.0/8,172.16.0.0/16,192.168.0.0/16,127.0.0.0/8"
       SECURE_CONNECTIONS: "1" #1: Preferred, 0: Required
+      # required for HW acceleration
       NVIDIA_VISIBLE_DEVICES: "all"
       NVIDIA_DRIVER_CAPABILITIES: "all"
       HARDWARE_DEVICE_PATH: "/dev/nvidia0"
@@ -86,7 +87,7 @@ spec:
         enabled: true
         type: emptyDir
         medium: Memory
-        sizeLimit: 2Gi
+        sizeLimit: 1Gi
         mountPath: /transcode
       media:
         enabled: true
@@ -114,16 +115,6 @@ spec:
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: "OnRootMismatch"
-      # Hardware acceleration using an Intel iGPU w/ QuickSync
-      # These IDs below should be matched to your `video` and `render` group on the host
-      # To obtain those IDs run the following grep statement on the host:
-      # $ cat /etc/group | grep "video\|render"
-      # video:x:44:
-      # render:x:109:
-      # supplementalGroups:
-      #   - 44
-      #   - 100
-
     # affinity with GPU
     affinity:
       nodeAffinity:
@@ -134,12 +125,14 @@ spec:
                   operator: In
                   values:
                     - "true"
+    # required for HW acceleration
     runtimeClassName: nvidia
     resources:
       requests:
         nvidia.com/gpu: 1
         cpu: 200m
-        memory: 256Mi
+        memory: 300Mi
       limits:
         nvidia.com/gpu: 1
-        memory: 4096Mi
+        cpu: 2000m
+        memory: 1024Mi
