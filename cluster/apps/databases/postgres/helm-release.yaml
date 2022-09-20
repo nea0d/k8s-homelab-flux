@@ -18,10 +18,10 @@ spec:
   install:
     createNamespace: true
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
     remediation:
-      retries: 5
+      retries: 3
   values:
     repository: ghcr.io/cloudnative-pg/cloudnative-pg
     tag: "1.17.0"

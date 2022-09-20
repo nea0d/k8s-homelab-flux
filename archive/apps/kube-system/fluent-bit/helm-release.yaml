@@ -17,11 +17,11 @@ spec:
   install:
     createNamespace: true
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
     remediation:
-      retries: 5
-  maxHistory: 3
+      retries: 3
+
   values:
     image:
       repository: cr.fluentbit.io/fluent/fluent-bit
