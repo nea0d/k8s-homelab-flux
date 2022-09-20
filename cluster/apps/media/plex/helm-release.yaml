@@ -44,6 +44,7 @@ spec:
       NVIDIA_VISIBLE_DEVICES: "all"
       NVIDIA_DRIVER_CAPABILITIES: "all"
       HARDWARE_DEVICE_PATH: "/dev/nvidia0"
+      TRANSCODER_TEMP_DIRECTORY: "/tmp" # /transocde
     controller:
       type: deployment
       replicas: 1
@@ -84,12 +85,12 @@ spec:
       config:
         enabled: true
         existingClaim: plex-config-v1
-      transcode:
-        enabled: true
-        type: emptyDir
-        medium: Memory
-        sizeLimit: 1Gi
-        mountPath: /transcode
+      # transcode:
+      #   enabled: true
+      #   type: emptyDir
+      #   medium: Memory
+      #   sizeLimit: 1Gi
+      #   mountPath: /transcode
       media:
         enabled: true
         type: nfs
@@ -136,4 +137,4 @@ spec:
       limits:
         nvidia.com/gpu: 1
         cpu: 2000m
-        memory: 1024Mi
+        memory: 2048Mi
