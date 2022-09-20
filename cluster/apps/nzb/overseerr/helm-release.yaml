@@ -28,7 +28,7 @@ spec:
     env:
       TZ: "${TIMEZONE}"
       LOG_LEVEL: "info"
-      PORT: &port 5055
+      PORT: &port 80
     service:
       main:
         ports:
