@@ -21,7 +21,7 @@ spec:
   upgrade:
     remediation:
       retries: 3
-    values:
+  values:
     image:
       repository: hkotel/mealie
       tag: v0.5.6
@@ -55,17 +55,15 @@ spec:
           - hosts:
               - *host
             secretName: mealie-tls
-
     persistence:
       config:
         enabled: true
         mountPath: /app/data/
         existingClaim: mealie-data-v0
-
-    # TODO : add ressources limits
-    # resources:
-    #   requests:
-    #     memory: 650Mi
-    #     cpu: 1000m
-    #   limits:
-    #     memory: 1500Mi
+    resources:
+      requests:
+        memory: 200Mi
+        cpu: 10m
+      limits:
+        memory: 400Mi
+        cpu: 100m
