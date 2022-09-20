@@ -1,17 +1,17 @@
 ---
-systemd_journal_system_max_use: 20M
+systemd_journal_system_max_use: 15M
 systemd_journal_system_max_file_size: 5M
-systemd_journal_system_max_rentention_sec: 3day
+systemd_journal_system_max_rentention_sec: 2day
 systemd_journal_system_max_file_sec: 1day
 
 logrotate_scripts:
   - name: allvarlogs
     path: /var/log/*.log
     options:
-      - rotate 2
+      - rotate 1
       - daily
       - dateext
-      - maxsize 10M
+      - maxsize 5M
       - missingok
       - compress
       - copytruncate
@@ -21,7 +21,21 @@ logrotate_scripts:
   - name: allpodlogs
     path: /var/log/pods/*/*/*.log
     options:
-      - rotate 2
+      - rotate 1
+      - daily
+      - copytruncate
+      - missingok
+      - notifempty
+      - compress
+      - maxsize 5M
+      - dateext
+      - dateformat -%Y%m%d-%s
+      - create 0644 root root
+
+  - name: calico
+    path: /var/log/calico/cni/*.log
+    options:
+      - rotate 1
       - daily
       - copytruncate
       - missingok
@@ -36,7 +50,7 @@ logrotate_scripts:
     path: /var/log/syslog
     options:
       - maxsize 5M
-      - rotate 2
+      - rotate 1
       - daily
       - missingok
       - notifempty
@@ -64,7 +78,7 @@ logrotate_scripts:
       - /var/log/messages
     options:
       - maxsize 1M
-      - rotate 2
+      - rotate 1
       - daily
       - missingok
       - notifempty
