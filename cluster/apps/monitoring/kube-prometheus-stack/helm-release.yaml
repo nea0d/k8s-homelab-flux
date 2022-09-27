@@ -26,11 +26,11 @@ spec:
     alertmanager:
       config:
         global:
-          slack_api_url: "${SECRET_ALERT_MANAGER_MATTERMOST_WEBHOOK}"
+          slack_api_url: "${SECRET_ALERT_MANAGER_DISCORD_WEBHOOK}"
           resolve_timeout: 5m
         receivers:
           - name: 'null'
-          - name: 'mattermost'
+          - name: 'discord'
             slack_configs:
               - channel: '#prometheus'
                 icon_url: https://avatars3.githubusercontent.com/u/3380462
@@ -56,7 +56,7 @@ spec:
             - receiver: 'null'
               match:
                 alertname: Watchdog
-            - receiver: 'mattermost'
+            - receiver: 'discord'
               match_re:
                 severity: critical|warning|error
               continue: true
