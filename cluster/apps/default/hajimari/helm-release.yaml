@@ -34,16 +34,16 @@ spec:
         #   - default
       name: Matt
       title: Hajimari
-      lightTheme: gazette
+      lightTheme: tron
       darkTheme: tron
       # customThemes:
       #   - name: danger
       #     backgroundColor: '#0c0e0c'
       #     primaryColor: '#eaebea'
       #     accentColor: '#d8323c'
-      showGreeting: true
+      showGreeting: false
       showAppGroups: true
-      showAppUrls: true
+      showAppUrls: false
       showAppInfo: false
       showAppStatus: true
       defaultAppIcon: mdi:application
