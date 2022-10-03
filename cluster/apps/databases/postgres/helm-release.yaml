@@ -25,6 +25,8 @@ spec:
   values:
     repository: ghcr.io/cloudnative-pg/cloudnative-pg
     tag: "1.17.0"
+    crds:
+      create: true
   # postRenderers:
   #   - kustomize:
   #       patches:
