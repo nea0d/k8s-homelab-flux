@@ -46,12 +46,12 @@ spec:
         requestAutoCert: false
       prometheus:
         diskCapacityGB: 1
-        storageClassName: longhorn-ssd
+        storageClassName: longhorn-temp
       log:
         db:
           volumeClaimTemplate:
             spec:
-              storageClassName: longhorn-ssd
+              storageClassName: longhorn-temp
               accessModes:
                 - ReadWriteOnce
               resources:
