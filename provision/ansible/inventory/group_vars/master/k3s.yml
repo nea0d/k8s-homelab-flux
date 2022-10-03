@@ -59,3 +59,5 @@ k3s_server:
     - "feature-gates=MixedProtocolLBService=true"
     # Required for HAProxy health-checks
     - "anonymous-auth=true"
+  # Fix webhook calls failing: https://github.com/k3s-io/k3s/issues/5835
+  egress-selector-mode: "disabled"
