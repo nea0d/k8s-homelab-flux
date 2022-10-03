@@ -18,19 +18,19 @@ spec:
     createNamespace: true
     crds: CreateReplace
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
     crds: CreateReplace
     remediation:
-      retries: 5
+      retries: 3
   values:
     installation:
       enabled: true
       registry: quay.io
       imagePath: calico
       calicoNetwork:
-        bgp: Disabled
-        hostPorts: Disabled
+        bgp: Enabled
+        hostPorts: Enabled
         # Note: The ipPools section cannot be modified post-install.
         ipPools:
           - blockSize: 26
@@ -38,10 +38,18 @@ spec:
             encapsulation: "VXLANCrossSubnet"
             natOutgoing: Enabled
             nodeSelector: all()
-        # linuxDataplane: Iptables
-        # multiInterfaceMode: None
-        # nodeAddressAutodetectionV4:
+        linuxDataplane: Iptables
+        multiInterfaceMode: None
+        nodeAddressAutodetectionV4:
+          firstFound: true
+          # kubernetes: NodeInternalIP
         #   cidrs:
         #     - "${NET_NODE_CIDR}"
+      controlPlaneReplicas: 2
+      nodeUpdateStrategy:
+        rollingUpdate:
+          maxUnavailable: 1
+        type: RollingUpdate
+      # nonPrivileged: Enabled
       nodeMetricsPort: 9091
       typhaMetricsPort: 9093

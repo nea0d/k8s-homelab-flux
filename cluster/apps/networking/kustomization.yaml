@@ -9,4 +9,7 @@ resources:
   - metallb
   - k8s-gateway
   - traefik
+  # TODO(tigera-operator): Adding this chart post cluster installation
+  # requires Helm to take ownership of the existing manifests
+  # https://github.com/onedr0p/home-ops/issues/3385
   - tigera-operator
