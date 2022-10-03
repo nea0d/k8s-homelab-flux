@@ -32,7 +32,25 @@ spec:
         any: true
         # matchNames:
         #   - default
-      name: "Matt"
+      name: Matt
+      title: Hajimari
+      lightTheme: gazette
+      darkTheme: tron
+      # customThemes:
+      #   - name: danger
+      #     backgroundColor: '#0c0e0c'
+      #     primaryColor: '#eaebea'
+      #     accentColor: '#d8323c'
+      showGreeting: true
+      showAppGroups: true
+      showAppUrls: true
+      showAppInfo: false
+      showAppStatus: true
+      defaultAppIcon: mdi:application
+      showBookmarkGroups: true
+      showGlobalBookmarks: false
+      alwaysTargetBlank: true
+      defaultSearchProvider: Google
       # customApps:
       #   - group: Storage
       #     apps:
@@ -40,7 +58,7 @@ spec:
       #         url: "https://nas01.${SECRET_PUBLIC_DOMAIN}"
       #         icon: test-tube
       #         info: Main NAS
-      bookmarks:
+      globalBookmarks:
         - group: Communicate
           bookmarks:
             - name: Discord
