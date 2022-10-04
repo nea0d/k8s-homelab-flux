@@ -9,7 +9,7 @@ spec:
   url: https://github.com/NVIDIA/gpu-operator.git
   ref:
     # renovate: registryUrl=https://nvidia.github.io/gpu-operator
-    tag: v1.11.1
+    tag: v22.9.0
   ignore: |
     # exclude all
     /*
