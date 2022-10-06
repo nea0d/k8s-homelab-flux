@@ -87,74 +87,21 @@ spec:
         - hosts:
             - *host
           secretName: "grafana-tls"
-    # plugins:
-    #   - natel-discrete-panel
-    #   - pr0ps-trackmap-panel
-    #   - grafana-piechart-panel
-    #   - vonage-status-panel
-    #   - grafana-worldmap-panel
-    #   - grafana-clock-panel
-    #   - natel-plotly-panel
+    plugins:
+      - natel-discrete-panel
+      - pr0ps-trackmap-panel
+      - grafana-piechart-panel
+      - vonage-status-panel
+      - grafana-worldmap-panel
+      - grafana-clock-panel
+      - natel-plotly-panel
     serviceMonitor:
       enabled: true
     serviceAccount:
       create: true
       autoMount: true
-    # dashboardProviders:
-    #   dashboardproviders.yaml:
-    #     apiVersion: 1
-    #     providers:
-    #       - name: 'default'
-    #         orgId: 1
-    #         folder: ''
-    #         type: file
-    #         disableDeletion: false
-    #         allowUiUpdates: true
-    #         options:
-    #           path: /var/lib/grafana/dashboards/default
-    #       - name: 'teslamate'
-    #         orgId: 1
-    #         folder: Teslamate
-    #         type: file
-    #         disableDeletion: false
-    #         # updateIntervalSeconds: -1
-    #         allowUiUpdates: true
-    #         options:
-    #           path: /var/lib/grafana/dashboards/teslamate
-    # dashboards:
-    #   default:
-    #     # # Ref: https://grafana.com/grafana/dashboards/11315
-    #     # unifi-client-insights:
-    #     #   gnetId: 11315
-    #     #   revision: 8
-    #     #   datasource: Prometheus
-    #     # # Ref: https://grafana.com/grafana/dashboards/11311
-    #     # unifi-network-sites:
-    #     #   gnetId: 11311
-    #     #   revision: 4
-    #     #   datasource: Prometheus
-    #     # # Ref: https://grafana.com/grafana/dashboards/11314
-    #     # unifi-uap-insights:
-    #     #   gnetId: 11314
-    #     #   revision: 9
-    #     #   datasource: Prometheus
-    #     flux-cluster:
-    #       url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
-    #       datasource: Prometheus
-    #     flux-control-plane:
-    #       url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/control-plane.json
-    #       datasource: Prometheus
-    #     lidarr:
-    #       url: https://raw.githubusercontent.com/k8s-at-home/grafana-dashboards/main/lidarr.json
-    #       datasource: Prometheus
-    #     radarr:
-    #       url: https://raw.githubusercontent.com/k8s-at-home/grafana-dashboards/main/radarr.json
-    #       datasource: Prometheus
-    #     sonarr:
-    #       url: https://raw.githubusercontent.com/k8s-at-home/grafana-dashboards/main/sonarr.json
-    #       datasource: Prometheus
     sidecar:
-      skipTlsVerify: true
+      # skipTlsVerify: true
       dashboards:
         enabled: true
         label: grafana_dashboard
@@ -169,11 +116,11 @@ spec:
         label: grafana_datasource
         searchNamespace: ALL
         reloadURL: "http://localhost:3000/api/admin/provisioning/datasources/reload"
-      plugins:
-        enabled: true
-        label: grafana_plugin
-        searchNamespace: ALL
-        reloadURL: "http://localhost:3000/api/admin/provisioning/plugins/reload"
+      # plugins:
+      #   enabled: true
+      #   label: grafana_plugin
+      #   searchNamespace: ALL
+      #   reloadURL: "http://localhost:3000/api/admin/provisioning/plugins/reload"
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -184,17 +131,6 @@ spec:
             url: http://thanos-query:9090/
             access: proxy
             isDefault: true
-          # - name: TeslaMate
-          #   type: postgres
-          #   access: proxy
-          #   url: http://teslamate-postgresql.home:5432
-          #   database: "${SECRET_TESLAMATE_DBNAME}"
-          #   user: "${SECRET_TESLAMATE_DB_USERNAME}"
-          #   secureJsonData:
-          #     password: "${SECRET_TESLAMATE_DB_PASSWORD}"
-          #   jsonData:
-          #     postgresVersion: 1000
-          #     sslmode: disable
     replicas: 1
     persistence:
       enabled: true

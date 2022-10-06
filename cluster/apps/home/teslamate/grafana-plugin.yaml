@@ -8,10 +8,12 @@ metadata:
     grafana_plugin: "true"
 data:
   grafana-plugin-teslamate.yaml: |-
-    - natel-discrete-panel
-    - pr0ps-trackmap-panel
-    - grafana-piechart-panel
-    - vonage-status-panel
-    - grafana-worldmap-panel
-    - grafana-clock-panel
-    - natel-plotly-panel
+    apiVersion: 1
+    plugins:
+      - natel-discrete-panel
+      - pr0ps-trackmap-panel
+      - grafana-piechart-panel
+      - vonage-status-panel
+      - grafana-worldmap-panel
+      - grafana-clock-panel
+      - natel-plotly-panel
