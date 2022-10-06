@@ -168,10 +168,12 @@ spec:
         enabled: true
         label: grafana_datasource
         searchNamespace: ALL
+        reloadURL: "http://localhost:3000/api/admin/provisioning/datasources/reload"
       plugins:
         enabled: true
         label: grafana_plugin
         searchNamespace: ALL
+        reloadURL: "http://localhost:3000/api/admin/provisioning/plugins/reload"
     datasources:
       datasources.yaml:
         apiVersion: 1
