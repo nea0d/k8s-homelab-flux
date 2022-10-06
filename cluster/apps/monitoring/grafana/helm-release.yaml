@@ -87,14 +87,15 @@ spec:
         - hosts:
             - *host
           secretName: "grafana-tls"
-    # plugins:
-    #   - natel-discrete-panel
-    #   - pr0ps-trackmap-panel
-    #   - grafana-piechart-panel
-    #   - vonage-status-panel
-    #   - grafana-worldmap-panel
-    #   - grafana-clock-panel
-    #   - natel-plotly-panel
+    plugins:
+      - natel-discrete-panel
+      - pr0ps-trackmap-panel
+      - grafana-piechart-panel
+      - vonage-status-panel
+      - grafana-worldmap-panel
+      - grafana-clock-panel
+      - natel-plotly-panel
+      - panodata-map-panel
     serviceMonitor:
       enabled: true
     serviceAccount:
