@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: grafana
-      version: 6.40.1
+      version: 6.40.2
       sourceRef:
         kind: HelmRepository
         name: grafana-charts
@@ -87,14 +87,14 @@ spec:
         - hosts:
             - *host
           secretName: "grafana-tls"
-    plugins:
-      - natel-discrete-panel
-      - pr0ps-trackmap-panel
-      - grafana-piechart-panel
-      - vonage-status-panel
-      - grafana-worldmap-panel
-      - grafana-clock-panel
-      - natel-plotly-panel
+    # plugins:
+    #   - natel-discrete-panel
+    #   - pr0ps-trackmap-panel
+    #   - grafana-piechart-panel
+    #   - vonage-status-panel
+    #   - grafana-worldmap-panel
+    #   - grafana-clock-panel
+    #   - natel-plotly-panel
     serviceMonitor:
       enabled: true
     serviceAccount:
@@ -154,6 +154,7 @@ spec:
     #       url: https://raw.githubusercontent.com/k8s-at-home/grafana-dashboards/main/sonarr.json
     #       datasource: Prometheus
     sidecar:
+      skipTlsVerify: true
       dashboards:
         enabled: true
         label: grafana_dashboard
@@ -168,10 +169,9 @@ spec:
         label: grafana_datasource
         searchNamespace: ALL
       plugins:
-        enabled: false
+        enabled: true
         label: grafana_plugin
         searchNamespace: ALL
-
     datasources:
       datasources.yaml:
         apiVersion: 1

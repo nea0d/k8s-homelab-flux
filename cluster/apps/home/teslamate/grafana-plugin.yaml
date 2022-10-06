@@ -15,4 +15,3 @@ data:
     - grafana-worldmap-panel
     - grafana-clock-panel
     - natel-plotly-panel
-    - panodata-map-panel
