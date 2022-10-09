@@ -151,6 +151,8 @@ spec:
         enabled: true
         port: 2381
         targetPort: 2381
+      serviceMonitor:
+        enabled: false
     prometheus:
       ingress:
         enabled: true
