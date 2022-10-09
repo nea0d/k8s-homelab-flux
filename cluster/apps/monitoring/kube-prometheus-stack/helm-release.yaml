@@ -26,7 +26,7 @@ spec:
     alertmanager:
       config:
         global:
-          slack_api_url: "${SECRET_ALERT_MANAGER_DISCORD_WEBHOOK}"
+          slack_api_url: "${SECRET_ALERT_MANAGER_DISCORD_WEBHOOK}/slack"
           resolve_timeout: 5m
         receivers:
           - name: 'null'
