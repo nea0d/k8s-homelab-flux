@@ -29,6 +29,18 @@ tasks:
       - flux reconcile -n flux-system source git flux-cluster
       - flux reconcile -n flux-system kustomization flux-cluster
 
+  suspend:
+    desc: Suspend Flux to pull in changes from your Git repository
+    cmds:
+      - flux suspend -n flux-system source git flux-cluster
+      - flux suspend -n flux-system kustomization flux-cluster
+
+  resume:
+    desc: Resume Flux to pull in changes from your Git repository
+    cmds:
+      - flux resume -n flux-system source git flux-cluster
+      - flux resume -n flux-system kustomization flux-cluster
+
   nodes:
     desc: List all the nodes in your cluster
     cmds:

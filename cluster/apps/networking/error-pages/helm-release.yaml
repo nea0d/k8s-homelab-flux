@@ -21,9 +21,6 @@ spec:
   upgrade:
     remediation:
       retries: 3
-  dependsOn:
-    - name: traefik
-      namespace: networking
   values:
     image:
       repository: ghcr.io/tarampampam/error-pages

@@ -23,10 +23,6 @@ spec:
     remediation:
       retries: 3
   dependsOn:
-    - name: traefik
-      namespace: networking
-    - name: longhorn
-      namespace: longhorn-system
     - name: kube-prometheus-stack
       namespace: monitoring
   values:
