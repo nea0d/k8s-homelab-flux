@@ -28,8 +28,8 @@ spec:
     - name: metallb
       namespace: networking
   values:
-    # deploymentStrategy:
-    #   type: Recreate
+    deploymentStrategy:
+      type: Recreate
     rollingUpdate:
       maxUnavailable: 0
       maxSurge: 1
