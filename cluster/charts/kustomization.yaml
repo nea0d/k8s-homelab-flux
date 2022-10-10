@@ -16,7 +16,6 @@ resources:
   - k8s-at-home-charts.yaml
   - k8s-gateway-charts.yaml
   - longhorn-charts.yaml
-  - mattermost-charts.yaml
   - metallb-charts.yaml
   - metrics-server-charts.yaml
   - minio-charts.yaml
@@ -24,6 +23,4 @@ resources:
   - prometheus-community-charts.yaml
   - project-calico-charts.yaml
   - stakater-charts.yaml
-  # TODO: delete
-  # - traefik-charts.yaml
   - vector-charts.yaml
