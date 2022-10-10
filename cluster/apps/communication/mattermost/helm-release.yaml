@@ -26,17 +26,14 @@ spec:
     image:
       repository: mattermost/mattermost-team-edition
       tag: 7.3.0@sha256:42742be5393667a6604d1965e6eb5cd8de07e5cfd04809732fcd2d4d5c7881a1
-
     mysql:
       mysqlUser: "${SECRET_MATTERMOST_MYSQL_USERNAME}"
       mysqlPassword: "${SECRET_MATTERMOST_MYSQL_PASSWORD}"
       mysqlRootPassword: "${SECRET_MATTERMOST_MYSQL_ROOT_PASSWORD}"
       mysqlDatabase: "${SECRET_MATTERMOST_MYSQL_DBNAME}"
-
       persistence:
         enabled: true
         existingClaim: mattermost-mysql-v1
-
     ingress:
       enabled: true
       ingressClassName: "nginx"
@@ -44,6 +41,7 @@ spec:
         cert-manager.io/cluster-issuer: "letsencrypt-production"
         external-dns/is-public: "true"
         external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_PUBLIC_DOMAIN}"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         hajimari.io/enable: "true"
         hajimari.io/icon: "slack"
         hajimari.io/group: "communication"
@@ -53,13 +51,11 @@ spec:
         - hosts:
             - *host
           secretName: mattermost-tls
-
     configJSON:
       ServiceSettings:
         SiteURL: "https://mattermost.${SECRET_PUBLIC_DOMAIN}"
       TeamSettings:
         SiteName: "Mattermost on Oxygn"
-
     persistence:
       data:
         enabled: true
