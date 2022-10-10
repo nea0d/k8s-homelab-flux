@@ -7,8 +7,6 @@ metadata:
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
-  annotations:
-    traefik.ingress.kubernetes.io/service.passhostheader: "true"
 spec:
   type: ExternalName
   externalName: unifi.${SECRET_PRIVATE_DOMAIN}.

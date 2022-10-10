@@ -9,15 +9,12 @@ metadata:
     app.kubernetes.io/instance: *app
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-production"
-    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-    traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
-    traefik.ingress.kubernetes.io/router.tls: "true"
-    traefik.ingress.kubernetes.io/ssl-proxy-headers: "X-Forwarded-Proto:https"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     hajimari.io/enable: "true"
     hajimari.io/icon: "server"
     hajimari.io/group: "networking"
 spec:
-  ingressClassName: "traefik"
+  ingressClassName: "nginx"
   rules:
     - host: &host "pve.${SECRET_PUBLIC_DOMAIN}"
       http:

@@ -60,14 +60,12 @@ spec:
     ingress:
       console:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: "nginx"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "bucket"
           hajimari.io/group: "storage"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
         host: &host-console "minio.${SECRET_PUBLIC_DOMAIN}"
         tls:
           - hosts:
@@ -75,14 +73,12 @@ spec:
             secretName: "minio-console-tls"
       api:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: "nginx"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "bucket"
           hajimari.io/group: "storage"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
         host: &host-api "s3.${SECRET_PUBLIC_DOMAIN}"
         tls:
           - hosts:
