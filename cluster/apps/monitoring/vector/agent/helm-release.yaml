@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: vector
-      version: 0.16.2
+      version: 0.16.3
       sourceRef:
         kind: HelmRepository
         name: vector-charts
@@ -27,7 +27,7 @@ spec:
   values:
     image:
       repository: timberio/vector
-      tag: 0.24.1-debian
+      # tag: 0.24.1-debian
     role: Agent
     customConfig:
       data_dir: /vector-data-dir
@@ -65,5 +65,9 @@ spec:
     securityContext:
       privileged: true
     tolerations:
+      - key: node-role.kubernetes.io/controlplane
+        effect: NoSchedule
+        operator: Exists
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
+        operator: Exists
