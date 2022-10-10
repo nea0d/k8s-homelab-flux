@@ -24,7 +24,7 @@ spec:
       retries: 3
   dependsOn:
     - name: cert-manager
-      namespace: kube-system
+      namespace: cert-manager
     - name: metallb
       namespace: networking
   values:
