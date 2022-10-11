@@ -68,14 +68,12 @@ spec:
             equal: ['alertname', 'namespace']
       ingress:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: "nginx"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "alert-box"
           hajimari.io/appName: "Alert-Manager"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
         hosts:
           - &host "alert-manager.${SECRET_PUBLIC_DOMAIN}"
         tls:
@@ -156,14 +154,14 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: "nginx"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "monitor-eye"
           hajimari.io/appName: "Prometheus"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+
+
         hosts:
           - &host "prometheus.${SECRET_PUBLIC_DOMAIN}"
         tls:
@@ -177,11 +175,11 @@ spec:
       thanosIngress:
         ingress:
           enabled: true
-          ingressClassName: "traefik"
+          ingressClassName: "nginx"
           annotations:
             cert-manager.io/cluster-issuer: "letsencrypt-production"
-            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-            traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+
+
           hosts:
             - &host "thanos-sidecar.${SECRET_PUBLIC_DOMAIN}"
           tls:

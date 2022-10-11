@@ -39,11 +39,9 @@ spec:
       ingress:
         enabled: true
         hostname: &host "thanos-query.${SECRET_PUBLIC_DOMAIN}"
-        ingressClassName: "traefik"
+        ingressClassName: "nginx"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
         tls: true
         extraTls:
           - hosts:
@@ -58,11 +56,11 @@ spec:
       # ingress:
       #   enabled: true
       #   hostname: &host "thanos-bucketweb.${SECRET_PUBLIC_DOMAIN}"
-      #   ingressClassName: "traefik"
+      #   ingressClassName: "nginx"
       #   annotations:
       #     cert-manager.io/cluster-issuer: "letsencrypt-production"
-      #     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-      #     traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+      #
+      #
       #   tls: true
       #   extraTls:
       #     - hosts:
@@ -79,11 +77,11 @@ spec:
       # ingress:
       #   enabled: true
       #   hostname: &host "thanos-compactor.${SECRET_PUBLIC_DOMAIN}"
-      #   ingressClassName: "traefik"
+      #   ingressClassName: "nginx"
       #   annotations:
       #     cert-manager.io/cluster-issuer: "letsencrypt-production"
-      #     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-      #     traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+      #
+      #
       #   tls: true
       #   extraTls:
       #     - hosts:
@@ -100,11 +98,11 @@ spec:
       # ingress:
       #   enabled: true
       #   hostname: &host "thanos-storegateway.${SECRET_PUBLIC_DOMAIN}"
-      #   ingressClassName: "traefik"
+      #   ingressClassName: "nginx"
       #   annotations:
       #     cert-manager.io/cluster-issuer: "letsencrypt-production"
-      #     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-      #     traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+      #
+      #
       #   tls: true
       #   extraTls:
       #     - hosts:
@@ -134,11 +132,11 @@ spec:
       # ingress:
       #   enabled: true
       #   hostname: &host "thanos-ruler.${SECRET_PUBLIC_DOMAIN}"
-      #   ingressClassName: "traefik"
+      #   ingressClassName: "nginx"
       #   annotations:
       #     cert-manager.io/cluster-issuer: "letsencrypt-production"
-      #     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-      #     traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-only@kubernetescrd"
+      #
+      #
       #   tls: true
       #   extraTls:
       #     - hosts:

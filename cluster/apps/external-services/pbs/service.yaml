@@ -7,8 +7,6 @@ metadata:
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
-  annotations:
-    traefik.ingress.kubernetes.io/service.passhostheader: "false"
 spec:
   type: ExternalName
   externalName: pbs.${SECRET_PRIVATE_DOMAIN}.

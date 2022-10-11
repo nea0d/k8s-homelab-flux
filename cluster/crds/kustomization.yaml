@@ -8,4 +8,5 @@ resources:
   - kube-prometheus-stack
   - metallb
   - system-upgrade-controller
-  - traefik
+  # TODO: delete
+  # - traefik
