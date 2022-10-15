@@ -50,17 +50,17 @@ spec:
     rollingUpdate:
       maxUnavailable: 1
       maxSurge: 25%
-    # prometheus:
-    #   service:
-    #     enabled: false
-    #     annotations:
-    #       prometheus.io/scrape: "true"
-    #       prometheus.io/port: "9153"
-    #   monitor:
-    #     enabled: false
-    #     additionalLabels: {}
-    #     namespace: ""
-    #     interval: ""
+    prometheus:
+      service:
+        enabled: true
+        annotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "9153"
+      monitor:
+        enabled: true
+        # additionalLabels: {}
+        namespace: "monitoring"
+        interval: "1m"
 
     # Default zone is what Kubernetes recommends:
     # https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/#coredns-configmap-options

@@ -54,16 +54,16 @@ spec:
           receiver: 'null'
           routes:
             - receiver: 'null'
-              match:
-                alertname: Watchdog
+              matchers:
+                - alertname="Watchdog"
             - receiver: 'discord'
-              match_re:
-                severity: critical|warning|error
+              matchers:
+                - severity~="critical|warning|error"
               continue: true
         inhibit_rules:
-          - source_match:
+          - source_matchers:
               severity: 'critical'
-            target_match:
+            target_matchers:
               severity: 'warning'
             equal: ['alertname', 'namespace']
       ingress:
