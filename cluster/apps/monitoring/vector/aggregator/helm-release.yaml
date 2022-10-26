@@ -83,6 +83,8 @@ spec:
           remove_label_fields: true
           remove_timestamp: true
           labels:
+            hostname: >-
+              {{`{{ host }}`}}
             app: >-
               {{`{{ custom_app_name }}`}}
             namespace: >-
