@@ -101,6 +101,11 @@ spec:
       ingress:
         enabled: true
         ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "file-document-multiple"
+          hajimari.io/group: "monitoring"
         hosts:
           - host: &host "loki.${SECRET_PUBLIC_DOMAIN}"
             paths:
@@ -109,6 +114,7 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: "loki-tls"
     write:
       replicas: 1
       persistence:
