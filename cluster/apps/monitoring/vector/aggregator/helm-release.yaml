@@ -62,7 +62,6 @@ spec:
           mode: udp
           inputs:
             - journal_logs
-            - kubernetes_logs_remap
           address: 10.10.10.40:12201
           encoding:
             codec: gelf
@@ -76,7 +75,6 @@ spec:
           type: socket
           mode: udp
           inputs:
-            - journal_logs
             - kubernetes_logs_remap
           address: 10.10.10.40:12201
           encoding:
