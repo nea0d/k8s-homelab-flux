@@ -6,5 +6,6 @@ resources:
   - namespace.yaml
   - grafana
   - kube-prometheus-stack
+  - loki
   - thanos
   - vector

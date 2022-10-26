@@ -129,6 +129,10 @@ spec:
             url: http://thanos-query:9090/
             access: proxy
             isDefault: true
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://loki-gateway:80
     replicas: 1
     persistence:
       enabled: true

@@ -57,90 +57,72 @@ spec:
       # Sinks
       #
       sinks:
-        graylog_journal:
-          type: socket
-          mode: udp
+        # graylog_journal:
+        #   type: socket
+        #   mode: udp
+        #   inputs:
+        #     - journal_logs
+        #   address: 10.10.10.40:12201
+        #   encoding:
+        #     codec: gelf
+        # graylog_kubernetes:
+        #   type: socket
+        #   mode: udp
+        #   inputs:
+        #     - kubernetes_logs_remap
+        #   address: 10.10.10.40:12201
+        #   encoding:
+        #     codec: gelf
+        loki_journal:
+          type: loki
           inputs:
             - journal_logs
-          address: 10.10.10.40:12201
+          endpoint: http://loki-gateway:80
           encoding:
-            codec: gelf
+            codec: json
+          batch:
+            max_bytes: 2049000
           out_of_order_action: accept
           remove_label_fields: true
           remove_timestamp: true
           labels:
             hostname: >-
               {{`{{ host }}`}}
-        graylog_kubernetes:
-          type: socket
-          mode: udp
+        loki_kubernetes:
+          type: loki
           inputs:
             - kubernetes_logs_remap
-          address: 10.10.10.40:12201
+          endpoint: http://loki-gateway:80
           encoding:
-            codec: gelf
+            codec: json
+          batch:
+            max_bytes: 2049000
           out_of_order_action: accept
           remove_label_fields: true
           remove_timestamp: true
           labels:
-            hostname: >-
-              {{`{{ host }}`}}
             app: >-
               {{`{{ custom_app_name }}`}}
             namespace: >-
               {{`{{ kubernetes.pod_namespace }}`}}
             node: >-
               {{`{{ kubernetes.pod_node_name }}`}}
-        # loki_journal:
-        #   type: loki
-        #   inputs:
-        #     - journal_logs
-        #   endpoint: http://loki-gateway:80
-        #   encoding:
-        #     codec: json
-        #   batch:
-        #     max_bytes: 2049000
-        #   out_of_order_action: accept
-        #   remove_label_fields: true
-        #   remove_timestamp: true
-        #   labels:
-        #     hostname: >-
-        #       {{`{{ host }}`}}
-        # loki_kubernetes:
-        #   type: loki
-        #   inputs:
-        #     - kubernetes_logs_remap
-        #   endpoint: http://loki-gateway:80
-        #   encoding:
-        #     codec: json
-        #   batch:
-        #     max_bytes: 2049000
-        #   out_of_order_action: accept
-        #   remove_label_fields: true
-        #   remove_timestamp: true
-        #   labels:
-        #     app: >-
-        #       {{`{{ custom_app_name }}`}}
-        #     namespace: >-
-        #       {{`{{ kubernetes.pod_namespace }}`}}
-        #     node: >-
-        #       {{`{{ kubernetes.pod_node_name }}`}}
-    replicas: 1
+    replicas: 3
     service:
       enabled: true
       type: LoadBalancer
-    # affinity:
-    #   podAntiAffinity:
-    #     preferredDuringSchedulingIgnoredDuringExecution:
-    #       - weight: 100
-    #         podAffinityTerm:
-    #           labelSelector:
-    #             matchExpressions:
-    #               - key: app.kubernetes.io/component
-    #                 operator: In
-    #                 values:
-    #                   - Stateless-Aggregator
-    #           topologyKey: kubernetes.io/hostname
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - Stateless-Aggregator
+              topologyKey: kubernetes.io/hostname
   postRenderers:
     - kustomize:
         patchesJson6902:
