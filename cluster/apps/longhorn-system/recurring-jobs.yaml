@@ -40,7 +40,6 @@ spec:
   task: "snapshot"
   groups:
     - weekly
-    - default
   retain: 7
   concurrency: 2
 ---
@@ -55,7 +54,6 @@ spec:
   task: "backup"
   groups:
     - weekly
-    - default
   retain: 4
   concurrency: 2
 ---
