@@ -97,7 +97,7 @@ spec:
           reporting_enabled: false
     gateway:
       enabled: true
-      replicas: 1
+      replicas: 3
       ingress:
         enabled: true
         ingressClassName: "nginx"
@@ -116,12 +116,12 @@ spec:
               - *host
             secretName: "loki-tls"
     write:
-      replicas: 1
+      replicas: 3
       persistence:
         size: 10Gi
         storageClass: longhorn-ssd
     read:
-      replicas: 1
+      replicas: 3
       extraVolumeMounts:
         - name: loki-rules
           mountPath: /rules/fake
