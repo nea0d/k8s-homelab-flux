@@ -133,6 +133,13 @@ spec:
             type: loki
             access: proxy
             url: http://loki-gateway:80
+    dashboards:
+      default:
+        # Ref: https://grafana.com/grafana/dashboards/13502
+        minio:
+          gnetId: 13502
+          revision: 10
+          datasource: Prometheus
     replicas: 1
     persistence:
       enabled: true
