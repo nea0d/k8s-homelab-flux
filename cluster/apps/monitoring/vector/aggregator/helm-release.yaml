@@ -57,7 +57,7 @@ spec:
       # Sinks
       #
       sinks:
-        graylog:
+        graylog_journal:
           type: socket
           mode: udp
           inputs:
@@ -66,6 +66,31 @@ spec:
           address: 10.10.10.40:12201
           encoding:
             codec: gelf
+          out_of_order_action: accept
+          remove_label_fields: true
+          remove_timestamp: true
+          labels:
+            hostname: >-
+              {{`{{ host }}`}}
+        graylog_kubernetes:
+          type: socket
+          mode: udp
+          inputs:
+            - journal_logs
+            - kubernetes_logs_remap
+          address: 10.10.10.40:12201
+          encoding:
+            codec: gelf
+          out_of_order_action: accept
+          remove_label_fields: true
+          remove_timestamp: true
+          labels:
+            app: >-
+              {{`{{ custom_app_name }}`}}
+            namespace: >-
+              {{`{{ kubernetes.pod_namespace }}`}}
+            node: >-
+              {{`{{ kubernetes.pod_node_name }}`}}
         # loki_journal:
         #   type: loki
         #   inputs:
