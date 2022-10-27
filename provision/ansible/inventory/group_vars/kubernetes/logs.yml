@@ -13,7 +13,6 @@ logrotate_scripts:
       - dateext
       - maxsize 5M
       - missingok
-      - compress
       - copytruncate
       - dateformat -%Y%m%d-%s
       - create 0644 root root
@@ -21,13 +20,12 @@ logrotate_scripts:
   - name: allpodlogs
     path: /var/log/pods/*/*/*.log
     options:
-      - rotate 1
-      - daily
+      - rotate 12
+      - hourly
       - copytruncate
       - missingok
       - notifempty
-      - compress
-      - maxsize 5M
+      - maxsize 1M
       - dateext
       - dateformat -%Y%m%d-%s
       - create 0644 root root
@@ -40,8 +38,7 @@ logrotate_scripts:
       - copytruncate
       - missingok
       - notifempty
-      - compress
-      - maxsize 5M
+      - maxsize 1M
       - dateext
       - dateformat -%Y%m%d-%s
       - create 0644 root root
@@ -49,14 +46,12 @@ logrotate_scripts:
   - name: rsyslog
     path: /var/log/syslog
     options:
-      - maxsize 5M
+      - maxsize 10M
       - rotate 1
       - daily
       - missingok
       - notifempty
-      - delaycompress
       - copytruncate
-      - compress
       - dateext
       - dateformat -%Y%m%d-%s
     scripts:
@@ -83,8 +78,6 @@ logrotate_scripts:
       - missingok
       - notifempty
       - copytruncate
-      - compress
-      - delaycompress
       - sharedscripts
       - dateext
       - dateformat -%Y%m%d-%s

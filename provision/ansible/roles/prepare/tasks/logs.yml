@@ -11,6 +11,15 @@
 #     regexp: ^SystemMaxFileSize=
 #     line: SystemMaxFileSize={{ systemd_journal_system_max_file_size }}
 
+- name: Copy logrotate to hourly cron
+  ansible.builtin.copy:
+    src: /etc/cron.daily/logrotate
+    dest: /etc/cron.hourly/logrotate
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+  become: true # <-- unless you are connecting as root
+
 - name: upload new logrotate conf template
   template:
     src: 'logrotate.conf.j2'
@@ -40,3 +49,11 @@
     name: rsyslog
     state: restarted
   become: true
+
+- name: Delete log files older than 3 days
+  ansible.builtin.cron:
+    name: "delete old logs"
+    minute: "5"
+    hour: "1"
+    job: "find /var/log -mindepth 1 -mtime +3 -delete"
+  become: true # <-- unless you are connecting as root
