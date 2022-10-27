@@ -141,7 +141,20 @@ spec:
         size: 10Gi
         storageClass: nfs-k8s-storage
     monitoring:
+      dashboards:
+        enabled: true
+        annotations:
+          grafana_folder: "teslamate"
+        labels:
+          grafana_dashboard: "true"
+      rules:
+        enabled: true
+        alerting: true
+      alerts:
+        enabled: true
       selfMonitoring:
         enabled: false
         grafanaAgent:
           installOperator: false
+        lokiCanary:
+          enabled: false
