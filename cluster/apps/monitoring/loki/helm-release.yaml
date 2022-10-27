@@ -140,6 +140,8 @@ spec:
       persistence:
         size: 10Gi
         storageClass: nfs-k8s-storage
+    test:
+      enabled: false
     monitoring:
       dashboards:
         enabled: true
