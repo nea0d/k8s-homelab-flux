@@ -154,6 +154,8 @@ spec:
         alerting: true
       alerts:
         enabled: true
+      serviceMonitor:
+        enabled: false
       selfMonitoring:
         enabled: false
         grafanaAgent:
