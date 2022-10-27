@@ -42,6 +42,12 @@ configMapGenerator:
   - name: grafana-dashboard-teslamate-states
     files:
       - https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/states.json
+  - name: grafana-dashboard-teslamate-statistics
+    files:
+      - https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/statistics.json
+  - name: grafana-dashboard-teslamate-timeline
+    files:
+      - https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/timeline.json
   - name: grafana-dashboard-teslamate-trip
     files:
       - https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/trip.json
