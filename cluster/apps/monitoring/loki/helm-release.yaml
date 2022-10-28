@@ -141,12 +141,12 @@ spec:
         size: 10Gi
         storageClass: nfs-k8s-storage
     test:
-      enabled: true
+      enabled: false
     monitoring:
       dashboards:
         enabled: true
         annotations:
-          grafana_folder: "loki"
+          grafana_folder: "teslamate"
         labels:
           grafana_dashboard: "true"
       rules:
@@ -155,10 +155,10 @@ spec:
       alerts:
         enabled: true
       serviceMonitor:
-        enabled: true
+        enabled: false
       selfMonitoring:
-        enabled: true
+        enabled: false
         grafanaAgent:
-          installOperator: true
+          installOperator: false
         lokiCanary:
-          enabled: true
+          enabled: false
