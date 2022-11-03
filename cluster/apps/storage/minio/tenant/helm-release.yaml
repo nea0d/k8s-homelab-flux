@@ -41,7 +41,7 @@ spec:
           region: "us-east-1"
         - name: "postgres-backup-v1"
           region: "us-east-1"
-      prometheusOperator: false
+      prometheusOperator: true
       metrics:
         enabled: true
         port: 9000
