@@ -21,7 +21,7 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://postgres-backup-v1/
-      endpointURL: http://minio.storage
+      endpointURL: http://minio.storage:80
       serverName: postgres-v1
       s3Credentials:
         accessKeyId:
