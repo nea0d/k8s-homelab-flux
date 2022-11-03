@@ -42,6 +42,8 @@ spec:
         - name: "postgres-backup-v1"
           region: "us-east-1"
       prometheusOperator: true
+      env:
+        PROMETHEUS_NAMESPACE: "monitoring"
       metrics:
         enabled: true
         port: 9000
