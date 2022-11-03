@@ -39,6 +39,8 @@ spec:
           region: "us-east-1"
         - name: "loki-chunks-v1"
           region: "us-east-1"
+        - name: "postgres-backup-v1"
+          region: "us-east-1"
       prometheusOperator: false
       metrics:
         enabled: true
