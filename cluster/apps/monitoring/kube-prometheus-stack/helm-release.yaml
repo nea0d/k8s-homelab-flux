@@ -217,7 +217,14 @@ spec:
           # objectStorageConfig:
           #   name: thanos-objstore-secret
           #   key: objstore.yml
-        # additionalScrapeConfigs:
+        additionalScrapeConfigs:
+          - job_name: "minio"
+            scrape_interval: 1m
+            scrape_timeout: 10s
+            honor_timestamps: true
+            static_configs:
+              - targets:
+                  - "minio-tenant-main-hl.storage:9000"
         #   - job_name: "coredns"
         #     scrape_interval: 1m
         #     scrape_timeout: 10s
