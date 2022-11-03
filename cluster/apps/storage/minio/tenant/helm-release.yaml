@@ -51,9 +51,9 @@ spec:
         protocol: http
       certificate:
         requestAutoCert: false
-      prometheus:
-        diskCapacityGB: 1
-        storageClassName: longhorn-temp
+      # prometheus:
+      #   diskCapacityGB: 1
+      #   storageClassName: longhorn-temp
       log:
         db:
           volumeClaimTemplate:
