@@ -43,7 +43,8 @@ spec:
           region: "us-east-1"
       prometheusOperator: true
       env:
-        PROMETHEUS_NAMESPACE: "monitoring"
+        - name: PROMETHEUS_NAMESPACE
+          value: "monitoring"
       metrics:
         enabled: true
         port: 9000
