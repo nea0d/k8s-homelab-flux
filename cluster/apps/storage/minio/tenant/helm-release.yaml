@@ -42,15 +42,17 @@ spec:
         - name: "postgres-backup-v1"
           region: "us-east-1"
       prometheusOperator: true
-      env:
-        - name: PROMETHEUS_NAMESPACE
-          value: "monitoring"
-        - name: MINIO_PROMETHEUS_AUTH_TYPE
-          value: "public"
-        - name: MINIO_PROMETHEUS_URL
-          value: "http://kube-prometheus-stack-prometheus.monitoring:9090"
-        - name: MINIO_PROMETHEUS_JOB_ID
-          value: "minio"
+      configuration:
+        name: minio-tenant-main-env-conf
+      # env:
+      #   - name: PROMETHEUS_NAMESPACE
+      #     value: "monitoring"
+      #   - name: MINIO_PROMETHEUS_AUTH_TYPE
+      #     value: "public"
+      #   - name: MINIO_PROMETHEUS_URL
+      #     value: "http://kube-prometheus-stack-prometheus.monitoring:9090"
+      #   - name: MINIO_PROMETHEUS_JOB_ID
+      #     value: "minio"
       metrics:
         enabled: true
         port: 9000
