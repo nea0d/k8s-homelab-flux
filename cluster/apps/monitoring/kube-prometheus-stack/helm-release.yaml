@@ -224,7 +224,7 @@ spec:
             metrics_path: /minio/v2/metrics/cluster
             scheme: http
             static_configs:
-              - targets: ["minio.storage:9000"]
+              - targets: ["minio.storage.svc.cluster.local:80"]
         #   - job_name: "coredns"
         #     scrape_interval: 1m
         #     scrape_timeout: 10s
