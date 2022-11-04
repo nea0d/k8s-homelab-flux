@@ -9,8 +9,10 @@ collections:
   - name: ansible.utils
     version: 2.7.0
 roles:
-  - src: xanmanning.k3s
+  - name: xanmanning.k3s
+    src: https://github.com/PyratLabs/ansible-role-k3s.git
     version: v3.3.0
-  - src: chzerv.log2ram
-  - src: nickhammond.logrotate
+  - name: nickhammond.logrotate
+    src: https://github.com/nickhammond/ansible-logrotate.git
     version: v0.0.5
+  - src: chzerv.log2ram
