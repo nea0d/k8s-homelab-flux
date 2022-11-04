@@ -146,7 +146,7 @@ spec:
       dashboards:
         enabled: true
         annotations:
-          grafana_folder: "teslamate"
+          grafana_folder: "logs"
         labels:
           grafana_dashboard: "true"
       rules:
@@ -156,6 +156,8 @@ spec:
         enabled: true
       serviceMonitor:
         enabled: false
+        metricsInstance:
+          enabled: false
       selfMonitoring:
         enabled: false
         grafanaAgent:
