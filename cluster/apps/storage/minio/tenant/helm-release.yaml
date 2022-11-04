@@ -47,6 +47,10 @@ spec:
           value: "monitoring"
         - name: MINIO_PROMETHEUS_AUTH_TYPE
           value: "public"
+        - name: MINIO_PROMETHEUS_URL
+          value: "http://kube-prometheus-stack-prometheus.monitoring:9090"
+        - name: MINIO_PROMETHEUS_JOB_ID
+          value: "minio"
       metrics:
         enabled: true
         port: 9000
@@ -54,8 +58,8 @@ spec:
       certificate:
         requestAutoCert: false
       # prometheus:
-      #   diskCapacityGB: 1
-      #   storageClassName: longhorn-temp
+        # diskCapacityGB: 1
+        # storageClassName: longhorn-temp
       log:
         db:
           volumeClaimTemplate:
