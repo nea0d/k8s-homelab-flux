@@ -107,7 +107,7 @@ spec:
           - hosts:
               - *host-api
             secretName: "minio-api-tls"
-    secrets:
-      name: minio-tenant-root
-      accessKey: ${SECRET_MINIO_ROOT_USERNAME}
-      secretKey: ${SECRET_MINIO_ROOT_PASSWORD}
+    # secrets:
+    #   name: minio-tenant-root
+    #   accessKey: ${SECRET_MINIO_ROOT_USERNAME}
+    #   secretKey: ${SECRET_MINIO_ROOT_PASSWORD}
