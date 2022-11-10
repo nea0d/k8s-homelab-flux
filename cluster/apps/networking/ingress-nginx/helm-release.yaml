@@ -62,7 +62,7 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: true
-          namespace: default
+          namespace: monitoring
           namespaceSelector:
             any: true
       # extraArgs:
@@ -71,7 +71,7 @@ spec:
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
+          whenUnsatisfiable: ScheduleAnyway
           labelSelector:
             matchLabels:
               app.kubernetes.io/name: ingress-nginx
