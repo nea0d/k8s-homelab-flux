@@ -23,8 +23,6 @@ spec:
     remediation:
       retries: 3
   values:
-    deploymentStrategy:
-      type: Recreate
     env:
       GF_EXPLORE_ENABLED: true
       GF_PANELS_DISABLE_SANITIZE_HTML: true
@@ -134,7 +132,7 @@ spec:
             access: proxy
             url: http://loki-gateway:80
     dashboards:
-      storage:
+      default:
         # Ref: https://grafana.com/grafana/dashboards/13502
         minio:
           gnetId: 13502
