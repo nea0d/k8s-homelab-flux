@@ -23,6 +23,9 @@ spec:
     remediation:
       retries: 3
   values:
+    replicas: 1
+    rbac:
+      pspEnabled: false
     env:
       GF_EXPLORE_ENABLED: true
       GF_PANELS_DISABLE_SANITIZE_HTML: true
@@ -138,13 +141,12 @@ spec:
           gnetId: 13502
           revision: 10
           datasource: Prometheus
-    replicas: 1
     persistence:
-      enabled: true
-      storageClassName: "longhorn-ssd"
-      size: 10Gi
-      accessModes:
-        - ReadWriteOnce
+      enabled: false
+      # storageClassName: "longhorn-ssd"
+      # size: 10Gi
+      # accessModes:
+      #  - ReadWriteOnce
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
@@ -154,6 +156,5 @@ spec:
                 matchExpressions:
                   - key: app.kubernetes.io/name
                     operator: In
-                    values:
-                      - grafana
+                    values: ["grafana"]
               topologyKey: kubernetes.io/hostname
