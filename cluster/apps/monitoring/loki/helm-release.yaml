@@ -155,9 +155,9 @@ spec:
       alerts:
         enabled: true
       serviceMonitor:
-        enabled: false
+        enabled: true
         metricsInstance:
-          enabled: false
+          enabled: true
       selfMonitoring:
         enabled: false
         grafanaAgent:
