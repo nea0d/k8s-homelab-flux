@@ -57,7 +57,7 @@ spec:
               s3: s3://loki-chunks-v1@us-east-1/
               bucketnames: loki-chunks-v1
               access_key_id: ${SECRET_MINIO_ROOT_USERNAME}
-              endpoint: http://minio.storage.svc.cluster.local.
+              endpoint: http://minio.storage.svc.cluster.local
               secret_access_key: ${SECRET_MINIO_ROOT_PASSWORD}
               insecure: true
               s3forcepathstyle: true
@@ -67,7 +67,7 @@ spec:
         ruler:
           enable_api: true
           enable_alertmanager_v2: true
-          alertmanager_url: http://kube-prometheus-stack-alertmanager:9093
+          alertmanager_url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local.:9093
           storage:
             type: local
             local:
