@@ -119,7 +119,7 @@ spec:
       # dnsDiscovery:
       #   enabled: true
       # alertmanagers:
-      #   - http://kube-prometheus-stack-alertmanager.monitoring:9093
+      #   - http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local.:9093
       # clusterName: "${CLUSTER_NAME}"
       # extraFlags:
       #   - "--web.prefix-header=X-Forwarded-Prefix"
