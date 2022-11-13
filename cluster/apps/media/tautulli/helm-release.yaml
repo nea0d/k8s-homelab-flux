@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/tautulli
-      tag: 2.10.5@sha256:33271bcd3baef8ead1a0e57ca3551bcb52bb57c66fa8c3c6df1eca4d0d18a22e
+      tag: 2.10.5@sha256:e06b11f52d1a7d2de3e70b7734721ab17693adfa7d31e60e815d6fd334d00a58
     env:
       TZ: "${TIMEZONE}"
     service:
