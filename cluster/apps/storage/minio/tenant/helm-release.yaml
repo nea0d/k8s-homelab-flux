@@ -50,7 +50,7 @@ spec:
       #   - name: PROMETHEUS_NAMESPACE
       #     value: "monitoring"
       #   - name: MINIO_PROMETHEUS_URL
-      #     value: http://kube-prometheus-stack-prometheus.monitoring:9090
+      #     value: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local.:9090
       #   - name: MINIO_PROMETHEUS_JOB_ID
       #     value: minio-job
       #   - name: MINIO_BROWSER_REDIRECT_URL
