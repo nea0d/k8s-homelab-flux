@@ -115,11 +115,11 @@ spec:
         label: grafana_datasource
         searchNamespace: ALL
         reloadURL: "http://localhost:3000/api/admin/provisioning/datasources/reload"
-      # plugins:
-      #   enabled: true
-      #   label: grafana_plugin
-      #   searchNamespace: ALL
-      #   reloadURL: "http://localhost:3000/api/admin/provisioning/plugins/reload"
+      plugins:
+        enabled: true
+        label: grafana_plugin
+        searchNamespace: ALL
+        reloadURL: "http://localhost:3000/api/admin/provisioning/plugins/reload"
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -130,10 +130,24 @@ spec:
             url: http://thanos-query:9090/
             access: proxy
             isDefault: true
+            jsonData:
+              alertmanagerUid: "P7648CD38D5F55DE2"
+              manageAlerts: true
+              httpMethod": "POST"
           - name: Loki
             type: loki
             access: proxy
             url: http://loki-gateway:80
+            jsonData:
+              alertmanagerUid: "P7648CD38D5F55DE2"
+              manageAlerts: true
+              httpMethod": "POST"
+          - name: Alertmanager
+            type: alertmanager
+            uid: "P7648CD38D5F55DE2"
+            url: http://kube-prometheus-stack-alertmanager:9093
+            jsonData:
+              implementation: prometheus
     # dashboards:
     #   default:
     #     # Ref: https://grafana.com/grafana/dashboards/13502
