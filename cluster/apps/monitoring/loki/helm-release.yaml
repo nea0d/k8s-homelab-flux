@@ -69,18 +69,9 @@ spec:
           enable_alertmanager_v2: true
           alertmanager_url: http://kube-prometheus-stack-alertmanager:9093
           storage:
-            type: s3
-            s3:
-              s3: s3://loki-rules-v1@us-east-1/
-              bucketnames: loki-rules-v1
-              access_key_id: ${SECRET_MINIO_ROOT_USERNAME}
-              endpoint: http://minio.storage.svc.cluster.local
-              secret_access_key: ${SECRET_MINIO_ROOT_PASSWORD}
-              insecure: true
-              s3forcepathstyle: true
-            # type: local
-            # local:
-              # directory: /rules
+            type: local
+            local:
+              directory: /rules
           rule_path: /tmp/scratch
           ring:
             kvstore:
