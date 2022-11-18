@@ -21,6 +21,7 @@ spec:
       repository: nvcr.io/nvidia
       image: gpu-operator
       defaultRuntime: "containerd"
+      upgradeCRD: true
     driver:
       enabled: true
     nfd:
