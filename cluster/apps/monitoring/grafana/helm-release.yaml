@@ -24,7 +24,7 @@ spec:
       retries: 5
   values:
     replicas: 1
-    strategy:
+    deploymentStrategy:
       type: Recreate
     rbac:
       pspEnabled: false
