@@ -8,7 +8,9 @@ metadata:
     k3s-upgrade: server
 spec:
   serviceAccountName: system-upgrade
-  channel: https://update.k3s.io/v1-release/channels/v1.24
+  # channel: https://update.k3s.io/v1-release/channels/v1.24
+  # renovate: datasource=github-releases depName=k3s-io/k3s
+  version: "v1.24.7+k3s1"
   concurrency: 1
   cordon: true
   nodeSelector:
