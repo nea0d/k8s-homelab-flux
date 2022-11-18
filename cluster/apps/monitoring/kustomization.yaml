@@ -5,7 +5,7 @@ namespace: monitoring
 resources:
   - namespace.yaml
   - grafana
-  - kube-prometheus-stack
+  - prometheus
   - loki
   - thanos
   - vector
