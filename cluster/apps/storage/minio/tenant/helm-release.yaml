@@ -60,6 +60,9 @@ spec:
               resources:
                 requests:
                   storage: 1Gi
+      prometheus:
+        diskCapacityGB: 1
+        storageClassName: longhorn-temp
     ingress:
       console:
         enabled: true
