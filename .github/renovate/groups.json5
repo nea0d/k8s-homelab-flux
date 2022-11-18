@@ -24,6 +24,16 @@
       "matchUpdateTypes": ["minor", "patch"],
       "group": { "commitMessageTopic": "{{{groupName}}} group" },
       "separateMinorPatch": false
+    },
+    {
+      "description": "Kube-prometheus-stack kustomization (for CRDs) and chart",
+      "groupName": "kube-prometheus-stack",
+      "matchPackageNames": [
+        "kube-prometheus-stack",
+        "kube-prometheus-stack-crds"
+      ],
+      "group": { "commitMessageTopic": "{{{groupName}}} group" },
+      "separateMinorPatch": true
     }
   ]
 }
