@@ -16,6 +16,14 @@ spec:
         name: gpu-operator-charts
         namespace: flux-system
       interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    disableOpenAPIValidation: true
+    remediation:
+      retries: 3
   values:
     operator:
       repository: nvcr.io/nvidia
