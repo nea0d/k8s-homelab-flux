@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - namespace.yaml
+  - influxdb
   - grafana
   - prometheus
   - loki
