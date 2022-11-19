@@ -9,4 +9,5 @@ resources:
   - prometheus
   - loki
   - thanos
+  - unifi-poller
   - vector
