@@ -14,6 +14,11 @@ data:
       type: influxdb
       access: proxy
       url: http://influxdb-influxdb2.monitoring.svc.cluster.local.:80
-      organization: "oxygn"
-      token: ${SECRET_INFLUXDB_TOKEN}
-      defaultBucket: default
+      basicAuth: true
+      jsonData:
+        organization: oxygn
+        defaultBucket: default
+        httpMode: POST
+        version: Flux
+      secureJsonData:
+        token: "${SECRET_INFLUXDB_TOKEN}"

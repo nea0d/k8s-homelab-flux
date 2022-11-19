@@ -30,7 +30,7 @@ spec:
     adminUser:
       organization: "oxygn"
       bucket: "default"
-      user: "adm1n"
+      user: ${SECRET_INFLUXDB_USERNAME}
       existingSecret: influxdb-auth
     persistence:
       storageClass: longhorn-ssd
