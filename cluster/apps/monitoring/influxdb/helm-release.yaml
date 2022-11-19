@@ -1,0 +1,66 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: influxdb
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: influxdb2
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: influxdata-charts
+        namespace: flux-system
+      version: 2.1.1
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    service:
+      type: LoadBalancer
+      loadBalancerIP: ${METALLB_INFLUXDB_ADDR}
+      externalTrafficPolicy: Local
+    adminUser:
+      organization: "oxygn"
+      bucket: "default"
+      user: "adm1n"
+      existingSecret: influxdb-auth
+    persistence:
+      storageClass: longhorn-ssd
+      size: 20Gi
+    livenessProbe:
+      timeoutSeconds: 10
+    readinessProbe:
+      timeoutSeconds: 10
+    startupProbe:
+      enabled: true
+      failureThreshold: 10
+      periodSeconds: 10
+    ingress:
+      enabled: true
+      ingressClassName: "nginx"
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "chart-line"
+        hajimari.io/appName: "influxdb"
+        hajimari.io/group: "monitoring"
+      hosts:
+        - &host "influxdb.${SECRET_PUBLIC_DOMAIN}"
+      tls:
+        - hosts:
+            - *host
+          secretName: "influxdb-tls"
+    resources:
+      requests:
+        cpu: 100m
+        memory: 1024Mi
+      limits:
+        memory: 2048Mi
