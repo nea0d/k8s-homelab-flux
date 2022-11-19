@@ -189,10 +189,10 @@ spec:
               secretName: "thanos-sidecar-tls"
       resources:
         requests:
-          cpu: 10m
+          cpu: 200m
           memory: 2Gi
         limits:
-          cpu: 500m
+          cpu: 1000m
           memory: 4Gi
       prometheusSpec:
         replicas: 1
@@ -200,12 +200,12 @@ spec:
         replicaExternalLabelName: __replica__
         externalLabels:
         cluster: "${CLUSTER_NAME}"
-        retentionSize: "5GB"
+        retentionSize: "45GB"
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
-        retention: 6h
+        retention: 14d
         enableAdminAPI: true
         walCompression: true
         storageSpec:
@@ -214,7 +214,7 @@ spec:
               storageClassName: "longhorn-ssd"
               resources:
                 requests:
-                  storage: 10Gi
+                  storage: 50Gi
         thanos:
           image: quay.io/thanos/thanos:v0.29.0
           # renovate: datasource=docker depName=quay.io/thanos/thanos
