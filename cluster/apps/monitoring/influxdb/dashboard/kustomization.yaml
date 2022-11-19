@@ -1,15 +1,5 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: flux-system
-configMapGenerator:
-  - name: grafana-dashboard-proxmox-ve
-    files:
-      - https://grafana.com/api/dashboards/15356/revisions/13/download
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
-    grafana_folder: "proxmox"
-  labels:
-    grafana_dashboard: "true"
+resources:
+  - proxmox-ve-dahsboard.yaml
