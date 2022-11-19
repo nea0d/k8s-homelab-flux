@@ -126,16 +126,15 @@ spec:
       datasources.yaml:
         apiVersion: 1
         # list of datasources that should be deleted from the database
-        deleteDatasources:
-          - name: Proxmox-VE
-            orgId: 1
-          - name: Proxmox-BS
-            orgId: 1
+        # deleteDatasources:
+        #   - name: Proxmox-VE
+        #     orgId: 1
         datasources:
           - name: Prometheus
             type: prometheus
             #url: "http://kube-prometheus-stack-prometheus:9090"
             url: http://thanos-query:9090/
+            uid: "PBFA97CFB590B2093"
             access: proxy
             isDefault: true
             editable: true
@@ -147,6 +146,7 @@ spec:
             type: loki
             access: proxy
             url: http://loki-gateway:80
+            uid: "P8E80F9AEF21F6940"
             editable: true
             jsonData:
               alertmanagerUid: "P7648CD38D5F55DE2"
