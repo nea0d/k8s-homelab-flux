@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasource-influxdb
+  namespace: monitoring
+  labels:
+    grafana_datasource: "true"
+data:
+  grafana-datasource-influxdb.yaml: |-
+    apiVersion: 1
+    datasources:
+    - name: Proxmox-VE
+      type: influxdb
+      access: proxy
+      url: http://influxdb-influxdb2.monitoring.svc.cluster.local.:80
+      database: proxmox-ve
+    - name: Proxmox-BS
+      type: influxdb
+      access: proxy
+      url: http://influxdb-influxdb2.monitoring.svc.cluster.local.:80
+      database: proxmox-bs
