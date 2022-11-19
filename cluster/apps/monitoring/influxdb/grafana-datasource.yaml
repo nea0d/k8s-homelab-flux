@@ -15,6 +15,7 @@ data:
       access: proxy
       url: http://influxdb-influxdb2.monitoring.svc.cluster.local.:80
       basicAuth: true
+      uid: "P35862FFA6F3BFED8"
       jsonData:
         organization: oxygn
         defaultBucket: default
