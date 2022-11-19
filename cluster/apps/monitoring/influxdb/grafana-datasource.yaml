@@ -10,13 +10,10 @@ data:
   grafana-datasource-influxdb.yaml: |-
     apiVersion: 1
     datasources:
-    - name: Proxmox-VE
+    - name: InfluxDB-Flux
       type: influxdb
       access: proxy
       url: http://influxdb-influxdb2.monitoring.svc.cluster.local.:80
-      database: proxmox-ve
-    - name: Proxmox-BS
-      type: influxdb
-      access: proxy
-      url: http://influxdb-influxdb2.monitoring.svc.cluster.local.:80
-      database: proxmox-bs
+      organization: "oxygn"
+      token: ${SECRET_INFLUXDB_TOKEN}
+      defaultBucket: default
