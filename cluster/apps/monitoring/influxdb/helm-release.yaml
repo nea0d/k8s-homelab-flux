@@ -52,12 +52,9 @@ spec:
         hajimari.io/icon: "chart-line"
         hajimari.io/appName: "influxdb"
         hajimari.io/group: "monitoring"
-      hosts:
-        - &host "influxdb.${SECRET_PUBLIC_DOMAIN}"
-      tls:
-        - hosts:
-            - *host
-          secretName: "influxdb-tls"
+      hostname: &host "influxdb.${SECRET_PUBLIC_DOMAIN}"
+      tls: true
+      secretName: "influxdb-tls"
     resources:
       requests:
         cpu: 100m
