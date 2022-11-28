@@ -51,101 +51,93 @@ spec:
       enabled: false
     bucketweb:
       enabled: false
-      # replicaCount: 1
-      # podAntiAffinityPreset: hard
-      # ingress:
-      #   enabled: true
-      #   hostname: &host "thanos-bucketweb.${SECRET_PUBLIC_DOMAIN}"
-      #   ingressClassName: "nginx"
-      #   annotations:
-      #     cert-manager.io/cluster-issuer: "letsencrypt-production"
-      #
-      #
-      #   tls: true
-      #   extraTls:
-      #     - hosts:
-      #         - *host
-      #       secretName: thanos-bucketweb-tls
+      replicaCount: 1
+      podAntiAffinityPreset: hard
+      ingress:
+        enabled: true
+        hostname: &host "thanos-bucketweb.${SECRET_PUBLIC_DOMAIN}"
+        ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        tls: true
+        extraTls:
+          - hosts:
+              - *host
+            secretName: thanos-bucketweb-tls
     compactor:
       enabled: false
-      # extraFlags:
-      #   - "--compact.concurrency"
-      #   - "1"
-      # retentionResolutionRaw: 14d
-      # retentionResolution5m: 14d
-      # retentionResolution1h: 14d
-      # ingress:
-      #   enabled: true
-      #   hostname: &host "thanos-compactor.${SECRET_PUBLIC_DOMAIN}"
-      #   ingressClassName: "nginx"
-      #   annotations:
-      #     cert-manager.io/cluster-issuer: "letsencrypt-production"
-      #
-      #
-      #   tls: true
-      #   extraTls:
-      #     - hosts:
-      #         - *host
-      #       secretName: thanos-compactor-tls
-      # persistence:
-      #   enabled: true
-      #   storageClass: "longhorn-ssd"
-      #   size: 10Gi
+      extraFlags:
+        - "--compact.concurrency"
+        - "1"
+      retentionResolutionRaw: 2d
+      retentionResolution5m: 14d
+      retentionResolution1h: 30d
+      ingress:
+        enabled: true
+        hostname: &host "thanos-compactor.${SECRET_PUBLIC_DOMAIN}"
+        ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        tls: true
+        extraTls:
+          - hosts:
+              - *host
+            secretName: thanos-compactor-tls
+      persistence:
+        enabled: true
+        storageClass: "longhorn-ssd"
+        size: 10Gi
     storegateway:
       enabled: false
-      # replicaCount: 1
-      # podAntiAffinityPreset: hard
-      # ingress:
-      #   enabled: true
-      #   hostname: &host "thanos-storegateway.${SECRET_PUBLIC_DOMAIN}"
-      #   ingressClassName: "nginx"
-      #   annotations:
-      #     cert-manager.io/cluster-issuer: "letsencrypt-production"
-      #
-      #
-      #   tls: true
-      #   extraTls:
-      #     - hosts:
-      #         - *host
-      #       secretName: thanos-storegateway-tls
-      # persistence:
-      #   enabled: true
-      #   storageClass: "longhorn-ssd"
-      #   size: 5Gi
+      replicaCount: 1
+      podAntiAffinityPreset: hard
+      ingress:
+        enabled: true
+        hostname: &host "thanos-storegateway.${SECRET_PUBLIC_DOMAIN}"
+        ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        tls: true
+        extraTls:
+          - hosts:
+              - *host
+            secretName: thanos-storegateway-tls
+      persistence:
+        enabled: true
+        storageClass: "longhorn-ssd"
+        size: 5Gi
     ruler:
       enabled: false
-      # replicaCount: 1
-      # podAntiAffinityPreset: hard
-      # dnsDiscovery:
-      #   enabled: true
-      # alertmanagers:
-      #   - http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local.:9093
-      # clusterName: "${CLUSTER_NAME}"
-      # extraFlags:
-      #   - "--web.prefix-header=X-Forwarded-Prefix"
-      # config: |-
-      #   groups:
-      #     - name: "PrometheusWatcher"
-      #       rules:
-      #         - alert: "PrometheusDown"
-      #           expr: absent(up{job="kube-prometheus-stack-prometheus"})
-      # ingress:
-      #   enabled: true
-      #   hostname: &host "thanos-ruler.${SECRET_PUBLIC_DOMAIN}"
-      #   ingressClassName: "nginx"
-      #   annotations:
-      #     cert-manager.io/cluster-issuer: "letsencrypt-production"
-      #
-      #
-      #   tls: true
-      #   extraTls:
-      #     - hosts:
-      #         - *host
-      #       secretName: thanos-ruler-tls
-      # persistence:
-      #   enabled: true
-      #   storageClass: "longhorn-ssd"
-      #   size: 5Gi
+      replicaCount: 1
+      podAntiAffinityPreset: hard
+      dnsDiscovery:
+        enabled: true
+      alertmanagers:
+        - http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local.:9093
+      clusterName: "${CLUSTER_NAME}"
+      extraFlags:
+        - "--web.prefix-header=X-Forwarded-Prefix"
+      config: |-
+        groups:
+          - name: "PrometheusWatcher"
+            rules:
+              - alert: "PrometheusDown"
+                expr: absent(up{job="kube-prometheus-stack-prometheus"})
+      ingress:
+        enabled: true
+        hostname: &host "thanos-ruler.${SECRET_PUBLIC_DOMAIN}"
+        ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        tls: true
+        extraTls:
+          - hosts:
+              - *host
+            secretName: thanos-ruler-tls
+      persistence:
+        enabled: true
+        storageClass: "longhorn-ssd"
+        size: 5Gi
     metrics:
       enabled: true
       serviceMonitor:

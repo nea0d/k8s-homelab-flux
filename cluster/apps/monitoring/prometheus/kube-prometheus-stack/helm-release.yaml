@@ -205,7 +205,7 @@ spec:
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
-        retention: 14d
+        retention: 3d
         enableAdminAPI: true
         walCompression: true
         storageSpec:
@@ -214,14 +214,14 @@ spec:
               storageClassName: "longhorn-ssd"
               resources:
                 requests:
-                  storage: 50Gi
+                  storage: 25Gi
         thanos:
           image: quay.io/thanos/thanos:v0.29.0
           # renovate: datasource=docker depName=quay.io/thanos/thanos
           version: "v0.29.0"
-          # objectStorageConfig:
-          #   name: thanos-objstore-secret
-          #   key: objstore.yml
+          objectStorageConfig:
+            name: thanos-objstore-secret
+            key: objstore.yml
         additionalScrapeConfigs:
           - job_name: "minio-job"
             metrics_path: /minio/v2/metrics/cluster
