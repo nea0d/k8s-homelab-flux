@@ -36,12 +36,12 @@ spec:
 apiVersion: v1
 kind: Endpoints
 metadata:
-  name: *app
+  name: pve
   namespace: external-services
 subsets:
   - addresses:
       - ip: 10.10.0.50
     ports:
       - name: https-pve
-        port: *port
+        port: 8006
         protocol: TCP
