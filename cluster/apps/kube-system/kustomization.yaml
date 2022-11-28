@@ -5,6 +5,7 @@ resources:
   - namespace.yaml
   # - coredns-autoscaler
   - descheduler
+  - k8s-gateway
   - kube-vip
   - metrics-server
   - reflector
