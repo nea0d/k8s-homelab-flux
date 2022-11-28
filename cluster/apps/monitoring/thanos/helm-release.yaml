@@ -48,9 +48,9 @@ spec:
               - *host
             secretName: thanos-query-tls
     queryFrontend:
-      enabled: false
+      enabled: true
     bucketweb:
-      enabled: false
+      enabled: true
       replicaCount: 1
       podAntiAffinityPreset: hard
       ingress:
@@ -65,7 +65,7 @@ spec:
               - *host
             secretName: thanos-bucketweb-tls
     compactor:
-      enabled: false
+      enabled: true
       extraFlags:
         - "--compact.concurrency"
         - "1"
@@ -88,7 +88,7 @@ spec:
         storageClass: "longhorn-ssd"
         size: 10Gi
     storegateway:
-      enabled: false
+      enabled: true
       replicaCount: 1
       podAntiAffinityPreset: hard
       ingress:
@@ -107,7 +107,7 @@ spec:
         storageClass: "longhorn-ssd"
         size: 5Gi
     ruler:
-      enabled: false
+      enabled: true
       replicaCount: 1
       podAntiAffinityPreset: hard
       dnsDiscovery:
