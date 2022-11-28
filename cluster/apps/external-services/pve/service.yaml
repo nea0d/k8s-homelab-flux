@@ -1,3 +1,20 @@
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: &app pve
+#   namespace: external-services
+#   labels:
+#     app.kubernetes.io/name: *app
+#     app.kubernetes.io/instance: *app
+# spec:
+#   type: ExternalName
+#   externalName: pve.${SECRET_PRIVATE_DOMAIN}.
+#   ports:
+#     - name: https-pve
+#       port: 8006
+#       protocol: TCP
+#       targetPort: 8006
 ---
 apiVersion: v1
 kind: Service
@@ -8,10 +25,23 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
 spec:
-  type: ExternalName
-  externalName: pve.${SECRET_PRIVATE_DOMAIN}.
+  type: ClusterIP
+  clusterIP: None
   ports:
     - name: https-pve
-      port: 8006
+      port: &port 8006
       protocol: TCP
-      targetPort: 8006
+      targetPort: *port
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: *app
+  namespace: external-services
+subsets:
+  - addresses:
+      - ip: 10.10.0.50
+    ports:
+      - name: https-pve
+        port: *port
+        protocol: TCP
