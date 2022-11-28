@@ -41,6 +41,8 @@ spec:
           region: "us-east-1"
         - name: "postgres-backup-v1"
           region: "us-east-1"
+        - name: "thanos-v1"
+          region: "us-east-1"
       prometheusOperator: true
       configuration:
         name: minio-tenant-env-configuration
