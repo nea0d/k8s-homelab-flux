@@ -200,7 +200,7 @@ spec:
         replicaExternalLabelName: __replica__
         externalLabels:
         cluster: "${CLUSTER_NAME}"
-        retentionSize: "45GB"
+        retentionSize: "20GB"
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
