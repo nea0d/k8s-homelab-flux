@@ -14,7 +14,7 @@ spec:
     - host: "flux-receiver.${SECRET_PUBLIC_DOMAIN}"
       http:
         paths:
-          - path: /
+          - path: /hook/
             pathType: Prefix
             backend:
               service:
