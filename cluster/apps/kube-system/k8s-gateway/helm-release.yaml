@@ -76,12 +76,19 @@ spec:
       config-file:
         enabled: true
         type: configMap
-        name: *app
+        name: k8s-gateway-configmap
         subPath: Corefile
         mountPath: /etc/coredns/Corefile
         readOnly: true
     podAnnotations:
       configmap.reloader.stakater.com/reload: *app
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: *app
     tolerations:
       - effect: NoSchedule
         operator: Exists
