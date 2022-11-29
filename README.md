@@ -13,10 +13,10 @@ Promoting Infrastrcture As Code to deploy and manage all my home kubernetes clus
 1. Install Hmebrew on your workstation
 
     ```
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" 
-    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/neaod/.profile 
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/neaod/.profile
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    sudo apt-get install build-essential 
+    sudo apt-get install build-essential
     ```
 
 2. Install [go-task](https://github.com/go-task/task) via Brew
@@ -55,9 +55,6 @@ The Git repository contains the following directories under `cluster` and are or
 ```sh
 📁 cluster      # k8s cluster defined as code
 ├─📁 flux       # flux, gitops operator, loaded before everything
-├─📁 crds       # custom resources, loaded before 📁 core and 📁 apps
-├─📁 charts     # helm repos, loaded before 📁 core and 📁 apps
-├─📁 config     # cluster config, loaded before 📁 core and 📁 apps
 ├─📁 core       # crucial apps, namespaced dir tree, loaded before 📁 apps
 └─📁 apps       # regular apps, namespaced dir tree, loaded last
 ```
