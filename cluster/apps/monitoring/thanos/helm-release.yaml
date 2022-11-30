@@ -68,9 +68,9 @@ spec:
       enabled: true
       extraFlags:
         - "--compact.concurrency"
-        - "1"
-      retentionResolutionRaw: 2d
-      retentionResolution5m: 14d
+        - "4"
+      retentionResolutionRaw: 1d
+      retentionResolution5m: 7d
       retentionResolution1h: 30d
       ingress:
         enabled: true
