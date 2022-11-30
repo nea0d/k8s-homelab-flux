@@ -181,31 +181,26 @@ spec:
           ingressClassName: "nginx"
           annotations:
             cert-manager.io/cluster-issuer: "letsencrypt-production"
+            nginx.ingress.kubernetes.io/ssl-redirect: "true"
+            nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
           hosts:
             - &host "thanos-sidecar.${SECRET_PUBLIC_DOMAIN}"
           tls:
             - hosts:
                 - *host
               secretName: "thanos-sidecar-tls"
-      resources:
-        requests:
-          cpu: 200m
-          memory: 2Gi
-        limits:
-          cpu: 1000m
-          memory: 4Gi
       prometheusSpec:
         replicas: 1
         podAntiAffinity: hard
         replicaExternalLabelName: __replica__
         externalLabels:
-        cluster: "${CLUSTER_NAME}"
-        retentionSize: "20GB"
+          cluster: "${CLUSTER_NAME}"
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         retention: 6h
+        retentionSize: "20GB"
         enableAdminAPI: true
         walCompression: true
         storageSpec:
@@ -222,6 +217,13 @@ spec:
           objectStorageConfig:
             name: thanos-objstore-secret
             key: objstore.yml
+        resources:
+          requests:
+            cpu: 200m
+            memory: 2Gi
+          limits:
+            cpu: 1000m
+            memory: 4Gi
         additionalScrapeConfigs:
           - job_name: "minio-job"
             metrics_path: /minio/v2/metrics/cluster
