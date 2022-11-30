@@ -4,10 +4,10 @@ kind: Kustomization
 namespace: kube-system
 resources:
   - helm-release.yaml
-  # - rbac.yaml
-# configMapGenerator:
-#   - name: k8s-gateway-configmap
-#     files:
-#       - ./Corefile
-# generatorOptions:
-#   disableNameSuffixHash: true
+  - rbac.yaml
+configMapGenerator:
+  - name: k8s-gateway-configmap
+    files:
+      - ./Corefile
+generatorOptions:
+  disableNameSuffixHash: true
