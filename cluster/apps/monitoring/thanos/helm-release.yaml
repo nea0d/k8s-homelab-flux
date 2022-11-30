@@ -85,8 +85,8 @@ spec:
             secretName: thanos-compactor-tls
       persistence:
         enabled: true
-        storageClass: "longhorn-ssd"
-        size: 10Gi
+        storageClass: "nfs-k8s-storage"
+        size: 20Gi
     storegateway:
       enabled: true
       replicaCount: 1
