@@ -1,18 +1,38 @@
 # Trash
 .DS_Store
 Thumbs.db
-# k8s
-kubeconfig
-# vscode-sops
-.decrypted~*.yaml
-.config.env
-*.agekey
-*.pub
-*.key
-github-deploy-key*
+# Binaries
+bin
+/flux
+*.iso
+# Temp folders
+.temp*
+.private/
+.logs/
+.task/
 # Ansible
 xanmanning.k3s*
+mrlesmithjr.zfs*
+geerlingguy.docker*
+geerlingguy.pip*
 # Terraform
 .terraform
 .terraform.tfstate*
 terraform.tfstate*
+*.tfvars
+# Sops
+.decrypted~*
+*.agekey
+# Kubernetes
+kubeconfig*
+*.pub
+*.key
+*.pem
+# Extras
+config.xml
+*.pid
+# Node
+node_modules
+package-lock.json
+# Conf
+.config.env

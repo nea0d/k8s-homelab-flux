@@ -5,15 +5,15 @@ metadata:
   name: core
   namespace: flux-system
 spec:
-  interval: 5m
+  interval: 30m
+  dependsOn:
+    - name: flux-installation
+    - name: flux-cluster
   path: ./cluster/core
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-cluster
-  dependsOn:
-    - name: charts
-    - name: config
   decryption:
     provider: sops
     secretRef:
@@ -22,5 +22,7 @@ spec:
     substituteFrom:
       - kind: ConfigMap
         name: cluster-settings
+        optional: false
       - kind: Secret
         name: cluster-secrets
+        optional: false
