@@ -417,19 +417,19 @@ The benefits of a public repository include:
 
   1. Generate new SSH key:
       ```sh
-      ssh-keygen -t ecdsa -b 521 -C "github-deploy-key" -f ./cluster/github-deploy-key -q -P ""
+      ssh-keygen -t ed25519 -C "github-deploy-key" -f ./cluster/github-deploy-key.key -q -P ""
       ```
-  2. Paste public key in the deploy keys section of your repository settings
-  3. Create sops secret in `cluster/bootstrap/github-deploy-key.sops.yaml` with the contents of:
+  2. Paste public key (./cluster/github-deploy-key.key.pub) in the deploy keys section of your repository settings
+  3. Create sops secret in `cluster/bootstrap/github-deploy-key.sops.yaml` with the contents of ./cluster/github-deploy-key.key
   4. Encrypt secret:
       ```sh
-      sops --encrypt --in-place ./cluster/flux/flux-system/github-deploy-key.sops.yaml
+      sops --encrypt --in-place ./cluster/bootstrap/github-deploy-key.sops.yaml
       ```
   5. Apply secret to cluster:
       ```sh
-      sops --decrypt cluster/flux/flux-system/github-deploy-key.sops.yaml | kubectl apply -f -
+      sops --decrypt cluster/bootstrap/github-deploy-key.sops.yaml | kubectl apply -f -
       ```
-  6.  Update `cluster/flux/flux-system/flux-cluster.yaml`:
+  6.  Update `cluster/flux/config/flux-cluster.yaml`:
       ```yaml
       ---
       apiVersion: source.toolkit.fluxcd.io/v1beta2
