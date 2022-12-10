@@ -144,7 +144,7 @@ spec:
       enabled: false
     monitoring:
       dashboards:
-        enabled: false
+        enabled: true
         annotations:
           grafana_folder: "logs"
         labels:
