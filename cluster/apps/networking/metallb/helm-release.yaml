@@ -25,3 +25,23 @@ spec:
   values:
     crds:
       enabled: true
+    prometheus:
+      namespace: monitoring
+      serviceAccount: kube-prometheus-stack-prometheus
+      rbacPrometheus: true
+      serviceMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
+    controller:
+      enabled: true
+      # -- Controller log level. Must be one of: `all`, `debug`, `info`, `warn`, `error` or `none`
+      logLevel: info
+    speaker:
+      enabled: true
+      # -- Speaker log level. Must be one of: `all`, `debug`, `info`, `warn`, `error` or `none`
+      logLevel: info
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
