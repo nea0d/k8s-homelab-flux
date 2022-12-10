@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: vector
-      version: 0.17.1
+      version: 0.18.0
       sourceRef:
         kind: HelmRepository
         name: vector-charts
@@ -21,13 +21,16 @@ spec:
   upgrade:
     remediation:
       retries: 3
+      remediateLastFailure: true
+    cleanupOnFail: true
   dependsOn:
     - name: vector-aggregator
       namespace: monitoring
+    - name: loki
+      namespace: monitoring
   values:
-    image:
-      repository: timberio/vector
-      tag: 0.25.2-debian
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: vector-agent
     role: Agent
     customConfig:
       data_dir: /vector-data-dir
@@ -46,6 +49,8 @@ spec:
             pod_annotations: "pod_annotations"
             pod_labels: "pod_labels"
             pod_name: "pod_name"
+        vector_metrics:
+          type: internal_metrics
       # Sinks
       sinks:
         loki_journal_sink:
@@ -60,6 +65,22 @@ spec:
             - kubernetes_logs
           address: vector-aggregator:6010
           version: "2"
+        prometheus_sink:
+          type: prometheus_exporter
+          inputs:
+            - vector_metrics
+          address: 0.0.0.0:9090
+    podMonitor:
+      enabled: true
+      jobLabel: vector-agent
+      port: prometheus-sink
+    resources:
+      requests:
+        cpu: 48m
+        memory: 127M
+      limits:
+        cpu: 70m
+        memory: 907M
     service:
       enabled: false
     securityContext:
