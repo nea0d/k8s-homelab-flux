@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
-  timeout: 2m
+  timeout: 5m
   ref:
     branch: main
   url: "ssh://git@github.com/nea0d/k8s-homelab-flux"
