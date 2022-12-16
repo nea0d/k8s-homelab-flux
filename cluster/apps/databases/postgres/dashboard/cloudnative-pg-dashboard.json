@@ -3840,7 +3840,7 @@
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
-        "regex": "/cluster=\"(?<text>[^\"]+)/g",
+        "regex": "/container=\"(?<text>[^\"]+)/g",
         "skipUrlSync": false,
         "sort": 1,
         "type": "query"
