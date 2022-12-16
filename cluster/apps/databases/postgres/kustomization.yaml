@@ -7,4 +7,5 @@ resources:
   - secret-minio.sops.yaml
   - helm-release.yaml
   - pg-cluster.yaml
+  - prometheus.yaml
   - scheduled-backup.yaml
