@@ -76,11 +76,11 @@ spec:
       port: prometheus-sink
     resources:
       requests:
-        cpu: 48m
-        memory: 127M
+        cpu: 200m
+        memory: 256M
       limits:
-        cpu: 70m
-        memory: 907M
+        cpu: 500m
+        memory: 512M
     service:
       enabled: false
     securityContext:
