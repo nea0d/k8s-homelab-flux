@@ -5,11 +5,12 @@ metadata:
   name: &app echo-server
   namespace: default
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
       version: 1.2.0
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -49,7 +50,14 @@ spec:
           failureThreshold: 3
       readiness: *probes
       startup:
-        enabled: false
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /health
+            port: *port
+          failureThreshold: 30
+          periodSeconds: 10
     ingress:
       main:
         enabled: true
@@ -72,7 +80,7 @@ spec:
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
+        whenUnsatisfiable: ScheduleAnyway
         labelSelector:
           matchLabels:
             app.kubernetes.io/name: *app
