@@ -6,6 +6,7 @@ metadata:
   namespace: databases
 spec:
   instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgresql:14.5
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
@@ -23,7 +24,7 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://postgres-backup-v2/
+      destinationPath: s3://postgres-backup-v1/
       endpointURL: http://minio.storage.svc.cluster.local:80
       serverName: postgres-v2
       s3Credentials:
