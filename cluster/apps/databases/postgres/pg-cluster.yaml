@@ -5,24 +5,27 @@ metadata:
   name: postgres
   namespace: databases
 spec:
-  instances: 1
+  instances: 3
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
-    storageClass: longhorn-ssd
+    storageClass: longhorn-temp
   superuserSecret:
     name: postgres-superuser
   monitoring:
     enablePodMonitor: true
+  bootstrap:
+    recovery:
+      source: postgres
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://postgres-backup-v1/
+      destinationPath: s3://postgres-backup-v2/
       endpointURL: http://minio.storage.svc.cluster.local:80
-      serverName: postgres
+      serverName: postgres-v2
       s3Credentials:
         accessKeyId:
           name: postgres-minio
@@ -30,3 +33,18 @@ spec:
         secretAccessKey:
           name: postgres-minio
           key: MINIO_SECRET_KEY
+  externalClusters:
+    - name: postgres
+      barmanObjectStore:
+        wal:
+          compression: bzip2
+          maxParallel: 8
+        destinationPath: s3://postgres-backup-v1/
+        endpointURL: http://minio.storage.svc.cluster.local:80
+        s3Credentials:
+          accessKeyId:
+            name: postgres-minio
+            key: MINIO_ACCESS_KEY
+          secretAccessKey:
+            name: postgres-minio
+            key: MINIO_SECRET_KEY
