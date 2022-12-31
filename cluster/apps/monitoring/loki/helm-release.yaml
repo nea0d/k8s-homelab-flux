@@ -45,6 +45,8 @@ spec:
           split_queries_by_interval: 15m
           ingestion_rate_mb: 8
           ingestion_burst_size_mb: 16
+          shard_streams:
+            enabled: true
         schema_config:
           configs:
             - from: "2021-08-01"
@@ -103,6 +105,10 @@ spec:
     gateway:
       enabled: true
       replicas: 3
+      image:
+        registry: ghcr.io
+        repository: nginxinc/nginx-unprivileged
+        tag: 1.23-alpine
       ingress:
         enabled: true
         ingressClassName: "nginx"
