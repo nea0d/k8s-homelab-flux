@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://nvidia.github.io/gpu-operator
       chart: gpu-operator
-      version: v22.9.1
+      version: v22.9.0
       sourceRef:
         kind: HelmRepository
         name: gpu-operator-charts
@@ -26,14 +26,14 @@ spec:
       retries: 3
   values:
     operator:
-      # defaultRuntime: "containerd"
+      defaultRuntime: "containerd"
       upgradeCRD: true
     driver:
       enabled: true
     nfd:
       enabled: true
     psp:
-      enabled: false
+      enabled: true
     toolkit:
       enabled: true
       toolkit:
