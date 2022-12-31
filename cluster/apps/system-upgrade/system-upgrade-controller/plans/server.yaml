@@ -1,12 +1,11 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/plan_v1.json
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
-  name: server
+  name: k3s-server
   namespace: system-upgrade
   labels:
-    k3s-upgrade: server
+    k3s-upgrade: k3s-server
 spec:
   # channel: https://update.k3s.io/v1-release/channels/v1.24
   # renovate: datasource=github-releases depName=k3s-io/k3s
