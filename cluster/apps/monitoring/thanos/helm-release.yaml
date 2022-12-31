@@ -34,6 +34,11 @@ spec:
     query:
       enabled: true
       replicaCount: 3
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
       podAntiAffinityPreset: hard
       replicaLabel:
         - __replica__
@@ -53,9 +58,20 @@ spec:
             secretName: thanos-query-tls
     queryFrontend:
       enabled: true
+      replicaCount: 3
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
     bucketweb:
       enabled: true
       replicaCount: 3
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
       podAntiAffinityPreset: hard
       ingress:
         enabled: true
@@ -94,6 +110,11 @@ spec:
     storegateway:
       enabled: true
       replicaCount: 3
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
       podAntiAffinityPreset: hard
       ingress:
         enabled: true
@@ -113,6 +134,11 @@ spec:
     ruler:
       enabled: true
       replicaCount: 3
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
       podAntiAffinityPreset: hard
       dnsDiscovery:
         enabled: true
