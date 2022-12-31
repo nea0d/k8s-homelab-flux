@@ -10,7 +10,7 @@ spec:
   primaryUpdateStrategy: unsupervised
   storage:
     size: 10Gi
-    storageClass: local-path
+    storageClass: longhorn-ssd
   superuserSecret:
     name: postgres-superuser
   monitoring:
@@ -23,7 +23,7 @@ spec:
     barmanObjectStore:
       wal:
         compression: bzip2
-        maxParallel: 8
+        maxParallel: 2
       destinationPath: s3://postgres-backup-v1/
       endpointURL: http://minio.storage.svc.cluster.local:80
       serverName: postgres-v3
@@ -39,7 +39,7 @@ spec:
       barmanObjectStore:
         wal:
           compression: bzip2
-          maxParallel: 8
+          maxParallel: 2
         destinationPath: s3://postgres-backup-v1/
         endpointURL: http://minio.storage.svc.cluster.local:80
         s3Credentials:
