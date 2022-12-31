@@ -211,19 +211,19 @@ spec:
                 requests:
                   storage: 20Gi
         thanos:
-          image: quay.io/thanos/thanos:v0.30.0
+          image: quay.io/thanos/thanos:v0.30.1
           # renovate: datasource=docker depName=quay.io/thanos/thanos
-          version: "v0.30.0"
+          version: "v0.30.1"
           objectStorageConfig:
             name: thanos-objstore-secret
             key: objstore.yml
         resources:
           requests:
-            cpu: 200m
+            cpu: 500m
             memory: 2Gi
           limits:
-            cpu: 1000m
-            memory: 4Gi
+            cpu: 2000m
+            memory: 6Gi
         additionalScrapeConfigs:
           - job_name: "minio-job"
             metrics_path: /minio/v2/metrics/cluster

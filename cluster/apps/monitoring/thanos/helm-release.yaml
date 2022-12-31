@@ -9,19 +9,23 @@ spec:
   chart:
     spec:
       chart: thanos
-      version: 11.6.6
+      version: 11.6.8
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
         namespace: flux-system
       interval: 15m
+  maxHistory: 3
   install:
     createNamespace: true
     remediation:
       retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
       retries: 3
+  uninstall:
+    keepHistory: false
   dependsOn:
     - name: kube-prometheus-stack
       namespace: monitoring
