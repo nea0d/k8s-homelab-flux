@@ -150,7 +150,7 @@ spec:
             command:
               - sh
               - -c
-              - if [ $(wget -q -O- https://ipinfo.io./country) != 'FR' ]; then exit 0; else exit $?; fi
+              - if [ $(curl https://ipinfo.io./country) != 'FR' ]; then exit 0; else exit $?; fi
           # Initial delay before performing the probe
           initialDelaySeconds: 30
           # How often to perform the probe
