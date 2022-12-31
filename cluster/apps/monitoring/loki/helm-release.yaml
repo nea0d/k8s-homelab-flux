@@ -105,6 +105,11 @@ spec:
     gateway:
       enabled: true
       replicas: 3
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
       image:
         registry: ghcr.io
         repository: nginxinc/nginx-unprivileged
