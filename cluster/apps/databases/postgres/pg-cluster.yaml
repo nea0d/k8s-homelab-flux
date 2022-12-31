@@ -5,11 +5,11 @@ metadata:
   name: postgres
   namespace: databases
 spec:
-  instances: 1
+  instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:14.5
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 20Gi
+    size: 10Gi
     storageClass: local-path
   superuserSecret:
     name: postgres-superuser
@@ -17,7 +17,7 @@ spec:
     enablePodMonitor: true
   bootstrap:
     recovery:
-      source: postgres
+      source: postgres-v2
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
@@ -26,7 +26,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://postgres-backup-v1/
       endpointURL: http://minio.storage.svc.cluster.local:80
-      serverName: postgres-v2
+      serverName: postgres-v3
       s3Credentials:
         accessKeyId:
           name: postgres-minio
@@ -35,7 +35,7 @@ spec:
           name: postgres-minio
           key: MINIO_SECRET_KEY
   externalClusters:
-    - name: postgres
+    - name: postgres-v2
       barmanObjectStore:
         wal:
           compression: bzip2
