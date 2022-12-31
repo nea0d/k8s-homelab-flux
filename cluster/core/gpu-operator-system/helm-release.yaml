@@ -26,8 +26,6 @@ spec:
       retries: 3
   values:
     operator:
-      repository: nvcr.io/nvidia
-      image: gpu-operator
       defaultRuntime: "containerd"
       upgradeCRD: true
     driver:
@@ -35,7 +33,7 @@ spec:
     nfd:
       enabled: true
     psp:
-      enabled: true
+      enabled: false
     toolkit:
       enabled: true
       toolkit:
