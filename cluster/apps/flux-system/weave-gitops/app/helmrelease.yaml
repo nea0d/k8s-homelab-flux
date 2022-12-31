@@ -28,6 +28,7 @@ spec:
   values:
     adminUser:
       create: true
+      username: admin
     ingress:
       enabled: true
       className: nginx
@@ -51,7 +52,6 @@ spec:
       enabled: true
     rbac:
       create: true
-      username: admin
       impersonationResourceNames: ["admin"]
     podAnnotations:
       secret.reloader.stakater.com/reload: weave-gitops-secret
