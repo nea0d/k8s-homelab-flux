@@ -24,8 +24,8 @@ spec:
   dependsOn:
     - name: metallb
       namespace: networking
-    - name: gpu-operator
-      namespace: gpu-operator
+    # - name: gpu-operator
+      # namespace: gpu-operator
   values:
     image:
       repository: ghcr.io/onedr0p/plex
@@ -36,10 +36,10 @@ spec:
       PLEX_CLAIM: "${SECRET_PLEX_CLAIM}"
       ALLOWED_NETWORKS: "10.0.0.0/8,172.16.0.0/16,192.168.0.0/16,127.0.0.0/8"
       SECURE_CONNECTIONS: "1" #1: Preferred, 0: Required
-      # required for HW acceleration
-      NVIDIA_VISIBLE_DEVICES: "all"
-      NVIDIA_DRIVER_CAPABILITIES: "all"
-      HARDWARE_DEVICE_PATH: "/dev/nvidia0"
+      # # required for HW acceleration
+      # NVIDIA_VISIBLE_DEVICES: "all"
+      # NVIDIA_DRIVER_CAPABILITIES: "all"
+      # HARDWARE_DEVICE_PATH: "/dev/nvidia0"
       TRANSCODER_TEMP_DIRECTORY: "/tmp" # /transocde
     controller:
       type: deployment
@@ -116,24 +116,24 @@ spec:
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: "OnRootMismatch"
-    # affinity with GPU
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: nvidia.com/gpu.present
-                  operator: In
-                  values:
-                    - "true"
-    # required for HW acceleration
-    runtimeClassName: nvidia
-    resources:
-      requests:
-        nvidia.com/gpu: 1
-        cpu: 200m
-        memory: 300Mi
-      limits:
-        nvidia.com/gpu: 1
-        cpu: 2000m
-        memory: 2048Mi
+    # # affinity with GPU
+    # affinity:
+    #   nodeAffinity:
+    #     requiredDuringSchedulingIgnoredDuringExecution:
+    #       nodeSelectorTerms:
+    #         - matchExpressions:
+    #             - key: nvidia.com/gpu.present
+    #               operator: In
+    #               values:
+    #                 - "true"
+    # # required for HW acceleration
+    # runtimeClassName: nvidia
+    # resources:
+    #   requests:
+    #     nvidia.com/gpu: 1
+    #     cpu: 200m
+    #     memory: 300Mi
+    #   limits:
+    #     nvidia.com/gpu: 1
+    #     cpu: 2000m
+    #     memory: 2048Mi
