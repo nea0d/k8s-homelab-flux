@@ -14,19 +14,19 @@ spec:
         kind: HelmRepository
         name: vector-charts
         namespace: flux-system
+  maxHistory: 3
   install:
     createNamespace: true
     remediation:
       retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
       retries: 3
-      remediateLastFailure: true
-    cleanupOnFail: true
+  uninstall:
+    keepHistory: false
   dependsOn:
     - name: vector-aggregator
-      namespace: monitoring
-    - name: loki
       namespace: monitoring
   values:
     podAnnotations:

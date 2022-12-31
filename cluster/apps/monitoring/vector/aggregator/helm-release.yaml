@@ -14,16 +14,17 @@ spec:
         kind: HelmRepository
         name: vector-charts
         namespace: flux-system
+  maxHistory: 3
   install:
     createNamespace: true
     remediation:
       retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
       retries: 3
-  dependsOn:
-    - name: loki
-      namespace: monitoring
+  uninstall:
+    keepHistory: false
   values:
     podAnnotations:
       configmap.reloader.stakater.com/reload: vector-aggregator
@@ -149,18 +150,25 @@ spec:
       limits:
         cpu: 57m
         memory: 788M
-    affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: app.kubernetes.io/component
-                    operator: In
-                    values:
-                      - Stateless-Aggregator
-              topologyKey: kubernetes.io/hostname
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: *app
+    # affinity:
+    #   podAntiAffinity:
+    #     preferredDuringSchedulingIgnoredDuringExecution:
+    #       - weight: 100
+    #         podAffinityTerm:
+    #           labelSelector:
+    #             matchExpressions:
+    #               - key: app.kubernetes.io/component
+    #                 operator: In
+    #                 values:
+    #                   - Stateless-Aggregator
+    #           topologyKey: kubernetes.io/hostname
   postRenderers:
     - kustomize:
         patchesJson6902:
