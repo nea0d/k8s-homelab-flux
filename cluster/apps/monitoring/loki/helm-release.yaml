@@ -51,7 +51,7 @@ spec:
                 period: 24h
         common:
           path_prefix: /var/loki
-          replication_factor: 1
+          replication_factor: 3
           storage:
             s3:
               s3: s3://loki-chunks-v1@us-east-1/
@@ -97,7 +97,7 @@ spec:
           reporting_enabled: false
     gateway:
       enabled: true
-      replicas: 1
+      replicas: 3
       ingress:
         enabled: true
         ingressClassName: "nginx"
@@ -116,12 +116,12 @@ spec:
               - *host
             secretName: "loki-tls"
     write:
-      replicas: 1
+      replicas: 3
       persistence:
         size: 10Gi
-        storageClass: nfs-k8s-storage
+        storageClass: longhorn-local
     read:
-      replicas: 1
+      replicas: 3
       extraVolumeMounts:
         - name: loki-rules
           mountPath: /rules/fake
@@ -139,7 +139,7 @@ spec:
           emptyDir: {}
       persistence:
         size: 10Gi
-        storageClass: nfs-k8s-storage
+        storageClass: longhorn-local
     test:
       enabled: false
     monitoring:

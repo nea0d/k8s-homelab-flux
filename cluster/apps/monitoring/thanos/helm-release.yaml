@@ -29,7 +29,7 @@ spec:
     existingObjstoreSecret: &secret thanos-objstore-secret
     query:
       enabled: true
-      replicaCount: 1
+      replicaCount: 3
       podAntiAffinityPreset: hard
       replicaLabel:
         - __replica__
@@ -51,7 +51,7 @@ spec:
       enabled: true
     bucketweb:
       enabled: true
-      replicaCount: 1
+      replicaCount: 3
       podAntiAffinityPreset: hard
       ingress:
         enabled: true
@@ -68,7 +68,7 @@ spec:
       enabled: true
       extraFlags:
         - "--compact.concurrency"
-        - "4"
+        - "2"
       retentionResolutionRaw: 2d
       retentionResolution5m: 14d
       retentionResolution1h: 30d
@@ -85,11 +85,11 @@ spec:
             secretName: thanos-compactor-tls
       persistence:
         enabled: true
-        storageClass: "longhorn-ssd"
-        size: 20Gi
+        storageClass: "longhorn-temp"
+        size: 50Gi
     storegateway:
       enabled: true
-      replicaCount: 1
+      replicaCount: 3
       podAntiAffinityPreset: hard
       ingress:
         enabled: true
@@ -104,11 +104,11 @@ spec:
             secretName: thanos-storegateway-tls
       persistence:
         enabled: true
-        storageClass: "longhorn-ssd"
+        storageClass: "longhorn-local"
         size: 5Gi
     ruler:
       enabled: true
-      replicaCount: 1
+      replicaCount: 3
       podAntiAffinityPreset: hard
       dnsDiscovery:
         enabled: true
@@ -136,7 +136,7 @@ spec:
             secretName: thanos-ruler-tls
       persistence:
         enabled: true
-        storageClass: "longhorn-ssd"
+        storageClass: "longhorn-local"
         size: 5Gi
     metrics:
       enabled: true
