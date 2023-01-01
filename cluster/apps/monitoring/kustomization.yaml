@@ -5,10 +5,11 @@ namespace: monitoring
 resources:
   - namespace.yaml
   - flux
-  - influxdb
   - grafana
-  - prometheus
+  - influxdb
+  - kubernetes-dashboard
   - loki
+  - prometheus
   - thanos
   - unifi-poller
   - vector
