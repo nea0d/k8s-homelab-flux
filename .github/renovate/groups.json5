@@ -39,8 +39,8 @@
       "description": "Minio operator and tenant charts",
       "groupName": "minio",
       "matchPackageNames": [
-        "minio-operator",
-        "minio-tenant"
+        "operator",
+        "tenant"
       ],
       "group": { "commitMessageTopic": "{{{groupName}}} group" },
       "separateMinorPatch": false
