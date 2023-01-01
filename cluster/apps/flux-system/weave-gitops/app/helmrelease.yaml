@@ -26,6 +26,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    logLevel: debug
     adminUser:
       create: true
       username: admin
