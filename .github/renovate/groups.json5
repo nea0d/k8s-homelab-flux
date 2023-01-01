@@ -34,6 +34,16 @@
       ],
       "group": { "commitMessageTopic": "{{{groupName}}} group" },
       "separateMinorPatch": false
+    },
+    {
+      "description": "Minio operator and tenant charts",
+      "groupName": "minio",
+      "matchPackageNames": [
+        "minio-operator",
+        "minio-tenant"
+      ],
+      "group": { "commitMessageTopic": "{{{groupName}}} group" },
+      "separateMinorPatch": false
     }
   ]
 }
