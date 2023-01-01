@@ -26,7 +26,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    logLevel: debug
+    logLevel: info #debug
+    oidcSecret:
+      create: false
     adminUser:
       create: true
       username: admin
@@ -49,12 +51,14 @@ spec:
             - *host
           secretName: weave-gitops-tls
     networkPolicy:
-      create: false
+      create: true
     metrics:
       enabled: true
     rbac:
       create: true
       impersonationResourceNames: ["admin"]
+      impersonationResources: ["users", "groups"]
+      viewSecretsResourceNames: ["cluster-user-auth"] #, "oidc-auth"
       additionalRules:
         - apiGroups: ["infra.contrib.fluxcd.io"]
           resources: ["terraforms"]
