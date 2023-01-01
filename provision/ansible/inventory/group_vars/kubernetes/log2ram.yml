@@ -8,9 +8,10 @@ log2ram_reboot_after_install: false
 log2ram_state: install
 
 #RAM size to host logs
-log2ram_size: "200M"
+log2ram_size: "256M"
+log2ram_log_disk_size: "512M"
 log2ram_use_rsync: "true"
-log2ram_mail: "true"
+log2ram_mail: "false"
 log2ram_path_disk: "/var/log"
 log2ram_use_zl2r: "false"
 log2ram_compression_algorithm: "lz4"
