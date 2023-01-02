@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: gpu-operator
+resources:
+  - ./helmrelease.yaml
+configMapGenerator:
+  - name: gpu-operator-dashboard
+    files:
+      - gpu-operator-dashboard.json=https://raw.githubusercontent.com/NVIDIA/dcgm-exporter/main/grafana/dcgm-exporter-dashboard.json
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+    grafana_folder: "gpu"
+  labels:
+    grafana_dashboard: "true"
