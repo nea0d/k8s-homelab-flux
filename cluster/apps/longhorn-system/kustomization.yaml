@@ -1,9 +1,9 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: longhorn-system
 resources:
-  - longhorn-local-storage-class.yaml
-  - longhorn-ssd-storage-class.yaml
-  - longhorn-temp-storage-class.yaml
-  - recurring-jobs.yaml
+  # Pre Flux-Kustomizations
+  - ./namespace.yaml
+  # Flux-Kustomizations
+  - ./longhorn-system/ks.yaml

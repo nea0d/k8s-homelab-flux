@@ -30,7 +30,7 @@ spec:
       backupTargetCredentialSecret: longhorn-backup # Uncomment only if using s3 backup target
       defaultDataPath: ${SECRET_LONGHORN_STORAGE_MOUNT_PATH}
       defaultReplicaCount: 3
-      defaultLonghornStaticStorageClass: longhorn-static
+      defaultLonghornStaticStorageClass: longhorn-ssd
       createDefaultDiskLabeledNodes: true
       replicaSoftAntiAffinity: false
       storageOverProvisioningPercentage: 200
