@@ -28,4 +28,5 @@ resources:
   - ./rook-ceph-charts.yaml
   - ./stakater-charts.yaml
   - ./vector-charts.yaml
+  - ./vmware-tanzu-charts.yaml
   - ./weave-gitops-charts.yaml
