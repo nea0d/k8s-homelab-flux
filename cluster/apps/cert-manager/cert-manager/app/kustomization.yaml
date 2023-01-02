@@ -1,7 +1,11 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: flux-system
+namespace: cert-manager
+resources:
+  - ./helmrelease.yaml
+  - ./prometheusrule.yaml
 configMapGenerator:
   - name: cert-manager-dashboard
     files:
@@ -10,6 +14,6 @@ generatorOptions:
   disableNameSuffixHash: true
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
-    grafana_folder: "core"
+    grafana_folder: "security"
   labels:
     grafana_dashboard: "true"
