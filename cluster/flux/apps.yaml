@@ -9,7 +9,6 @@ spec:
   dependsOn:
     - name: flux-installation
     - name: flux-cluster
-    - name: core
   path: ./cluster/apps
   prune: true
   sourceRef:
