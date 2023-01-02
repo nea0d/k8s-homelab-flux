@@ -28,12 +28,26 @@ spec:
     operator:
       defaultRuntime: "containerd"
       upgradeCRD: true
+      cleanupCRD: true
     dcgmExporter:
       enabled: true
       serviceMonitor:
         enabled: true
     driver:
       enabled: true
+      driver:
+    manager:
+      env:
+        - name: ENABLE_AUTO_DRAIN
+          value: "false"
+        - name: DRAIN_USE_FORCE
+          value: "false"
+        - name: DRAIN_POD_SELECTOR_LABEL
+          value: "gpu=drain"
+        - name: DRAIN_TIMEOUT_SECONDS
+          value: "0s"
+        - name: DRAIN_DELETE_EMPTYDIR_DATA
+          value: "false"
     nfd:
       enabled: true
     psp:
