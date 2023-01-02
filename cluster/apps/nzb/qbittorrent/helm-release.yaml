@@ -71,8 +71,6 @@ spec:
         ingressClassName: "nginx"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
-
-
         hosts:
           - host: *host
             paths:
@@ -97,6 +95,8 @@ spec:
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: "OnRootMismatch"
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
     #TODO : add ressources limits
     # resources:
     #   requests:

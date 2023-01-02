@@ -73,3 +73,5 @@ spec:
         memory: 588M
       limits:
         memory: 1265M
+    podAnnotations:
+      backup.velero.io/backup-volumes: config

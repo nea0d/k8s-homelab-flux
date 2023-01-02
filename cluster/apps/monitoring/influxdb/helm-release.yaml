@@ -35,6 +35,8 @@ spec:
     persistence:
       storageClass: longhorn-ssd
       size: 20Gi
+    podAnnotations:
+      backup.velero.io/backup-volumes: data
     livenessProbe:
       timeoutSeconds: 10
     readinessProbe:

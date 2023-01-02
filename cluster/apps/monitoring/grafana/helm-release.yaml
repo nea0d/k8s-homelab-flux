@@ -172,6 +172,8 @@ spec:
       size: 10Gi
       accessModes:
         - ReadWriteOnce
+    podAnnotations:
+      backup.velero.io/backup-volumes: storage
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:

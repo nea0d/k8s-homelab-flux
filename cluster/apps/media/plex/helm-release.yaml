@@ -111,6 +111,8 @@ spec:
         path: "/volume2/Videos"
         mountPath: /videos
         readOnly: true
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568

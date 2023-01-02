@@ -54,6 +54,8 @@ spec:
       config:
         enabled: true
         existingClaim: tautulli-config-v1
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568

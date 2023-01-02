@@ -95,3 +95,5 @@ spec:
         enabled: true
         interval: 3m
         scrapeTimeout: 1m30s
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
