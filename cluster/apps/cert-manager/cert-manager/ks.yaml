@@ -31,7 +31,6 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-cert-manager
-    - name: cluster-apps-external-secrets-stores
   path: ./cluster/apps/cert-manager/cert-manager/issuers
   prune: true
   sourceRef:
