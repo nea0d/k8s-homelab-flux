@@ -10,6 +10,7 @@ vars:
 
 tasks:
 
+  # Requires export LC_ALL=en_US.UTF-8 as locale (LC_ALL)
   init:
     desc: Install / Upgrade Ansible galaxy deps
     dir: '{{.ANSIBLE_DIR}}'

@@ -1,4 +1,10 @@
 ---
+- name: Ensure locale exists
+  community.general.locale_gen:
+    name: "{{ locale }}"
+    state: present
+  when:
+    - locale is defined
 - name: Set timezone
   community.general.timezone:
     name: "{{ timezone }}"

@@ -2,6 +2,9 @@
 # (string) Timezone for the servers (e.g. Europe/Paris)
 timezone: "Europe/Paris"
 
+# (string) Locale for the servers (e.g. fr_FR.UTF-8)
+locale: "fr_FR.UTF-8"
+
 # (list) Additional ssh public keys to add to the nodes
 ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCxxkDEGhbVnPr/YkevsvxrMHJrCbLWkE02G6u4M1AHVWnF8Plbdb5tk2OJLGi72O4U2VPS0e42pPwt2UgxsrUNNooCBqIV9PSEtJ2D/RQlBmScBQjw7XNsNhZBfMd6EVfoV52Vruwfuxgr1/K+kKZaec6GRFmlX+4TtgaLmzHaH3oyPOF7Peym/RX9cFEqeWgsBzTA0FVW/0hHCh4Ee1s6cgKQUi24oJmOWpiVQ94hW200k/OWS9st8pCl8Nr0hEimui/BUUIGPUfjGnvdPilvosW0YlqXaAMolNyAG6hor6O2Qmez3vqo5WtmjJRwnPEdXWjKOav1+qfnU8xof1oPoP+FaiNOvsztd3XWOf99nEE+omQ/DOnRKPsiFUYJWefUe5Ft2OhhN/HSWM0a/Dmi7T+k/72GWB9B6XXCgdJaI1o3dO/blBmfkUYVVh+jKydaSoc6Qi1uqU2uNbDKNYhFhHYRMXOOUB15M94K1W5XsiMrhuO2RCpm+e/8ep7Mstc= ssh@oxygn.dev
