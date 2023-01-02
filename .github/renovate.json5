@@ -15,13 +15,13 @@
     "github>nea0d/k8s-homelab-flux//.github/renovate/commitMessage.json5",
     "github>nea0d/k8s-homelab-flux//.github/renovate/groups.json5",
     "github>nea0d/k8s-homelab-flux//.github/renovate/labels.json5",
-    "github>nea0d/k8s-homelab-flux//.github/renovate/semanticCommits.json5",
-    "helpers:pinGitHubActionDigests"
+    "github>nea0d/k8s-homelab-flux//.github/renovate/semanticCommits.json5"
   ],
   "platform": "github",
   "username": "mushu-bot[bot]",
   "gitAuthor": "mushu-bot <279124+mushu-bot[bot]@users.noreply.github.com>",
   "repositories": ["nea0d/k8s-homelab-flux"],
+  "branchConcurrentLimit": 3,
   "timezone": "Europe/Paris",
   "schedule": ["after 10pm every weekday", "before 5am every weekday", "every weekend"],
   "onboarding": false,
@@ -32,9 +32,6 @@
   "rollbackPrs": true,
   "commitBodyTable": true,
   "ignorePaths": ["archive/**"],
-  "pre-commit": {
-    "enabled": true
-  },
   "flux": {
     "fileMatch": ["cluster/.+\\.ya?ml$"]
   },
