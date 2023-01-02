@@ -146,9 +146,9 @@ spec:
     persistence:
       data:
         enabled: true
-        storageClass: longhorn-temp
-    # podAnnotations:
-    #   configmap.reloader.stakater.com/reload: "hajimari-settings"
+        storageClass: ceph-block
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "hajimari-settings"
     resources:
       requests:
         cpu: 100m
