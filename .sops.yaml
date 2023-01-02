@@ -1,6 +1,11 @@
 ---
 creation_rules:
-  - path_regex: provision/.*\.sops\.ya?ml
+  - path_regex: ansible/.*\.sops\.ya?ml
+    unencrypted_regex: "^(kind)$"
+    key_groups:
+      - age:
+          - age1cf3265t4kjwkn034zgyk2r6q404trv58c04fgk2xw6lack4mp90spa7ugm
+  - path_regex: terraform/.*\.sops\.ya?ml
     unencrypted_regex: "^(kind)$"
     key_groups:
       - age:
