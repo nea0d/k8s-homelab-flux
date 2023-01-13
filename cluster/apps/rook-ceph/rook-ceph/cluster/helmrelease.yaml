@@ -136,7 +136,7 @@ spec:
           enabled: true
           name: ceph-block
           isDefault: true
-          reclaimPolicy: Delete
+          reclaimPolicy: Retain
           allowVolumeExpansion: true
           parameters:
             imageFormat: "2"
@@ -158,7 +158,7 @@ spec:
           enabled: true
           name: ceph-block-local
           isDefault: false
-          reclaimPolicy: Delete
+          reclaimPolicy: Retain
           allowVolumeExpansion: true
           parameters:
             imageFormat: "2"
