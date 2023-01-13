@@ -135,7 +135,7 @@ spec:
       replicas: 3
       persistence:
         size: 10Gi
-        storageClass: longhorn-local
+        storageClass: ceph-block-local
     read:
       replicas: 3
       extraVolumeMounts:
@@ -155,7 +155,7 @@ spec:
           emptyDir: {}
       persistence:
         size: 10Gi
-        storageClass: longhorn-local
+        storageClass: ceph-block-local
     test:
       enabled: false
     monitoring:

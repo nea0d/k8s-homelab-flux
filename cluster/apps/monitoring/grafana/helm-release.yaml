@@ -168,7 +168,7 @@ spec:
     #       datasource: Prometheus
     persistence:
       enabled: true
-      storageClassName: "longhorn-ssd"
+      storageClassName: "ceph-block"
       size: 10Gi
       accessModes:
         - ReadWriteOnce

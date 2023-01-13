@@ -33,7 +33,7 @@ spec:
       user: ${SECRET_INFLUXDB_USERNAME}
       existingSecret: influxdb-auth
     persistence:
-      storageClass: longhorn-ssd
+      storageClass: ceph-block
       size: 20Gi
     podAnnotations:
       backup.velero.io/backup-volumes: data

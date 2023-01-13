@@ -129,7 +129,7 @@ spec:
             secretName: thanos-storegateway-tls
       persistence:
         enabled: true
-        storageClass: "longhorn-local"
+        storageClass: "ceph-block-local"
         size: 5Gi
     ruler:
       enabled: true
@@ -166,7 +166,7 @@ spec:
             secretName: thanos-ruler-tls
       persistence:
         enabled: true
-        storageClass: "longhorn-local"
+        storageClass: "ceph-block-local"
         size: 5Gi
     metrics:
       enabled: true

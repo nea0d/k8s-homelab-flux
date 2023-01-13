@@ -91,7 +91,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: "longhorn-local"
+              storageClassName: "ceph-block-local"
               resources:
                 requests:
                   storage: 250Mi
@@ -206,7 +206,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: "longhorn-local"
+              storageClassName: "ceph-block-local"
               resources:
                 requests:
                   storage: 20Gi
