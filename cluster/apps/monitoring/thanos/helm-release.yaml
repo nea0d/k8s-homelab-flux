@@ -105,7 +105,7 @@ spec:
             secretName: thanos-compactor-tls
       persistence:
         enabled: true
-        storageClass: "longhorn-temp"
+        storageClass: "ceph-block-local"
         size: 50Gi
     storegateway:
       enabled: true
