@@ -17,7 +17,7 @@ spec:
     enablePodMonitor: true
   bootstrap:
     recovery:
-      source: postgres-v2
+      source: postgres-v4
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
@@ -26,7 +26,7 @@ spec:
         maxParallel: 2
       destinationPath: s3://postgres-backup-v1/
       endpointURL: http://minio.storage.svc.cluster.local:80
-      serverName: postgres-v4
+      serverName: postgres-v5
       s3Credentials:
         accessKeyId:
           name: postgres-minio
@@ -35,7 +35,7 @@ spec:
           name: postgres-minio
           key: MINIO_SECRET_KEY
   externalClusters:
-    - name: postgres-v2
+    - name: postgres-v4
       barmanObjectStore:
         wal:
           compression: bzip2
