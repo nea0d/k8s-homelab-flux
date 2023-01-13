@@ -135,7 +135,7 @@ spec:
       replicas: 3
       persistence:
         size: 10Gi
-        storageClass: ceph-block-local
+        storageClass: nfs-k8s-storage
     read:
       replicas: 3
       extraVolumeMounts:
@@ -155,7 +155,7 @@ spec:
           emptyDir: {}
       persistence:
         size: 10Gi
-        storageClass: ceph-block-local
+        storageClass: nfs-k8s-storage
     test:
       enabled: false
     monitoring:
