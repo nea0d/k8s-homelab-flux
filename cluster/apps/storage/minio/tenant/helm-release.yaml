@@ -35,8 +35,6 @@ spec:
           storageClassName: nfs-k8s-storage
           size: 200Gi
       buckets:
-        - name: "longhorn-backup"
-          region: "us-east-1"
         - name: "loki-chunks-v1"
           region: "us-east-1"
         - name: "postgres-backup-v1"
