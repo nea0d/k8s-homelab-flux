@@ -28,7 +28,7 @@ spec:
   values:
     monitoring:
       enabled: true
-      createPrometheusRules: false
+      createPrometheusRules: true
     ingress:
       dashboard:
         ingressClassName: nginx
@@ -45,7 +45,6 @@ spec:
           - hosts:
               - *host
             secretName: "rook-ceph-tls"
-
     configOverride: |
       [global]
       bdev_enable_discard = true
