@@ -56,7 +56,7 @@ spec:
         db:
           volumeClaimTemplate:
             spec:
-              storageClassName: longhorn-temp
+              storageClassName: ceph-block-local
               accessModes:
                 - ReadWriteOnce
               resources:
@@ -64,7 +64,7 @@ spec:
                   storage: 1Gi
       prometheus:
         diskCapacityGB: 1
-        storageClassName: longhorn-temp
+        storageClassName: ceph-block-local
     ingress:
       console:
         enabled: true
