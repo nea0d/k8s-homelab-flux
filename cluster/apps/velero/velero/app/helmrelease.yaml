@@ -23,6 +23,7 @@ spec:
     crds: CreateReplace
   values:
     configuration:
+      logLevel: debug
       provider: aws
       backupStorageLocation:
         name: default
