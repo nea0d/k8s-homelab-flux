@@ -8,7 +8,7 @@ metadata:
     substitution.flux.home.arpa/enabled: "true"
 spec:
   dependsOn:
-    - name: cluster-apps-minio
+    - name: cluster-apps-minio-tenant
     - name: cluster-apps-rook-ceph-cluster
   path: ./cluster/apps/monitoring/thanos/app
   prune: true
