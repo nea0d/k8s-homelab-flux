@@ -1,0 +1,93 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app minio-tenants
+  namespace: storage
+spec:
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://operator.min.io/
+      chart: tenant
+      version: 4.5.7
+      sourceRef:
+        kind: HelmRepository
+        name: minio-charts
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    tenant:
+      name: minio-tenant-main
+      pools:
+        - servers: 3
+          volumesPerServer: 2
+          name: pool-main
+          storageClassName: nfs-k8s-storage
+          size: 200Gi
+      buckets:
+        - name: "loki-chunks-v1"
+          region: "us-east-1"
+        - name: "postgres-backup-v1"
+          region: "us-east-1"
+        - name: "thanos-v1"
+          region: "us-east-1"
+      prometheusOperator: true
+      configuration:
+        name: minio-tenant-env-configuration
+      metrics:
+        enabled: true
+        port: 9000
+        protocol: http
+      certificate:
+        requestAutoCert: false
+      log:
+        db:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ceph-block-local
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 1Gi
+      prometheus:
+        diskCapacityGB: 1
+        storageClassName: ceph-block-local
+    ingress:
+      console:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "bucket"
+          hajimari.io/group: "storage"
+        host: &host-console "minio.${SECRET_PUBLIC_DOMAIN}"
+        tls:
+          - hosts:
+              - *host-console
+            secretName: "minio-console-tls"
+      api:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "bucket"
+          hajimari.io/group: "storage"
+        host: &host-api "s3.${SECRET_PUBLIC_DOMAIN}"
+        tls:
+          - hosts:
+              - *host-api
+            secretName: "minio-api-tls"

@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: networking
+resources:
+  - ./helmrelease.yaml
+configMapGenerator:
+  - name: cloudflare-networks
+    files:
+      - cloudflare-networks.txt
+  - name: grafana-dashboard-nginx
+    files:
+      - https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
+  - name: grafana-dashboard-nginx-request-handling-performance
+    files:
+      - https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+    grafana_folder: "network"
+  labels:
+    grafana_dashboard: "true"

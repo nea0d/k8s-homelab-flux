@@ -1,12 +1,13 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - namespace.yaml
-  # - coredns-autoscaler
-  - descheduler
-  - k8s-gateway
-  - kube-vip
-  - metrics-server
-  - reflector
-  - reloader
+  # Pre Flux-Kustomizations
+  - ./namespace.yaml
+  # Flux-Kustomizations
+  - ./metrics-server/ks.yaml
+  - ./reloader/ks.yaml
+  - ./snapshot-controller/ks.yaml
+  # Standard Resources
+  - ./kube-vip

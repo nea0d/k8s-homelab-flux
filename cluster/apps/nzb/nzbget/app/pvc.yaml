@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nzbget-config-v1
+  namespace: nzb
+  labels:
+    app.kubernetes.io/name: nzbget
+    snapshot.home.cluster/enabled: "true"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ceph-block
