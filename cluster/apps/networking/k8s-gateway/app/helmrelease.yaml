@@ -73,21 +73,14 @@ spec:
           httpGet:
             path: /ready
             port: 8181
-            scheme: HTTP
       liveness:
         custom: true
         spec:
           httpGet:
             path: /health
             port: 8080
-            scheme: HTTP
       startup:
-        custom: true
-        spec:
-          httpGet:
-            path: /ready
-            port: 8181
-            scheme: HTTP
+        enabled: false
     persistence:
       config-file:
         enabled: true
@@ -96,9 +89,6 @@ spec:
         subPath: Corefile
         mountPath: /etc/coredns/Corefile
         readOnly: true
-    tolerations:
-      - effect: NoSchedule
-        operator: Exists
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
