@@ -14,24 +14,17 @@ spec:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
-  maxHistory: 3
   install:
     createNamespace: true
     remediation:
-      retries: 3
+      retries: 5
   upgrade:
-    cleanupOnFail: true
     remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
+      retries: 5
   values:
     controller:
-      replicas: 1
+      replicas: 3
       strategy: RollingUpdate
-      rollingUpdate:
-        unavailable: 1
-        surge: 1
       annotations:
         reloader.stakater.com/auto: "true"
     image:
@@ -73,14 +66,21 @@ spec:
           httpGet:
             path: /ready
             port: 8181
+            scheme: HTTP
       liveness:
         custom: true
         spec:
           httpGet:
             path: /health
             port: 8080
+            scheme: HTTP
       startup:
-        enabled: false
+        custom: true
+        spec:
+          httpGet:
+            path: /ready
+            port: 8181
+            scheme: HTTP
     persistence:
       config-file:
         enabled: true
@@ -89,6 +89,9 @@ spec:
         subPath: Corefile
         mountPath: /etc/coredns/Corefile
         readOnly: true
+    # tolerations:
+    #   - effect: NoSchedule
+    #     operator: Exists
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
