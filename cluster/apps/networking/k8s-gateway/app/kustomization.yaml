@@ -10,5 +10,9 @@ configMapGenerator:
   - name: k8s-gateway-configmap
     files:
       - Corefile=./config/Corefile
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
 configurations:
   - ./patches/kustomizeconfig.yaml
