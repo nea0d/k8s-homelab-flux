@@ -1,0 +1,112 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app mealie
+  namespace: home
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    image:
+      repository: docker.io/hkotel/mealie
+      tag: frontend-v1.0.0beta-5
+    env:
+      TZ: ${TIMEZONE}
+      DB_TYPE: sqlite
+    service:
+      main:
+        ports:
+          http:
+            port: 3000
+          api:
+            enabled: true
+            port: 9000
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          external-dns/is-public: "true"
+          external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_PUBLIC_DOMAIN}"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "food"
+          hajimari.io/group: "home"
+        hosts:
+          - host: &host "mealie-beta.${SECRET_PUBLIC_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: mealie-tls
+    persistence:
+      api-data:
+        enabled: true
+        mountPath: /app/data/
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        existingClaim: mealie-data-v1
+    additionalContainers:
+      api:
+        name: mealie-api
+        image: docker.io/hkotel/mealie:api-v1.0.0beta-5
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: API_PORT
+            value: '9000'
+          - name: TZ
+            value: ${TIMEZONE}
+          - name: DEFAULT_EMAIL
+            value: "admin@${SECRET_PUBLIC_DOMAIN}"
+          - name: BASE_URL
+            value: *host
+          - name: TOKEN_TIME
+            value: 720 # 24 hours * 30 days
+          - name: AUTO_BACKUP_ENABLED
+            value: 'true'
+          - name: ALLOW_SIGNUP
+            value: 'false'
+          # - name: SMTP_HOST
+          #   value: smtp-relay.services.svc.cluster.local
+          # - name: SMTP_PORT
+          #   value: 2525
+          # - name: SMTP_AUTH_STRATEGY
+          #   value: NONE
+          # - name: SMTP_FROM_NAME
+          #   value: Mealie
+          # - name: SMTP_FROM_EMAIL
+          #   value: 'mealie@${SECRET_PUBLIC_DOMAIN}'
+        ports:
+          - name: api
+            containerPort: 9000
+        volumeMounts:
+          - name: api-data
+            mountPath: /app/data/
+    resources:
+      requests:
+        memory: 200Mi
+        cpu: 10m
+      limits:
+        memory: 400Mi
+        cpu: 500m
