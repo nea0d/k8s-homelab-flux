@@ -167,7 +167,7 @@ spec:
           - name: Prometheus
             type: prometheus
             #url: "http://kube-prometheus-stack-prometheus:9090"
-            url: http://thanos-query:9090/
+            url: http://thanos-query.monitoring.svc.cluster.local.:9090/
             uid: "PBFA97CFB590B2093"
             access: proxy
             isDefault: true
@@ -179,7 +179,7 @@ spec:
           - name: Loki
             type: loki
             access: proxy
-            url: http://loki-gateway:80
+            url: http://loki-gateway.monitoring.svc.cluster.local.:80
             uid: "P8E80F9AEF21F6940"
             editable: true
             jsonData:
@@ -189,7 +189,7 @@ spec:
             type: alertmanager
             access: proxy
             uid: "P7648CD38D5F55DE2"
-            url: http://kube-prometheus-stack-alertmanager:9093
+            url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local.:9093
             editable: true
             jsonData:
               implementation: prometheus
