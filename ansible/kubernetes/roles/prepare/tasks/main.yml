@@ -30,8 +30,3 @@
 - import_tasks: user.yml
   tags:
     - user
-
-- import_tasks: worker.yml
-  tags:
-    - worker
-  when: "'worker' in group_names"
