@@ -78,6 +78,11 @@ spec:
       #   token_url: https://id.${SECRET_PUBLIC_DOMAIN}/application/o/token/
       #   api_url: https://id.${SECRET_PUBLIC_DOMAIN}/application/o/userinfo/
       #   role_attribute_path: "contains(groups[*], 'Grafana Admins') && 'Admin' || contains(groups[*], 'Grafana Editors') && 'Editor' || 'Viewer'"
+      auth.anonymous:
+        enabled: true
+        org_name: Oxygn
+        org_id: 1
+        org_role: Viewer
     ingress:
       enabled: true
       ingressClassName: "nginx"
@@ -127,6 +132,18 @@ spec:
         label: grafana_plugin
         searchNamespace: ALL
         reloadURL: "http://localhost:3000/api/admin/provisioning/plugins/reload"
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: "default"
+            orgId: 1
+            folder: ""
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
     datasources:
       datasources.yaml:
         apiVersion: 1
