@@ -59,7 +59,7 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: mealie-tls
+            secretName: mealie-beta-tls
     persistence:
       api-data:
         enabled: true
@@ -109,4 +109,4 @@ spec:
         cpu: 10m
       limits:
         memory: 400Mi
-        cpu: 500m
+        cpu: 400m
