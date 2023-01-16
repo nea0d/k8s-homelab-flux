@@ -1,14 +1,17 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - namespace.yaml
-  - lidarr
-  - nzbget
-  - organizr
-  - overseerr
-  - prowlarr
-  - qbittorrent
-  - radarr
-  - readarr
-  - sonarr
+  # Pre Flux-Kustomizations
+  - ./namespace.yaml
+  # Flux-Kustomizations
+  - ./lidarr/ks.yaml
+  - ./nzbget/ks.yaml
+  - ./organizr/ks.yaml
+  - ./overseerr/ks.yaml
+  - ./prowlarr/ks.yaml
+  - ./qbittorrent/ks.yaml
+  - ./radarr/ks.yaml
+  - ./readarr/ks.yaml
+  - ./sonarr/ks.yaml

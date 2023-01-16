@@ -6,12 +6,13 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - flux
-  - grafana
-  - influxdb
+  - ./grafana/ks.yaml
+  - ./influxdb/ks.yaml
+  - ./kube-prometheus-stack/ks.yaml
   - ./kubernetes-dashboard/ks.yaml
-  - loki
-  - prometheus
-  - thanos
-  - unifi-poller
-  - vector
+  - ./loki/ks.yaml
+  - ./smartctl-exporter/ks.yaml
+  - ./thanos/ks.yaml
+  - ./unifi-poller/ks.yaml
+  - ./vector/ks.yaml
+  - ./vpa/ks.yaml

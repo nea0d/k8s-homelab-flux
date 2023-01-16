@@ -1,0 +1,88 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app teslamate
+  namespace: home
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    initContainers:
+    init-db:
+      image: ghcr.io/onedr0p/postgres-initdb:14.6
+      env:
+        - name: POSTGRES_HOST
+          value: "postgres-rw.databases.svc.cluster.local."
+        - name: POSTGRES_DB
+          value: "${SECRET_TESLAMATE_DBNAME}"
+        - name: POSTGRES_USER
+          value: "${SECRET_TESLAMATE_DB_USERNAME}"
+        - name: POSTGRES_PASS
+          value: "${SECRET_TESLAMATE_DB_PASSWORD}"
+        - name: POSTGRES_SUPER_USER
+          value: "${SECRET_POSTGRES_SUPER_USERNAME}"
+        - name: POSTGRES_SUPER_PASS
+          value: "${SECRET_POSTGRES_SUPER_PASSWORD}"
+    image:
+      repository: teslamate/teslamate
+      tag: 1.27.1
+    env:
+      TZ: "${TIMEZONE}"
+      # Encrypts Tesla Token
+      ENCRYPTION_KEY: "${SECRET_TESLAMATE_ENCRYPTION_KEY}"
+      # -- Postgres database hostname
+      DATABASE_HOST: 'postgres-rw.databases.svc.cluster.local.'
+      # -- Postgres database user name
+      DATABASE_USER: "${SECRET_TESLAMATE_DB_USERNAME}"
+      # -- Postgres database password
+      DATABASE_PASS: "${SECRET_TESLAMATE_DB_PASSWORD}"
+      # -- Postgres database password
+      DATABASE_NAME: "${SECRET_TESLAMATE_DBNAME}"
+      # Disables the MQTT feature if `true`
+      DISABLE_MQTT: "true" # Otherwise app crashes at launch because MQTT_HOST is not set
+    service:
+      main:
+        ports:
+          http:
+            port: 4000
+    persistence:
+      import:
+        enabled: false
+        mountPath: /opt/app/import
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "car-electric"
+          hajimari.io/group: "home"
+        hosts:
+          - host: &host "teslamate.${SECRET_PUBLIC_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: teslamate-tls

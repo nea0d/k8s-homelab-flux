@@ -1,0 +1,62 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: &app pve
+  namespace: external-services
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: https-pve
+      port: &port 8006
+      protocol: TCP
+      targetPort: *port
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: pve
+  namespace: external-services
+subsets:
+  - addresses:
+      - ip: 10.10.0.50
+    ports:
+      - name: https-pve
+        port: 8006
+        protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: &app pve
+  namespace: external-services
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "server"
+    hajimari.io/group: "networking"
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: &host "pve.${SECRET_PUBLIC_DOMAIN}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: *app
+                port:
+                  name: "https-pve"
+  tls:
+    - hosts:
+        - *host
+      secretName: pve-tls

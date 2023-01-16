@@ -1,0 +1,243 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 44.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community-charts
+        namespace: flux-system
+      interval: 30m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    cleanPrometheusOperatorObjectNames: true
+    alertmanager:
+      config:
+        global:
+          slack_api_url: "${SECRET_ALERT_MANAGER_DISCORD_WEBHOOK}/slack"
+          resolve_timeout: 5m
+        receivers:
+          - name: 'null'
+          - name: 'discord'
+            slack_configs:
+              - channel: '#monitoring' #TODO : variabilize
+                icon_url: 'https://avatars3.githubusercontent.com/u/3380462'
+                username: 'Prometheus'
+                send_resolved: true
+                title: |-
+                  [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }} {{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }} {{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }} {{ else }}{{ .CommonLabels.alertname }}{{ end }}
+                text: >-
+                  {{ range .Alerts -}}
+                    *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
+                  {{ if ne .Annotations.summary ""}}*Summary:* {{ .Annotations.summary }} {{ else if ne .Annotations.message ""}}*Message:* {{ .Annotations.message }} {{ else if ne .Annotations.description ""}}*Description:* {{ .Annotations.description }}{{ end }}
+                  *Details:*
+                    {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+                    {{ end }}
+                  {{ end }}
+        route:
+          group_by: ['alertname', 'job']
+          group_wait: 30s
+          group_interval: 5m
+          repeat_interval: 6h
+          receiver: 'null'
+          routes:
+            - receiver: 'null'
+              matchers:
+                - alertname="Watchdog"
+            - receiver: 'discord'
+              matchers:
+                - severity=~"critical|warning|error"
+              continue: true
+        inhibit_rules:
+          - source_matchers:
+              - severity="critical"
+            target_matchers:
+              - severity="warning"
+            equal:
+              - 'alertname'
+              - 'namespace'
+      ingress:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "alert-box"
+          hajimari.io/appName: "Alert-Manager"
+        hosts:
+          - &host "alert-manager.${SECRET_PUBLIC_DOMAIN}"
+        tls:
+          - hosts:
+              - *host
+            secretName: "alert-manager-tls"
+      alertmanagerSpec:
+        replicas: 3
+        podAntiAffinity: hard
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: "ceph-block-local"
+              resources:
+                requests:
+                  storage: 250Mi
+    kube-state-metrics:
+      metricLabelsAllowlist:
+        - "persistentvolumeclaims=[*]"
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels:
+                - __meta_kubernetes_pod_node_name
+              targetLabel: kubernetes_node
+    grafana:
+      enabled: false
+      forceDeployDashboards: true
+      sidecar:
+        dashboards:
+          multicluster:
+            etcd:
+              enabled: true
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels:
+              - node
+            targetLabel: instance
+    kubeApiServer:
+      enabled: true
+    kubeControllerManager:
+      enabled: true
+      endpoints:
+        - ${CLUSTER_HOST_MASTER_ADDR_1}
+        - ${CLUSTER_HOST_MASTER_ADDR_2}
+        - ${CLUSTER_HOST_MASTER_ADDR_3}
+    kubeScheduler:
+      enabled: true
+      endpoints:
+        - ${CLUSTER_HOST_MASTER_ADDR_1}
+        - ${CLUSTER_HOST_MASTER_ADDR_2}
+        - ${CLUSTER_HOST_MASTER_ADDR_3}
+    kubeProxy:
+      enabled: true
+      endpoints:
+        - ${CLUSTER_HOST_MASTER_ADDR_1}
+        - ${CLUSTER_HOST_MASTER_ADDR_2}
+        - ${CLUSTER_HOST_MASTER_ADDR_3}
+    kubeEtcd:
+      enabled: true
+      endpoints:
+        - ${CLUSTER_HOST_MASTER_ADDR_1}
+        - ${CLUSTER_HOST_MASTER_ADDR_2}
+        - ${CLUSTER_HOST_MASTER_ADDR_3}
+      service:
+        enabled: true
+        port: 2381
+        targetPort: 2381
+      serviceMonitor:
+        enabled: false
+    prometheus:
+      ingress:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "monitor-eye"
+          hajimari.io/appName: "Prometheus"
+        hosts:
+          - &host "prometheus.${SECRET_PUBLIC_DOMAIN}"
+        tls:
+          - hosts:
+              - *host
+            secretName: "prometheus-tls"
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enabled: true
+      thanosIngress:
+        ingress:
+          enabled: true
+          ingressClassName: "nginx"
+          annotations:
+            cert-manager.io/cluster-issuer: "letsencrypt-production"
+            nginx.ingress.kubernetes.io/ssl-redirect: "true"
+            nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+          hosts:
+            - &host "thanos-sidecar.${SECRET_PUBLIC_DOMAIN}"
+          tls:
+            - hosts:
+                - *host
+              secretName: "thanos-sidecar-tls"
+      prometheusSpec:
+        replicas: 3
+        podAntiAffinity: hard
+        replicaExternalLabelName: __replica__
+        externalLabels:
+          cluster: "${CLUSTER_NAME}"
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        retention: 6h
+        retentionSize: "15GB"
+        enableAdminAPI: true
+        walCompression: true
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: "ceph-block-local"
+              resources:
+                requests:
+                  storage: 20Gi
+        thanos:
+          image: quay.io/thanos/thanos:v0.30.1
+          # renovate: datasource=docker depName=quay.io/thanos/thanos
+          version: "v0.30.1"
+          objectStorageConfig:
+            name: thanos-objstore-secret
+            key: objstore.yml
+        resources:
+          requests:
+            cpu: 500m
+            memory: 2Gi
+          limits:
+            cpu: 2000m
+            memory: 6Gi
+        additionalScrapeConfigs:
+          - job_name: "minio-job"
+            metrics_path: /minio/v2/metrics/cluster
+            scheme: http
+            static_configs:
+              - targets: ["minio.storage.svc.cluster.local:80"]
+        #   - job_name: "coredns"
+        #     scrape_interval: 1m
+        #     scrape_timeout: 10s
+        #     honor_timestamps: true
+        #     static_configs:
+        #       - targets:
+        #           - "${METALLB_K8S_GATEWAY_ADDR}:9153"

@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+resources:
+  - ./helm-release.yaml
+  - ./secret.sops.yaml
+  - ./grafana-datasource.yaml
+configMapGenerator:
+  - name: grafana-dashboard-proxmox-ve
+    files:
+      - proxmox-ve-dashboard.json
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+    grafana_folder: "proxmox"
+  labels:
+    grafana_dashboard: "true"

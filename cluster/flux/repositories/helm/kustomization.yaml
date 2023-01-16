@@ -5,9 +5,8 @@ resources:
   - ./bitnami-charts.yaml
   - ./bjw-s-charts.yaml
   - ./cloudnative-pg-charts.yaml
-  - ./descheduler-charts.yaml
-  - ./emberstack-charts.yaml
   - ./external-dns-charts.yaml
+  - ./fairwinds-charts.yaml
   - ./grafana-charts.yaml
   - ./gpu-operator-charts.yaml
   - ./hajimari-charts.yaml
@@ -17,12 +16,12 @@ resources:
   - ./k8s-at-home-charts.yaml
   - ./k8s-gateway-charts.yaml
   - ./kubernetes-dashboard-charts.yaml
-  - ./longhorn-charts.yaml
   - ./metallb-charts.yaml
   - ./metrics-server-charts.yaml
   - ./minio-charts.yaml
   - ./morremeyer-charts.yaml
   - ./nfs-subdir-external-provisioner-charts.yaml
+  - ./piraeus-charts.yaml
   - ./prometheus-community-charts.yaml
   - ./project-calico-charts.yaml
   - ./rook-ceph-charts.yaml
