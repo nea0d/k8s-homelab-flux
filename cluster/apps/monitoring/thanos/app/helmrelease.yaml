@@ -159,3 +159,36 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: Deployment
+              name: thanos-bucketweb
+            patch:
+              - op: replace
+                path: /spec/strategy/rollingUpdate/maxUnavailable
+                value: 1
+              - op: replace
+                path: /spec/strategy/rollingUpdate/maxSurge
+                value: 1
+          - target:
+              kind: Deployment
+              name: thanos-query-frontend
+            patch:
+              - op: replace
+                path: /spec/strategy/rollingUpdate/maxUnavailable
+                value: 1
+              - op: replace
+                path: /spec/strategy/rollingUpdate/maxSurge
+                value: 1
+          - target:
+              kind: Deployment
+              name: thanos-query
+            patch:
+              - op: replace
+                path: /spec/strategy/rollingUpdate/maxUnavailable
+                value: 1
+              - op: replace
+                path: /spec/strategy/rollingUpdate/maxSurge
+                value: 1

@@ -6,21 +6,6 @@ namespace: monitoring
 resources:
   - ./helmrelease.yaml
   - ./secret.sops.yaml
-patches:
-  - patch: |
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: not-used
-      spec:
-        strategy:
-          type: RollingUpdate
-          rollingUpdate:
-            maxUnavailable: 1
-            maxSurge: 1
-    target:
-      kind: Deployment
-      name: "(thanos-query-frontend|thanos-bucketweb|thanos-query)"
 configMapGenerator:
   - name: thanos-bucket-replicate-dashboard
     files:
