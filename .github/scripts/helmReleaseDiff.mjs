@@ -1,5 +1,5 @@
 #!/usr/bin/env zx
-$.verbose = false
+$.verbose = true
 
 /**
  * * helmReleaseDiff.mjs
@@ -8,7 +8,7 @@ $.verbose = false
  * @param --incoming-release  The target Flux HelmRelease to compare against the source
  * @param --kubernetes-dir    The directory containing your Flux manifests including the HelmRepository manifests
  * * Limitations:
- * * Does not work with multiple HelmRelease maninfests in the same YAML document
+ * * Does not work with multiple HelmRelease manifests in the same YAML document
  */
 const CurrentRelease  = argv['current-release']
 const IncomingRelease = argv['incoming-release']
