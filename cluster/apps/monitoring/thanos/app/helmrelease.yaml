@@ -166,38 +166,32 @@ spec:
               kind: Deployment
               name: thanos-bucketweb
             patch:
-              - op: add
+              - op: replace
                 path: /spec/strategy
-                value: "rollingUpdate:"
-              - op: add
-                path: /spec/strategy/rollingUpdate/maxUnavailable
-                value: 1
-              - op: add
-                path: /spec/strategy/rollingUpdate/maxSurge
-                value: 1
+                value:
+                  type: RollingUpdate
+                  rollingUpdate:
+                    maxSurge: 1
+                    maxUnavailable: 1
           - target:
               kind: Deployment
               name: thanos-query-frontend
             patch:
-              - op: add
+              - op: replace
                 path: /spec/strategy
-                value: "rollingUpdate:"
-              - op: add
-                path: /spec/strategy/rollingUpdate/maxUnavailable
-                value: 1
-              - op: add
-                path: /spec/strategy/rollingUpdate/maxSurge
-                value: 1
+                value:
+                  type: RollingUpdate
+                  rollingUpdate:
+                    maxSurge: 1
+                    maxUnavailable: 1
           - target:
               kind: Deployment
               name: thanos-query
             patch:
-              - op: add
+              - op: replace
                 path: /spec/strategy
-                value: "rollingUpdate:"
-              - op: add
-                path: /spec/strategy/rollingUpdate/maxUnavailable
-                value: 1
-              - op: add
-                path: /spec/strategy/rollingUpdate/maxSurge
-                value: 1
+                value:
+                  type: RollingUpdate
+                  rollingUpdate:
+                    maxSurge: 1
+                    maxUnavailable: 1
