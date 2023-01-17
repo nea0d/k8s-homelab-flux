@@ -51,7 +51,7 @@ spec:
     nfd:
       enabled: true
     psp:
-      enabled: false
+      enabled: true
     toolkit:
       enabled: true
       toolkit:
