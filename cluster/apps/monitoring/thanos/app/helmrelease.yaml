@@ -31,12 +31,7 @@ spec:
     query:
       enabled: true
       replicaCount: 3
-      deploymentStrategy:
-        type: RollingUpdate
-        rollingUpdate:
-          maxUnavailable: 1
-          maxSurge: 1
-      # podAntiAffinityPreset: hard
+      podAntiAffinityPreset: hard
       replicaLabel:
         - __replica__
       dnsDiscovery:
@@ -56,20 +51,11 @@ spec:
     queryFrontend:
       enabled: true
       replicaCount: 3
-      deploymentStrategy:
-        type: RollingUpdate
-        rollingUpdate:
-          maxUnavailable: 1
-          maxSurge: 1
+      podAntiAffinityPreset: hard
     bucketweb:
       enabled: true
       replicaCount: 3
-      deploymentStrategy:
-        type: RollingUpdate
-        rollingUpdate:
-          maxUnavailable: 1
-          maxSurge: 1
-      # podAntiAffinityPreset: hard
+      podAntiAffinityPreset: hard
       ingress:
         enabled: true
         hostname: &host "thanos-bucketweb.${SECRET_PUBLIC_DOMAIN}"
@@ -107,12 +93,7 @@ spec:
     storegateway:
       enabled: true
       replicaCount: 3
-      deploymentStrategy:
-        type: RollingUpdate
-        rollingUpdate:
-          maxUnavailable: 1
-          maxSurge: 1
-      # podAntiAffinityPreset: hard
+      podAntiAffinityPreset: hard
       ingress:
         enabled: true
         hostname: &host "thanos-storegateway.${SECRET_PUBLIC_DOMAIN}"
@@ -131,12 +112,7 @@ spec:
     ruler:
       enabled: true
       replicaCount: 3
-      deploymentStrategy:
-        type: RollingUpdate
-        rollingUpdate:
-          maxUnavailable: 1
-          maxSurge: 1
-      # podAntiAffinityPreset: hard
+      podAntiAffinityPreset: hard
       dnsDiscovery:
         enabled: true
       alertmanagers:
