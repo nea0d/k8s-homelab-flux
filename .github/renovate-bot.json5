@@ -1,0 +1,6 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "username": "mushu-bot[bot]",
+  "gitAuthor": "mushu-bot <279124+mushu-bot[bot]@users.noreply.github.com>",
+  "repositories": ["nea0d/k8s-homelab-flux"]
+}

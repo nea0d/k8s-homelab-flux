@@ -18,12 +18,7 @@
     "github>nea0d/k8s-homelab-flux//.github/renovate/semanticCommits.json5"
   ],
   "platform": "github",
-  "username": "mushu-bot[bot]",
-  "gitAuthor": "mushu-bot <279124+mushu-bot[bot]@users.noreply.github.com>",
-  "repositories": ["nea0d/k8s-homelab-flux"],
-  "branchConcurrentLimit": 3,
   "timezone": "Europe/Paris",
-  "schedule": ["after 10pm every weekday", "before 5am every weekday", "every weekend"],
   "onboarding": false,
   "requireConfig": "optional",
   "dependencyDashboardTitle": "Renovate Dashboard",
@@ -46,7 +41,7 @@
       "description": "Process custom dependencies",
       "fileMatch": [
         "ansible/.+\\.ya?ml$",
-        "cluster/.+\\.ya?ml$"
+        "kubernetes/.+\\.ya?ml$"
       ],
       "matchStrings": [
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
