@@ -36,7 +36,7 @@ spec:
         rollingUpdate:
           maxUnavailable: 1
           maxSurge: 1
-      podAntiAffinityPreset: hard
+      # podAntiAffinityPreset: hard
       replicaLabel:
         - __replica__
       dnsDiscovery:
@@ -69,7 +69,7 @@ spec:
         rollingUpdate:
           maxUnavailable: 1
           maxSurge: 1
-      podAntiAffinityPreset: hard
+      # podAntiAffinityPreset: hard
       ingress:
         enabled: true
         hostname: &host "thanos-bucketweb.${SECRET_PUBLIC_DOMAIN}"
@@ -112,7 +112,7 @@ spec:
         rollingUpdate:
           maxUnavailable: 1
           maxSurge: 1
-      podAntiAffinityPreset: hard
+      # podAntiAffinityPreset: hard
       ingress:
         enabled: true
         hostname: &host "thanos-storegateway.${SECRET_PUBLIC_DOMAIN}"
@@ -136,7 +136,7 @@ spec:
         rollingUpdate:
           maxUnavailable: 1
           maxSurge: 1
-      podAntiAffinityPreset: hard
+      # podAntiAffinityPreset: hard
       dnsDiscovery:
         enabled: true
       alertmanagers:
