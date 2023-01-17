@@ -7,9 +7,9 @@ resources:
   - ./helmrelease.yaml
   - ./secret.sops.yaml
 configMapGenerator:
-  - name: grafana-dashboard-minio-dashboard
+  - name: minio-dashboard
     files:
-      - https://github.com/minio/minio/raw/master/docs/metrics/prometheus/grafana/minio-dashboard.json
+      - ./minio-dashboard.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
