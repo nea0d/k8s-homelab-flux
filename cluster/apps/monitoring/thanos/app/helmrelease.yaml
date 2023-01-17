@@ -31,6 +31,11 @@ spec:
     query:
       enabled: true
       replicaCount: 3
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
       podAntiAffinityPreset: hard
       replicaLabel:
         - __replica__
@@ -51,10 +56,19 @@ spec:
     queryFrontend:
       enabled: true
       replicaCount: 3
-      podAntiAffinityPreset: hard
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
     bucketweb:
       enabled: true
       replicaCount: 3
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
       podAntiAffinityPreset: hard
       ingress:
         enabled: true
