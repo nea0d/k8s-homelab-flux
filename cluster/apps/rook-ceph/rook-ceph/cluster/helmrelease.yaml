@@ -51,6 +51,8 @@ spec:
       bdev_async_discard = true
       mon_data_avail_warn = 15
       mon_warn_on_pool_no_redundancy = false
+    toolbox:
+      enabled: true
     cephClusterSpec:
       network:
         provider: host
