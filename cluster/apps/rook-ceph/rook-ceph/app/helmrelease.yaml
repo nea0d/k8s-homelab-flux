@@ -28,6 +28,9 @@ spec:
   values:
     crds:
       enabled: true
+    csi:
+      nfs:
+        enabled: true
     pspEnable: false
     monitoring:
       enabled: true
