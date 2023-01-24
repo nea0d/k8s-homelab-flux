@@ -13,7 +13,7 @@ spec:
       version: v22.9.0
       sourceRef:
         kind: HelmRepository
-        name: gpu-operator-charts
+        name: gpu-operator
         namespace: flux-system
       interval: 15m
   install:
