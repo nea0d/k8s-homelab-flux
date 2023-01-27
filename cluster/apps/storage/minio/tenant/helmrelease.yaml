@@ -29,6 +29,9 @@ spec:
   values:
     tenant:
       name: minio-tenant-main
+      exposeServices:
+        minio: true
+        console: false
       pools:
         - servers: 3
           volumesPerServer: 2

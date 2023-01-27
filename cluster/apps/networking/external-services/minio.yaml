@@ -1,0 +1,79 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: &app minio
+  namespace: networking
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: http-minio-console
+      port: &port-console 9001
+      protocol: TCP
+      targetPort: *port-console
+    - name: http-minio-api
+      port: &port-api 9000
+      protocol: TCP
+      targetPort: *port-api
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: minio
+  namespace: networking
+subsets:
+  - addresses:
+      - ip: 10.10.10.20
+    ports:
+      - name: http-minio-console
+        port: 9001
+        protocol: TCP
+      - name: http-minio-api
+        port: 9000
+        protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: &app minio
+  namespace: networking
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "nas"
+    hajimari.io/group: "storage"
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: &host-console "minio.${SECRET_PUBLIC_DOMAIN}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: *app
+                port:
+                  number: 9001
+    - host: &host-api "s3.${SECRET_PUBLIC_DOMAIN}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: *app
+                port:
+                  number: 9000
+  tls:
+    - hosts:
+        - *host-console
+        - *host-api
+      secretName: minio-tls
