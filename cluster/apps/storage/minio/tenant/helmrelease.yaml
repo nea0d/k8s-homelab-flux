@@ -73,7 +73,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "bucket"
           hajimari.io/group: "storage"
-        host: &host-console "minio.${SECRET_PUBLIC_DOMAIN}"
+        host: &host-console "minio-k8s.${SECRET_PUBLIC_DOMAIN}"
         tls:
           - hosts:
               - *host-console
@@ -86,7 +86,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "bucket"
           hajimari.io/group: "storage"
-        host: &host-api "s3.${SECRET_PUBLIC_DOMAIN}"
+        host: &host-api "s3-k8s.${SECRET_PUBLIC_DOMAIN}"
         tls:
           - hosts:
               - *host-api
