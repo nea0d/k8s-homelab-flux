@@ -64,7 +64,7 @@ spec:
               s3: s3://loki-chunks-v1@us-east-1/
               bucketnames: loki-chunks-v1
               access_key_id: ${SECRET_MINIO_ROOT_USERNAME}
-              endpoint: http://minio.storage.svc.cluster.local
+              endpoint: http://minio.networking.svc.cluster.local
               secret_access_key: ${SECRET_MINIO_ROOT_PASSWORD}
               insecure: true
               s3forcepathstyle: true

@@ -31,7 +31,7 @@ spec:
         config:
           region: us-east-1
           s3ForcePathStyle: true
-          s3Url: http://minio.storage.svc.cluster.local
+          s3Url: http://minio.networking.svc.cluster.local
           publicUrl: "https://s3.${SECRET_PUBLIC_DOMAIN}"
       volumeSnapshotLocation:
         name: aws
