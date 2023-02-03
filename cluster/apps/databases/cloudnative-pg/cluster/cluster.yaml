@@ -15,6 +15,10 @@ spec:
     name: postgres-superuser
   monitoring:
     enablePodMonitor: true
+  affinity:
+    enablePodAntiAffinity: true
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: required
   bootstrap:
     recovery:
       source: postgres-v5
