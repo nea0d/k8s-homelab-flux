@@ -159,7 +159,7 @@ spec:
         port: 2381
         targetPort: 2381
       serviceMonitor:
-        enabled: false
+        enabled: true
     prometheus:
       ingress:
         enabled: true
@@ -204,7 +204,7 @@ spec:
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         retention: 6h
-        retentionSize: "15GB"
+        retentionSize: "6GB"
         enableAdminAPI: true
         walCompression: true
         storageSpec:
@@ -221,11 +221,10 @@ spec:
             key: objstore.yml
         resources:
           requests:
-            cpu: 500m
+            cpu: 150m
             memory: 2Gi
           limits:
-            cpu: 2000m
-            memory: 6Gi
+            memory: 7Gi
         additionalScrapeConfigs:
           - job_name: "minio-job"
             metrics_path: /minio/v2/metrics/cluster
