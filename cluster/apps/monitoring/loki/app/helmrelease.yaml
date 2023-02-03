@@ -61,8 +61,8 @@ spec:
           replication_factor: 3
           storage:
             s3:
-              s3: s3://loki-chunks-v1@us-east-1/
-              bucketnames: loki-chunks-v1
+              s3: s3://loki-chunks@us-east-1/
+              bucketnames: loki-chunks
               access_key_id: ${SECRET_MINIO_ROOT_USERNAME}
               endpoint: http://minio.networking.svc.cluster.local:9000
               secret_access_key: ${SECRET_MINIO_ROOT_PASSWORD}
@@ -135,14 +135,14 @@ spec:
       replicas: 3
       persistence:
         size: 10Gi
-        storageClass: nfs-k8s-storage
+        storageClass: ceph-block-local
     read:
       replicas: 3
     backend:
       replicas: 3
       persistence:
         size: 10Gi
-        storageClass: nfs-k8s-storage
+        storageClass: ceph-block-local
       extraVolumeMounts:
         - name: rules
           mountPath: /rules/fake
