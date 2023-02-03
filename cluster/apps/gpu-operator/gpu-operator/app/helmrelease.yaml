@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://nvidia.github.io/gpu-operator
       chart: gpu-operator
-      version: v22.9.0
+      version: v22.9.2
       sourceRef:
         kind: HelmRepository
         name: gpu-operator
