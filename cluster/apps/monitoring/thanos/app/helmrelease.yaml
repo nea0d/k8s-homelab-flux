@@ -34,7 +34,7 @@ spec:
     existingObjstoreSecret: &secret thanos-objstore-secret
     query:
       enabled: true
-      replicaCount: 3
+      replicaCount: 1
       deploymentStrategy:
         type: RollingUpdate
         rollingUpdate:
@@ -59,7 +59,7 @@ spec:
             secretName: thanos-query-tls
     queryFrontend:
       enabled: true
-      replicaCount: 3
+      replicaCount: 1
       deploymentStrategy:
         type: RollingUpdate
         rollingUpdate:
@@ -67,7 +67,7 @@ spec:
           maxSurge: 1
     bucketweb:
       enabled: true
-      replicaCount: 3
+      replicaCount: 1
       deploymentStrategy:
         type: RollingUpdate
         rollingUpdate:
@@ -90,7 +90,7 @@ spec:
       extraFlags:
         - "--compact.concurrency"
         - "4"
-      retentionResolutionRaw: 2d
+      retentionResolutionRaw: 7d
       retentionResolution5m: 14d
       retentionResolution1h: 30d
       ingress:
@@ -110,7 +110,7 @@ spec:
         size: 50Gi
     storegateway:
       enabled: true
-      replicaCount: 3
+      replicaCount: 1
       podAntiAffinityPreset: hard
       ingress:
         enabled: true
@@ -129,7 +129,7 @@ spec:
         size: 5Gi
     ruler:
       enabled: true
-      replicaCount: 3
+      replicaCount: 1
       podAntiAffinityPreset: hard
       dnsDiscovery:
         enabled: true
