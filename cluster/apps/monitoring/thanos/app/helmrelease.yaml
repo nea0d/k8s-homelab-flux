@@ -106,7 +106,7 @@ spec:
             secretName: thanos-compactor-tls
       persistence:
         enabled: true
-        storageClass: "ceph-block-local"
+        storageClass: "ceph-block"
         size: 50Gi
     storegateway:
       enabled: true
@@ -125,7 +125,7 @@ spec:
             secretName: thanos-storegateway-tls
       persistence:
         enabled: true
-        storageClass: "ceph-block-local"
+        storageClass: "ceph-block"
         size: 5Gi
     ruler:
       enabled: true
@@ -157,7 +157,7 @@ spec:
             secretName: thanos-ruler-tls
       persistence:
         enabled: true
-        storageClass: "ceph-block-local"
+        storageClass: "ceph-block"
         size: 5Gi
     metrics:
       enabled: true

@@ -135,14 +135,14 @@ spec:
       replicas: 1
       persistence:
         size: 10Gi
-        storageClass: ceph-block-local
+        storageClass: ceph-block
     read:
       replicas: 1
     backend:
       replicas: 1
       persistence:
         size: 10Gi
-        storageClass: ceph-block-local
+        storageClass: ceph-block
       extraVolumeMounts:
         - name: rules
           mountPath: /rules/fake
