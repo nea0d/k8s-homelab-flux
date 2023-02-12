@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: loki
-      version: 4.5.1
+      version: 4.6.0
       sourceRef:
         kind: HelmRepository
         name: grafana
@@ -138,6 +138,14 @@ spec:
         storageClass: ceph-block
     read:
       replicas: 1
+      persistence:
+        storageClass: ceph-block
+      extraVolumeMounts:
+        - name: rules
+          mountPath: /rules
+      extraVolumes:
+        - name: rules
+          emptyDir: {}
     backend:
       replicas: 1
       persistence:
