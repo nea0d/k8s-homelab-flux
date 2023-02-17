@@ -99,6 +99,11 @@ spec:
         repository: ghcr.io/tarampampam/error-pages
         tag: 2.20.0
       replicaCount: 3
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
       extraEnvs:
         - name: TEMPLATE_NAME
           value: ghost
@@ -125,3 +130,28 @@ spec:
       kind: ConfigMap
       name: cloudflare-networks
       valuesKey: cloudflare-networks.txt
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: Deployment
+              name: ingress-nginx-controller
+            patch:
+              - op: replace
+                path: /spec/strategy
+                value:
+                  type: RollingUpdate
+                  rollingUpdate:
+                    maxSurge: 1
+                    maxUnavailable: 1
+          - target:
+              kind: Deployment
+              name: ingress-nginx-defaultbackend
+            patch:
+              - op: replace
+                path: /spec/strategy
+                value:
+                  type: RollingUpdate
+                  rollingUpdate:
+                    maxSurge: 1
+                    maxUnavailable: 1
