@@ -116,7 +116,7 @@ spec:
       - grafana-worldmap-panel
       - grafana-clock-panel
       - natel-plotly-panel
-      - panodata-map-panel
+      # - panodata-map-panel -> not found
     serviceMonitor:
       enabled: true
     serviceAccount:
