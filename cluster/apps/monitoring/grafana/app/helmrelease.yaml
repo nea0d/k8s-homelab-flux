@@ -205,7 +205,9 @@ spec:
       enabled: true
       replicas: 1
     persistence:
-      enabled: false
+      enabled: true
+      size: 10Gi
+      storageClass: ceph-block
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
