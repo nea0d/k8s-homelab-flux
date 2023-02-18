@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 set -e
 
-usage="$(basename "$0") [-h] [-p POD] [-n NAMESPACE]
-Force delete 'terminating' pod
+usage="$(basename "$0") [-h] [-s SCALE] [-n NAMESPACE]
+Scale all deployments in a namespace
 where:
     -h  show this help text
-    -p  pod name
-    -n  pod namespace"
+    -s  scale number
+    -n  namespace"
 
 # constants
-options=':hp:n:'
+options=':hs:n:'
 while getopts $options option; do
   case "$option" in
     h) echo "$usage"; exit;;
-    p) POD=$OPTARG;;
+    s) SCALE=$OPTARG;;
     n) NAMESPACE=$OPTARG;;
     :) printf "missing argument for -%s\n" "$OPTARG" >&2; echo "$usage" >&2; exit 1;;
    \?) printf "illegal option: -%s\n" "$OPTARG" >&2; echo "$usage" >&2; exit 1;;
@@ -21,9 +21,9 @@ while getopts $options option; do
 done
 
 # mandatory arguments
-if [ ! "$POD" ] || [ ! "$NAMESPACE" ]; then
-  echo "arguments -p and -n must be provided"
+if [ ! "$SCALE" ] || [ ! "$NAMESPACE" ]; then
+  echo "arguments -s and -n must be provided"
   echo "$usage" >&2; exit 1
 fi
 
-kubectl delete pod $POD --grace-period=0 --force --namespace $NAMESPACE
+kubectl scale deploy -n $NAMESPACE --replicas=$SCALE --all
