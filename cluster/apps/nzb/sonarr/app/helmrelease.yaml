@@ -53,8 +53,7 @@ spec:
           timeoutSeconds: 1
           failureThreshold: 3
       readiness: *probes
-      startup:
-        enabled: false
+      startup: *probes
     ingress:
       main:
         enabled: true
@@ -73,20 +72,20 @@ spec:
           - hosts:
               - *host
             secretName: sonarr-tls
-      api:
-        enabled: true
-        ingressClassName: "nginx"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-        hosts:
-          - host: *host
-            paths:
-              - path: /api
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *host
-            secretName: sonarr-api-tls
+      # api:
+      #   enabled: true
+      #   ingressClassName: "nginx"
+      #   annotations:
+      #     cert-manager.io/cluster-issuer: "letsencrypt-production"
+      #   hosts:
+      #     - host: *host
+      #       paths:
+      #         - path: /api
+      #           pathType: Prefix
+      #   tls:
+      #     - hosts:
+      #         - *host
+      #       secretName: sonarr-api-tls
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568
