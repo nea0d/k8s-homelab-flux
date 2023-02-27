@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: authentication
 resources:
   - ./helmrelease.yaml
+  - ./secret.sops.yaml
 patchesStrategicMerge:
   - ./patches/env.yaml
 configMapGenerator:
