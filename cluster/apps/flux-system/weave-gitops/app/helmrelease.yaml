@@ -59,8 +59,9 @@ spec:
       enabled: true
     rbac:
       create: true
-      impersonationResourceNames: ["cluster-admin"]
+      impersonationResourceNames: ["admin"]
       impersonationResources: ["users", "groups"]
+      viewSecretsResourceNames: ["weave-gitops-secret"]
       additionalRules:
         - apiGroups: ["infra.contrib.fluxcd.io"]
           resources: ["terraforms"]
