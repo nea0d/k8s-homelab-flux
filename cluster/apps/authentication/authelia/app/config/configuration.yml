@@ -1,6 +1,11 @@
 # yaml-language-server: $schema=https://gist.githubusercontent.com/james-d-elliott/756de37a4398b3445072a60d674905c6/raw/ce90833b1ce145cb701184557dd964fa7546f19a/jsonschema.json
 ---
 session:
+  name: authelia_session
+  same_site: lax
+  expiration: 1h
+  inactivity: 5m
+  remember_me_duration: 1M
   redis:
     high_availability:
       sentinel_name: redis-master
@@ -11,6 +16,11 @@ session:
           port: 26379
         - host: redis-node-2.redis-headless.databases.svc.cluster.local
           port: 26379
+
+regulation:
+  max_retries: 3
+  find_time: 2m
+  ban_time: 5m
 
 access_control:
   default_policy: two_factor
@@ -23,7 +33,6 @@ access_control:
 
 totp:
   disable: false
-  issuer: oxygn.dev
   algorithm: sha1
   digits: 6
   period: 30
@@ -32,8 +41,8 @@ totp:
 
 webauthn:
   disable: false
-  display_name: oxygn.dev
-  attestation_conveyance_preference: indirect
+  display_name: Oxygn
+  attestation_conveyance_preference: none #indirect
   user_verification: preferred
   timeout: 60s
 
