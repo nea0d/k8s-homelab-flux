@@ -32,10 +32,10 @@ totp:
 
 webauthn:
   disable: false
-  display_name: Oxygn.dev
+  display_name: oxygn.dev
   attestation_conveyance_preference: indirect
   user_verification: preferred
-  # timeout: 60
+  timeout: 60s
 
 duo_api:
   disable: true
