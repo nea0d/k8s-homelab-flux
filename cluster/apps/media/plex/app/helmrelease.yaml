@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/plex
-      tag: 1.31.1.6733-bc0674160@sha256:13e22d890c9e1f25d17846c7e7e4c22df39daaa0f20c8d30570a2ad47ffb245c
+      tag: 1.31.1.6733-bc0674160@sha256:10376154353b48caf99cf0f601a19672ddc763660401af5fe0933e820be62ed8
     env:
       TZ: "${TIMEZONE}"
       ADVERTISE_IP: "http://${METALLB_PLEX_ADDR}:32400,https://{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}:32400"
