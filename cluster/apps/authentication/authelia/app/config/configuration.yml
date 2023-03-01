@@ -32,10 +32,10 @@ totp:
 
 webauthn:
   disable: false
-  display_name: Authelia
+  display_name: Oxygn.dev
   attestation_conveyance_preference: indirect
   user_verification: preferred
-  timeout: 60s
+  # timeout: 60
 
 duo_api:
   disable: true
