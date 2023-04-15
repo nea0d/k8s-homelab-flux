@@ -3,7 +3,13 @@
 set -o nounset
 set -o errexit
 
-current_ipv4="$(curl -s https://ipv4.icanhazip.com/)"
+current_ipv4="$(curl -s https://ipinfo.io/ip)"
+if [[ "${current_ipv4}" == "" ]]; then
+    printf "%s - Error - Unable to get your current ipv4 address" "$(date -u)"
+    exit 0
+else
+    printf "%s - Info - Your current IP Address is '%s'" "$(date -u)" "${current_ipv4}"
+fi
 zone_id=$(curl -s -X GET \
     "https://api.cloudflare.com/client/v4/zones?name=${CLOUDFLARE_RECORD_NAME#*.}&status=active" \
     -H "X-Auth-Email: ${CLOUDFLARE_EMAIL}" \
