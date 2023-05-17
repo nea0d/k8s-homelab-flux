@@ -83,6 +83,12 @@ spec:
       config:
         enabled: true
         existingClaim: pvc-plex-config-v1
+      transcode:
+        enabled: true
+        type: nfs
+        server: "nas01.${SECRET_PRIVATE_DOMAIN}"
+        path: "/volume2/Media/Transcode"
+        mountPath: /transcode
       # transcode:
       #   enabled: true
       #   type: emptyDir
