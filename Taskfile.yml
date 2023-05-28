@@ -2,46 +2,20 @@
 version: "3"
 
 vars:
-  PROJECT_DIR:
-    sh: "git rev-parse --show-toplevel"
-  CLUSTER_DIR: "{{.PROJECT_DIR}}/cluster"
-  ANSIBLE_DIR: "{{.PROJECT_DIR}}/ansible"
-  TERRAFORM_DIR: "{{.PROJECT_DIR}}/terraform"
+  CLUSTER_DIR: "{{.ROOT_DIR}}/cluster"
+  INFRASTRUCTURE_DIR: "{{.ROOT_DIR}}/ansible"
 
 env:
-  KUBECONFIG: "{{.PROJECT_DIR}}/ansible/kubernetes/kubeconfig"
+  KUBECONFIG: "{{.ROOT_DIR}}/ansible/kubernetes/kubeconfig"
 
 includes:
-  ansible: .taskfiles/AnsibleTasks.yml
-  cluster: .taskfiles/ClusterTasks.yml
-  terraform: .taskfiles/TerraformTasks.yml
+  es: .taskfiles/ExternalSecrets/Tasks.yml
+  fx: .taskfiles/Flux/Tasks.yml
+  ku: .taskfiles/Kubernetes/Tasks.yml
+  vs: .taskfiles/VolSync/Tasks.yml
 
 tasks:
 
-  init:
-    desc: Initialize workstation dependencies with Brew
-    cmds:
-      - brew install {{.DEPS}} {{.CLI_ARGS}}
-    preconditions:
-      - sh: command -v brew
-        msg: |
-          Homebrew is not installed. Using MacOS, Linux or WSL?
-          Head over to https://brew.sh to get up and running.
-    vars:
-      DEPS: >-
-        age
-        ansible
-        direnv
-        fluxcd/tap/flux
-        go-task/tap/go-task
-        helm
-        ipcalc
-        jq
-        kubernetes-cli
-        kustomize
-        prettier
-        sops
-        stern
-        terraform
-        yamllint
-        yq
+  default:
+    silent: true
+    cmds: ["task -l"]
