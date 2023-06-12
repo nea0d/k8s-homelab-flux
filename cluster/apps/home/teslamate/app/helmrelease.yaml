@@ -44,7 +44,7 @@ spec:
           value: "${SECRET_POSTGRES_SUPER_PASSWORD}"
     image:
       repository: teslamate/teslamate
-      tag: 1.27.2
+      tag: 1.27.3
     env:
       TZ: "${TIMEZONE}"
       # Encrypts Tesla Token
