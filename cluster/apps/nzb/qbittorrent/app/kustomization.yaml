@@ -6,7 +6,6 @@ namespace: nzb
 resources:
   - ./pvc.yaml
   - ./helmrelease.yaml
-  - ./cronjob.yaml
   - ./vpn-auth-secret.sops.yaml
   - ./vpn-config-secret.sops.yaml
   - ./backups
