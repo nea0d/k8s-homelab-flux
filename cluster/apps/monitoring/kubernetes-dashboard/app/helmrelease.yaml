@@ -28,36 +28,42 @@ spec:
   values:
     env:
       TZ: "${TIMEZONE}"
-    extraArgs:
-      - --enable-skip-login
-      - --disable-settings-authorizer
-      - --enable-insecure-login
-      - --token-ttl=43200
-    ingress:
-      enabled: true
-      className: nginx
-      annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-production"
-        hajimari.io/enable: "true"
-        hajimari.io/icon: mdi:kubernetes
-        hajimari.io/group: "monitoring"
-      hosts:
-        - &host "kubernetes.${SECRET_PUBLIC_DOMAIN}"
-      tls:
-        - hosts:
-            - *host
-          secretName: "kubernetes-dashboard-tls"
+    app:
+      image:
+        pullPolicy: IfNotPresent
+      ingress:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: mdi:kubernetes
+          hajimari.io/group: "monitoring"
+          nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+        hosts:
+          - &host "dashboard.${SECRET_PUBLIC_DOMAIN}"
+        tls:
+          - hosts:
+              - *host
+            secretName: "kubernetes-dashboard-tls"
+      # protocolHttp: true
+    api:
+      containers:
+      # https://github.com/kubernetes/dashboard/blob/master/docs/common/arguments.md
+        args:
+          # When enabled, the skip button on the login page will be shown.
+          - --enable-skip-login
+          # When enabled, Dashboard settings page will not require user to be logged in and authorized to access settings page.
+          - --disable-settings-authorizer
+          # When enabled, Dashboard login view will also be shown when Dashboard is not served over HTTPS.
+          - --enable-insecure-login
     metricsScraper:
       enabled: true
-    serviceMonitor:
-      enabled: false
-    # disables metrics-server subchart installation
-    metrics-server:
+    # disables nginx-ingress-controller subchart installation
+    nginx:
       enabled: false
     # disables cert-manager subchart installation
     cert-manager:
       enabled: false
-      installCRDs: false
-    # disables nginx-ingress-controller subchart installation
-    nginx:
+    # disables metrics-server subchart installation
+    metrics-server:
       enabled: false
