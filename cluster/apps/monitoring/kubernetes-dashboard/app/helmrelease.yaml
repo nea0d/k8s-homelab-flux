@@ -51,3 +51,10 @@ spec:
       enabled: true
     serviceMonitor:
       enabled: false
+    # disables cert-manager subchart installation
+    cert-manager:
+      enabled: false
+      installCRDs: false
+    # disables nginx-ingress-controller subchart installation
+    nginx:
+      enabled: false
