@@ -2,11 +2,11 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: pg-cluster
+  name: postgres
   namespace: databases
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:14.5
+  imageName: ghcr.io/cloudnative-pg/postgresql:14.8-7
   primaryUpdateStrategy: unsupervised
   storage:
     size: 10Gi
@@ -21,16 +21,16 @@ spec:
     podAntiAffinityType: required
   bootstrap:
     recovery:
-      source: postgres-v6
+      source: &previousCluster postgres-v6
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
       wal:
         compression: bzip2
-        maxParallel: 2
+        maxParallel: 8
       destinationPath: s3://postgres-backup-v1/
       endpointURL: http://minio.networking.svc.cluster.local:9000
-      serverName: postgres-v7
+      serverName: &currentCluster postgres-v7
       s3Credentials:
         accessKeyId:
           name: postgres-minio
@@ -38,12 +38,13 @@ spec:
         secretAccessKey:
           name: postgres-minio
           key: MINIO_SECRET_KEY
+  # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
-    - name: postgres-v6
+    - name: *previousCluster
       barmanObjectStore:
         wal:
           compression: bzip2
-          maxParallel: 2
+          maxParallel: 8
         destinationPath: s3://postgres-backup-v1/
         endpointURL: http://minio.networking.svc.cluster.local:9000
         s3Credentials:
