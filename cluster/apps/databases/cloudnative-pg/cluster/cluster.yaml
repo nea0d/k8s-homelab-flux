@@ -6,8 +6,7 @@ metadata:
   namespace: databases
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/cloudnative-pg-testing:dev-1354 #https://github.com/cloudnative-pg/cloudnative-pg/issues/1354
-  #ghcr.io/cloudnative-pg/postgresql:14.8-7
+  imageName: ghcr.io/cloudnative-pg/postgresql:14.8-7
   primaryUpdateStrategy: unsupervised
   storage:
     size: 10Gi
