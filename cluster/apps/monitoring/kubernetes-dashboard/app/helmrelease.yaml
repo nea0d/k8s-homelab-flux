@@ -51,6 +51,9 @@ spec:
       enabled: true
     serviceMonitor:
       enabled: false
+    # disables metrics-server subchart installation
+    metrics-server:
+      enabled: false
     # disables cert-manager subchart installation
     cert-manager:
       enabled: false
