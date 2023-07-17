@@ -21,7 +21,7 @@ spec:
     podAntiAffinityType: required
   bootstrap:
     recovery:
-      source: postgres-v5
+      source: postgres-v6
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
@@ -30,7 +30,7 @@ spec:
         maxParallel: 2
       destinationPath: s3://postgres-backup-v1/
       endpointURL: http://minio.networking.svc.cluster.local:9000
-      serverName: postgres-v6
+      serverName: postgres-v7
       s3Credentials:
         accessKeyId:
           name: postgres-minio
@@ -39,7 +39,7 @@ spec:
           name: postgres-minio
           key: MINIO_SECRET_KEY
   externalClusters:
-    - name: postgres-v5
+    - name: postgres-v6
       barmanObjectStore:
         wal:
           compression: bzip2
