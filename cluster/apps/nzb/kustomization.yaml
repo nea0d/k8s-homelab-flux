@@ -7,11 +7,11 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./lidarr/ks.yaml
-  - ./nzbget/ks.yaml
   - ./organizr/ks.yaml
   - ./overseerr/ks.yaml
   - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
   - ./radarr/ks.yaml
   - ./readarr/ks.yaml
+  - ./sabnzbd/ks.yaml
   - ./sonarr/ks.yaml
