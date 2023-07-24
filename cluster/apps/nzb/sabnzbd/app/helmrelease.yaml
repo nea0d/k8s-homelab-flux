@@ -99,8 +99,6 @@ spec:
         server: "nas01.${SECRET_PRIVATE_DOMAIN}"
         path: /volume2/Media
         mountPath: /media
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
     resources:
       requests:
         cpu: 10m
