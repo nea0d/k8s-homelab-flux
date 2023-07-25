@@ -5,4 +5,5 @@ kind: Kustomization
 namespace: actions-runner-system
 resources:
   # - ./k8s-homelab-flux.yaml
+  - ./secret.sops.yaml
   - ./helmrelease.yaml
