@@ -61,8 +61,8 @@ spec:
           replication_factor: 1
           storage:
             s3:
-              s3: s3://loki-chunks@us-east-1/
-              bucketnames: loki-chunks
+              s3: s3://loki-chunks-v1@us-east-1/
+              bucketnames: loki-chunks-v1
               access_key_id: ${SECRET_MINIO_ROOT_USERNAME}
               endpoint: http://minio.networking.svc.cluster.local:9000
               secret_access_key: ${SECRET_MINIO_ROOT_PASSWORD}
