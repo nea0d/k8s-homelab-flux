@@ -26,6 +26,11 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: local-path-provisioner
+      namespace: kube-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   values:
     loki:
       structuredConfig:
@@ -135,11 +140,11 @@ spec:
       replicas: 1
       persistence:
         size: 10Gi
-        storageClass: ceph-block
+        storageClass: local-path
     read:
       replicas: 1
       persistence:
-        storageClass: ceph-block
+        storageClass: local-path
       extraVolumeMounts:
         - name: rules
           mountPath: /rules
@@ -150,7 +155,7 @@ spec:
       replicas: 1
       persistence:
         size: 10Gi
-        storageClass: ceph-block
+        storageClass: local-path
       extraVolumeMounts:
         - name: rules
           mountPath: /rules/fake
