@@ -25,6 +25,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    controllerServiceAccount:
+      name: actions-runner-controller-gha-rs-controller
     runnerScaleSetName: arc-runner-set-homelab
     githubConfigUrl: https://github.com/nea0d/k8s-homelab-flux
     githubConfigSecret: &secret actions-runner-controller-secret
