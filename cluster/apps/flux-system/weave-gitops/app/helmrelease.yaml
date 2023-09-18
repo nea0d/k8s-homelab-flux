@@ -33,6 +33,7 @@ spec:
     oidcSecret:
       create: true
       clientID: weave-gitops
+      clientSecret: ${SECRET_WEAVEGITOPS_OAUTH_CLIENT_SECRET}
       issuerURL: "https://auth.${SECRET_PUBLIC_DOMAIN}"
       redirectURL: "https://gitops.${SECRET_PUBLIC_DOMAIN}/oauth2/callback"
     ingress:
@@ -73,7 +74,3 @@ spec:
       name: weave-gitops-secret
       valuesKey: adminPassword
       targetPath: adminUser.passwordHash
-    - kind: Secret
-      name: weave-gitops-secret
-      valuesKey: WEAVEGITOPS_OAUTH_CLIENT_SECRET
-      targetPath: oidcSecret.clientSecret
