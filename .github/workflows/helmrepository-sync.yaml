@@ -5,11 +5,11 @@ on:
   workflow_dispatch:
     inputs:
       repoName:
-        description: "Flux HelmRepository Name"
+        description: Flux HelmRepository Name
         required: true
       repoNamespace:
-        description: "Flux HelmRepository Namespace"
-        default: "flux-system"
+        description: Flux HelmRepository Namespace
+        default: flux-system
         required: true
   pull_request:
     branches: ["main"]
@@ -22,7 +22,7 @@ env:
 jobs:
   sync:
     name: Flux HelmRepository Sync
-    runs-on: ["self-hosted"]
+    runs-on: ["arc-runner-set-homelab"]
     steps:
       - name: Checkout
         uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
@@ -32,8 +32,7 @@ jobs:
       - name: Setup Kube Tools
         uses: yokawasa/action-setup-kube-tools@af4ebb1af1efd30c5bd84a2e9773355ad6362a33 # v0.9.3
         with:
-          setup-tools: |
-            yq
+          setup-tools: yq
 
       - name: Setup Flux
         uses: fluxcd/flux2/action@22cf986a79a6da2dd1bcd91b5eef763400f0104b # v2.1.0
@@ -42,19 +41,19 @@ jobs:
         id: kubeconfig
         uses: timheuer/base64-to-file@ca9e30baf83f7f26708fb0059af9a0973fe5f27e # v1.2
         with:
-          encodedString: ${{ secrets.KUBECONFIG }}
+          encodedString: "${{ secrets.KUBECONFIG }}"
           fileName: kubeconfig
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@246636f5fa148b5ad8e65ca4c57b18af3123e5f6 # v39.0.1
+        uses: tj-actions/changed-files@76c4d81a6acd339b55bd7407a016981c853eb702 # v39.0.3
         with:
-          files: |
-            ${{ env.KUBERNETES_DIR }}/**/helmrelease.yaml
+          files: ${{ env.KUBERNETES_DIR }}/**/helmrelease.yaml
 
       - name: Sync HelmRepository
         env:
-          KUBECONFIG: ${{ steps.kubeconfig.outputs.filePath }}
+          KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
+        shell: bash
         run: |
           declare -a repos=()
           for file in ${{ steps.changed-files.outputs.all_changed_and_modified_files }}; do
@@ -67,10 +66,11 @@ jobs:
             flux --namespace "${repo##*:}" reconcile source helm "${repo%%:*}"
           done
 
-      - name: Sync HelmRepository
-        if: ${{ github.event.inputs.repoName != '' }}
+      - if: ${{ github.event.inputs.repoName != '' }}
+        name: Sync HelmRepository
         env:
           KUBECONFIG: ${{ steps.kubeconfig.outputs.filePath }}
+        shell: bash
         run: |
           flux --namespace ${{ github.event.inputs.repoNamespace }} reconcile \
             source helm ${{ github.event.inputs.repoName }}
