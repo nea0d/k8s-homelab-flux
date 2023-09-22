@@ -7,6 +7,5 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./home-assistant/ks.yaml
-  # - ./mealie-alpha/ks.yaml
   - ./mealie/ks.yaml
   - ./teslamate/ks.yaml
