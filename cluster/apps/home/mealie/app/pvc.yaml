@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: mealie-data-v0
   namespace: home
+  labels:
+    app.kubernetes.io/name: mealie
+    snapshot.home.cluster/enabled: "true"
 spec:
   accessModes:
     - ReadWriteOnce
