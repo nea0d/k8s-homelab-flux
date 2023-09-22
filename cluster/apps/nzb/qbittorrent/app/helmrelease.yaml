@@ -28,15 +28,14 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    service:
-      main:
-        ports:
-          http:
-            port: *port
     controllers:
       main:
         annotations:
           configmap.reloader.stakater.com/reload: qbittorrent-dnsdist
+        pod:
+          securityContext:
+            supplementalGroups:
+              - 65539
         containers:
           main:
             nameOverride: qbittorrent
@@ -101,6 +100,12 @@ spec:
                 value: "8080"
               - name: PORT_FORWARDED
                 value: "/tmp/gluetun/forwarded_port"
+    service:
+      main:
+        enabled: true
+        ports:
+          http:
+            port: *port
     ingress:
       main:
         enabled: true
@@ -115,6 +120,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
