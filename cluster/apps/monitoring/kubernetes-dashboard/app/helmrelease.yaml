@@ -40,6 +40,8 @@ spec:
           hajimari.io/icon: mdi:kubernetes
           hajimari.io/group: "monitoring"
           nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+        issuer:
+          scope: disabled
         hosts:
           - &host "dashboard.${SECRET_PUBLIC_DOMAIN}"
         tls:
