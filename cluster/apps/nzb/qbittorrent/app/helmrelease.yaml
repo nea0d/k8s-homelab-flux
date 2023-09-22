@@ -28,6 +28,11 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    service:
+      main:
+        ports:
+          http:
+            port: *port
     controllers:
       main:
         annotations:
@@ -96,11 +101,6 @@ spec:
                 value: "8080"
               - name: PORT_FORWARDED
                 value: "/tmp/gluetun/forwarded_port"
-    service:
-      main:
-        ports:
-          http:
-            port: *port
     ingress:
       main:
         enabled: true
