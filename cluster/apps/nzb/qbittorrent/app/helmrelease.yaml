@@ -69,8 +69,6 @@ spec:
                 value: privado
               - name: SERVER_COUNTRIES
                 value: Switzerland
-              - name: VPN_ENDPOINT_PORT
-                value: "16881"
               - name: FIREWALL_INPUT_PORTS
                 value: "8080"
               - name: FIREWALL_OUTBOUND_SUBNETS
