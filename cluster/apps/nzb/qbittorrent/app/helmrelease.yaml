@@ -1,21 +1,21 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app qbittorrent
+  name: qbittorrent
   namespace: nzb
 spec:
-  interval: 5m
+  interval: 30m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: qbittorrent
-      version: 13.5.2
+      chart: app-template
+      version: 2.0.0-beta.3
+      interval: 30m
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
-      interval: 5m
   maxHistory: 3
   install:
     createNamespace: true
@@ -28,30 +28,79 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    global:
-      nameOverride: *app
-    image:
-      repository: ghcr.io/k8s-at-home/qbittorrent
-      tag: v4.4.3.1
-    env:
-      TZ: "${TIMEZONE}"
-    hostname: *app
-    podLabels:
-      setGateway: "true"
+    controllers:
+      main:
+        annotations:
+          configmap.reloader.stakater.com/reload: qbittorrent-dnsdist
+        containers:
+          main:
+            nameOverride: qbittorrent
+            image:
+              repository: ghcr.io/onedr0p/qbittorrent
+              tag: 4.5.5@sha256:30dffe7ad04ea0e39db0b50c0bd5e79362f99f7ff6b250526d2f389b58d96f14
+            env:
+              UMASK: "022"
+              QBITTORRENT__PORT: &port 8080
+            resources:
+              requests:
+                cpu: 49m
+                memory: 512Mi
+              limits:
+                memory: 1024Mi
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              fsGroup: 568
+              fsGroupChangePolicy: "OnRootMismatch"
+          dnsdist:
+            image:
+              repository: docker.io/powerdns/dnsdist-18
+              tag: 1.8.1
+          gluetun:
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: latest@sha256:b310d338615314e3654af8032913168ba956e0474267e69f76a4d80850d08d7a
+            env:
+              - name: VPN_SERVICE_PROVIDER
+                value: privado
+              - name: SERVER_COUNTRIES
+                value: Switzerland
+              - name: VPN_ENDPOINT_PORT
+                value: "16881"
+              - name: FIREWALL_INPUT_PORTS
+                value: "8080"
+              - name: FIREWALL_OUTBOUND_SUBNETS
+                # Allow access to k8s subnets
+                value: "10.43.0.0/12,10.10.99.0/24"
+              - name: SHADOWSOCKS
+                value: "on"
+              - name: DOT
+                value: "off"
+              - name: DNS_PLAINTEXT_ADDRESS
+                value: "127.0.0.2"
+            envFrom:
+              - secretRef:
+                  name: vpn-auth-secret
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+          port-forward:
+            image:
+              repository: docker.io/snoringdragon/gluetun-qbittorrent-port-manager
+              tag: "1.0"
+            env:
+              - name: QBITTORRENT_SERVER
+                value: localhost
+              - name: QBITTORRENT_PORT
+                value: "8080"
+              - name: PORT_FORWARDED
+                value: "/tmp/gluetun/forwarded_port"
     service:
       main:
         ports:
           http:
-            port: 8080
-      bittorrent:
-        enabled: true
-        type: ClusterIP
-        ports:
-          bittorrent:
-            enabled: true
-            port: 16881
-            protocol: TCP
-            targetPort: 16881
+            port: *port
     ingress:
       main:
         enabled: true
@@ -70,114 +119,37 @@ spec:
           - hosts:
               - *host
             secretName: qbittorrent-tls
-      api:
-        enabled: true
-        ingressClassName: "nginx"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-        hosts:
-          - host: *host
-            paths:
-              - path: /api
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *host
-            secretName: qbittorrent-api-tls
     persistence:
       config:
         enabled: true
         existingClaim: qbittorrent-config-v1
+        advancedMounts:
+          main:
+            main:
+              - path: /config
       media:
         enabled: true
         type: nfs
         server: "nas01.${SECRET_PRIVATE_DOMAIN}"
         path: /volume2/Media
         mountPath: /media
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-    #TODO : add ressources limits
-    # resources:
-    #   requests:
-    #     cpu: 500m
-    #     memory: 1000Mi
-    #   limits:
-    #     memory: 6000Mi
-    addons:
-
-      # -- The common chart supports adding a VPN add-on. It can be configured under this key.
-      # For more info, check out [our docs](http://docs.k8s-at-home.com/our-helm-charts/common-library-add-ons/#wireguard-vpn)
-      # @default -- See values.yaml
-      vpn:
-        # -- Enable running a VPN in the pod to route traffic through a VPN
+      dnsdist-config:
         enabled: true
-
-        # -- Specify the VPN type. Valid options are openvpn or wireguard
-        type: openvpn
-
-        # If the podSecurityContext is set to run as a different user, make sure to run the OpenVPN container as root.
-        # This is required for it to be able to read certain configuration files.
-        securityContext:
-          runAsGroup: 0
-          runAsUser: 0
-
-        # -- OpenVPN specific configuration
-        # @default -- See below
-        openvpn:
-
-          # -- Optionally specify an existing secret that contains the credentials.
-          # Credentials should be stored under the `VPN_AUTH` key
-          authSecret: vpn-auth-secret
-
-        # -- All variables specified here will be added to the vpn sidecar container
-        # See the documentation of the VPN image for all config values
-        env:
-          TZ: Europe/Paris
-          WAIT_FOR_VPN: "true"
-          FIREWALL: "on"
-          ROUTE_1: "10.0.0.0/8"
-          VPNPORT_1: "16881"
-          OTHER_ARGS: "--mute-replay-warnings"
-
-        # -- Reference an existing secret that contains the VPN configuration file
-        # The chart expects it to be present under the `vpnConfigfile` key.
-        configFileSecret: vpn-config-secret
-
-        livenessProbe:
-          exec:
-            # In the example bellow the VPN output is outside FRANCE - change appropiatly
-            command:
-              - sh
-              - -c
-              - if [ $(curl https://ipinfo.io./country) != 'FR' ]; then exit 0; else exit $?; fi
-          # Initial delay before performing the probe
-          initialDelaySeconds: 30
-          # How often to perform the probe
-          periodSeconds: 60
-          # Timeout after which the probe times out
-          timeoutSeconds: 5
-          # Number of retry before restarting the pod
-          failureThreshold: 3
-
-        networkPolicy:
-          enabled: true
-
-          egress:
-            - to:
-                - ipBlock:
-                    cidr: 0.0.0.0/0
-              ports:
-              # VPN traffic port - change if your provider uses a different port
-                - port: 1194
-                  protocol: UDP
-              #- port: 16881
-              #  protocol: TCP
-              #- port: 16881
-              #  protocol: UDP
-            - to:
-              # Allow traffic within K8S - change if your K8S cluster uses a different CIDR
-                - ipBlock:
-                    cidr: 10.0.0.0/8
+        type: configMap
+        name: qbittorrent-dnsdist
+        advancedMounts:
+          main:
+            dnsdist:
+              - path: /etc/dnsdist/dnsdist.conf
+                subPath: dnsdist.conf
+                readOnly: true
+      gluetun-data:
+        enabled: true
+        type: emptyDir
+        advancedMounts:
+          main:
+            gluetun:
+              - path: /tmp/gluetun
+            port-forward:
+              - path: /tmp/gluetun
+                readOnly: true
