@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/readarr-nightly
-      tag: 0.3.7.2253@sha256:450c1b2396e5c93cfb0b45b10c06ae7064e0189ffef744b8898f33ad049e8ee3
+      tag: 0.3.7.2257@sha256:1f849a3a469d859407ef26065460ebd894ff31ad67e9c788bd9eeb787dd4c794
     env:
       TZ: "${TIMEZONE}"
       READARR__INSTANCE_NAME: Readarr
