@@ -65,10 +65,10 @@ configMapGenerator:
     files:
       - https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/visited.json
   # custom dahsboards
-    - name: grafana-dashboard-teslamate-battery-health
+  - name: grafana-dashboard-teslamate-battery-health
     files:
       - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/BatteryHealth.json
-    - name: grafana-dashboard-teslamate-browse-charges
+  - name: grafana-dashboard-teslamate-browse-charges
     files:
       - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/BrowseCharges.json
   - name: grafana-dashboard-teslamate-charging-costs-stats
