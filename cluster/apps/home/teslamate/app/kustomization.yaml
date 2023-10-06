@@ -64,6 +64,43 @@ configMapGenerator:
   - name: grafana-dashboard-teslamate-visited
     files:
       - https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/visited.json
+  # custom dahsboards
+    - name: grafana-dashboard-teslamate-battery-health
+    files:
+      - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/BatteryHealth.json
+    - name: grafana-dashboard-teslamate-browse-charges
+    files:
+      - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/BrowseCharges.json
+  - name: grafana-dashboard-teslamate-charging-costs-stats
+    files:
+      - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/ChargingCostsStats.json
+  - name: grafana-dashboard-teslamate-charging-curve-stats
+    files:
+      - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/ChargingCurveStats.json
+  - name: grafana-dashboard-teslamate-countinuous-trip
+    files:
+      - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/ContinuousTrips.json
+  - name: grafana-dashboard-teslamate-current-charge-view
+    files:
+      - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/CurrentChargeView.json
+  - name: grafana-dashboard-teslamate-current-drive-view
+    files:
+      - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/CurrentDriveView.json
+  - name: grafana-dashboard-teslamate-current-state
+    files:
+      - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/CurrentState.json
+  - name: grafana-dashboard-teslamate-dc-charging-curves
+    files:
+      - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/DC_ChargingCurvesByCarrier.json
+  - name: grafana-dashboard-teslamate-incomplete-date
+    files:
+      - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/IncompleteData.json
+  - name: grafana-dashboard-teslamate-mileage-stats
+    files:
+      - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/MileageStats.json
+  - name: grafana-dashboard-teslamate-tacking-drives
+    files:
+      - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/TrackingDrives.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
