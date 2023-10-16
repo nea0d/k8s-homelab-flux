@@ -34,13 +34,24 @@ spec:
     env:
       TZ: "${TIMEZONE}"
       CS2__INSTANCE_NAME: CS2
-      CS2__PORT: &port 27015
+      CS2__GAMEPORT: &gameport 27015
+      CS2__CLIENTPORT: &clientport 27005
       CS2__LOG_LEVEL: info
     service:
       main:
+        type: LoadBalancer
+        loadBalancerIP: "${METALLB_CS2_ADDR}"
+        externalTrafficPolicy: Local
         ports:
-          http:
-            port: *port
+          gametcp:
+            port: *gameport
+            protocol: TCP
+          gameudp:
+            port: *gameport
+            protocol: UDP
+          clienttcp:
+            port: *clientport
+            protocol: TCP
     probes:
       liveness:
         enabled: false
@@ -48,24 +59,24 @@ spec:
         enabled: false
       startup:
         enabled: false
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "nginx"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "controller"
-          hajimari.io/group: "gaming"
-        hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *host
-            secretName: cs2-tls
+    # ingress:
+    #   main:
+    #     enabled: true
+    #     ingressClassName: "nginx"
+    #     annotations:
+    #       cert-manager.io/cluster-issuer: "letsencrypt-production"
+    #       hajimari.io/enable: "true"
+    #       hajimari.io/icon: "controller"
+    #       hajimari.io/group: "gaming"
+    #     hosts:
+    #       - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
+    #         paths:
+    #           - path: /
+    #             pathType: Prefix
+    #     tls:
+    #       - hosts:
+    #           - *host
+    #         secretName: cs2-tls
     persistence:
       data:
         enabled: true

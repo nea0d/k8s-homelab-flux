@@ -44,6 +44,10 @@ spec:
         enabled: true
       ingressClassResource:
         default: true
+      tcp:
+        configMapNamespace: "networking"
+      udp:
+        configMapNamespace: "networking"
       config:
         client-body-buffer-size: "100M"
         client-body-timeout: 120
