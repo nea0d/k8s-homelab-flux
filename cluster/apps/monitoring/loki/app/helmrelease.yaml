@@ -121,9 +121,8 @@ spec:
         tag: 1.25-alpine
       ingress:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: "internal"
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "file-document-multiple"
           hajimari.io/group: "monitoring"

@@ -4,9 +4,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: networking
 resources:
-  - ./dashboard
-  - ./ingress-nginx-tcp.yaml
-  - ./ingress-nginx-udp.yaml
+  - ./ingress-nginx-external-tcp.yaml
+  - ./ingress-nginx-external-udp.yaml
   - ./helmrelease.yaml
 configMapGenerator:
   - name: cloudflare-networks

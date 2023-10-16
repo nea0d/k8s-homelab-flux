@@ -38,12 +38,11 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-production"
     hajimari.io/enable: "true"
     hajimari.io/icon: "nas"
     hajimari.io/group: "storage"
 spec:
-  ingressClassName: "nginx"
+  ingressClassName: "internal"
   rules:
     - host: &host "nas01.${SECRET_PUBLIC_DOMAIN}"
       http:

@@ -77,9 +77,8 @@ spec:
               - 'namespace'
       ingress:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: "internal"
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "alert-box"
           hajimari.io/appName: "Alert-Manager"
@@ -163,9 +162,8 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: "internal"
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "monitor-eye"
           hajimari.io/appName: "Prometheus"
@@ -182,9 +180,8 @@ spec:
       thanosIngress:
         ingress:
           enabled: true
-          ingressClassName: "nginx"
+          ingressClassName: "internal"
           annotations:
-            cert-manager.io/cluster-issuer: "letsencrypt-production"
             nginx.ingress.kubernetes.io/ssl-redirect: "true"
             nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
           hosts:

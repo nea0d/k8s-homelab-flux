@@ -49,9 +49,7 @@ spec:
       ingress:
         enabled: true
         hostname: &host "thanos-query.${SECRET_PUBLIC_DOMAIN}"
-        ingressClassName: "nginx"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        ingressClassName: "internal"
         tls: true
         extraTls:
           - hosts:
@@ -77,9 +75,7 @@ spec:
       ingress:
         enabled: true
         hostname: &host "thanos-bucketweb.${SECRET_PUBLIC_DOMAIN}"
-        ingressClassName: "nginx"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        ingressClassName: "internal"
         tls: true
         extraTls:
           - hosts:
@@ -96,9 +92,7 @@ spec:
       ingress:
         enabled: true
         hostname: &host "thanos-compactor.${SECRET_PUBLIC_DOMAIN}"
-        ingressClassName: "nginx"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        ingressClassName: "internal"
         tls: true
         extraTls:
           - hosts:
@@ -115,9 +109,7 @@ spec:
       ingress:
         enabled: true
         hostname: &host "thanos-storegateway.${SECRET_PUBLIC_DOMAIN}"
-        ingressClassName: "nginx"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        ingressClassName: "internal"
         tls: true
         extraTls:
           - hosts:
@@ -147,9 +139,7 @@ spec:
       ingress:
         enabled: true
         hostname: &host "thanos-ruler.${SECRET_PUBLIC_DOMAIN}"
-        ingressClassName: "nginx"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        ingressClassName: "internal"
         tls: true
         extraTls:
           - hosts:

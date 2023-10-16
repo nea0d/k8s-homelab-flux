@@ -37,9 +37,8 @@ spec:
       replicaCount: 1
       ingress:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: internal
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: mdi:align-vertical-top
           hajimari.io/appName: "goldilocks"

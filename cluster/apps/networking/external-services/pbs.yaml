@@ -38,13 +38,12 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-production"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     hajimari.io/enable: "true"
     hajimari.io/icon: "backup-restore"
     hajimari.io/group: "storage"
 spec:
-  ingressClassName: "nginx"
+  ingressClassName: "internal"
   rules:
     - host: &host "pbs.${SECRET_PUBLIC_DOMAIN}"
       http:

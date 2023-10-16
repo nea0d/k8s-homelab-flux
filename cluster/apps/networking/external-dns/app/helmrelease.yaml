@@ -41,8 +41,8 @@ spec:
             name: external-dns-secret
             key: api-key
     extraArgs:
+      - --ingress-class=external
       - --cloudflare-proxied
-      - --annotation-filter=external-dns/is-public in (true)
     policy: sync
     sources:
       - ingress
