@@ -43,20 +43,32 @@ spec:
         loadBalancerIP: "${METALLB_CS2_ADDR}"
         externalTrafficPolicy: Local
         ports:
+          http:
+            enabled: false
           gametcp:
+            enabled: true
             port: *gameport
             protocol: TCP
           gameudp:
+            enabled: true
             port: *gameport
             protocol: UDP
           clienttcp:
+            enabled: true
             port: *clientport
             protocol: TCP
     probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          tcpSocket:
+            port: *gameport
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
       startup:
         enabled: false
     # ingress:
