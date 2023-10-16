@@ -43,6 +43,27 @@ spec:
         type: LoadBalancer
         loadBalancerIP: ${METALLB_NGINX_INTERNAL_ADDR}
         externalTrafficPolicy: Local
+        ports:
+          - name: http
+            port: 80
+            targetPort: 80
+            protocol: TCP
+          - name: https
+            port: 443
+            targetPort: 443
+            protocol: TCP
+          - name: cs2gametcp
+            port: 27015
+            targetPort: 27015
+            protocol: TCP
+          - name: cs2gameudp
+            port: 27015
+            targetPort: 27015
+            protocol: UDP
+          - name: cs2clienttcp
+            port: 27005
+            targetPort: 27005
+            protocol: TCP
       publishService:
         enabled: true
       ingressClassResource:
