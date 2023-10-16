@@ -49,9 +49,8 @@ spec:
       periodSeconds: 10
     ingress:
       enabled: true
-      className: "nginx"
+      className: "internal"
       annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-production"
         hajimari.io/enable: "true"
         hajimari.io/icon: "chart-line"
         hajimari.io/appName: "influxdb"
