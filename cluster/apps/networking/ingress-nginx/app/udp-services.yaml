@@ -3,7 +3,8 @@ kind: ConfigMap
 metadata:
   name: udp-services
   namespace: networking
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
 data:
-  27015: "gaming/cs2:27015"
+  "27015": "gaming/cs2:27015"
