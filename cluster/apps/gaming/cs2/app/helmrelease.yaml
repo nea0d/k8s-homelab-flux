@@ -17,11 +17,12 @@ spec:
   maxHistory: 3
   install:
     createNamespace: true
-    timeout: 15m0s
+    timeout: 20m
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    timeout: 20m
     remediation:
       retries: 3
   uninstall:
@@ -40,6 +41,13 @@ spec:
         ports:
           http:
             port: *port
+    probes:
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
     ingress:
       main:
         enabled: true
@@ -70,11 +78,11 @@ spec:
         memory: 250Mi
       limits:
         memory: 1000Mi
-    prometheus:
-      podMonitor:
-        enabled: true
-        interval: 3m
-        scrapeTimeout: 1m30s
+    # prometheus:
+    #   podMonitor:
+    #     enabled: true
+    #     interval: 3m
+    #     scrapeTimeout: 1m30s
     # podSecurityContext:
     #   runAsUser: 1000
     #   runAsGroup: 1000
