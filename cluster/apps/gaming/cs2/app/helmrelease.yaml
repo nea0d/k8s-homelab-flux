@@ -17,6 +17,7 @@ spec:
   maxHistory: 3
   install:
     createNamespace: true
+    timeout: 15m0s
     remediation:
       retries: 3
   upgrade:
