@@ -91,7 +91,7 @@ configMapGenerator:
       - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/CurrentState.json
   - name: grafana-dashboard-teslamate-dc-charging-curves
     files:
-      - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/DC_ChargingCurvesByCarrier.json
+      - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/DCChargingCurvesByCarrier.json
   - name: grafana-dashboard-teslamate-incomplete-date
     files:
       - https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/IncompleteData.json
