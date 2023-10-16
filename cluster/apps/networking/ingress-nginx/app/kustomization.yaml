@@ -5,8 +5,8 @@ kind: Kustomization
 namespace: networking
 resources:
   - ./dashboard
-  - ./tcp-services.yaml
-  - ./udp-services.yaml
+  - ./ingress-nginx-tcp.yaml
+  - ./ingress-nginx-udp.yaml
   - ./helmrelease.yaml
 configMapGenerator:
   - name: cloudflare-networks
