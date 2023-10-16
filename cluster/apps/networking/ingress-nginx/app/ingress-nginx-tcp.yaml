@@ -1,10 +1,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: udp-services
+  name: ingress-nginx-tcp
   namespace: networking
   labels:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
 data:
   "27015": "gaming/cs2:27015"
+  "27005": "gaming/cs2:27005"

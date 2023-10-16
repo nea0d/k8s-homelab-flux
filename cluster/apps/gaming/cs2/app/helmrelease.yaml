@@ -97,7 +97,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
-                  port: 27015
+                  port: *gameport
         tls:
           - hosts:
               - *host
