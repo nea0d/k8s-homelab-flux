@@ -3,5 +3,7 @@ kind: ConfigMap
 metadata:
   name: udp-services
   namespace: networking
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
 data:
   27015: "gaming/cs2:27015"
