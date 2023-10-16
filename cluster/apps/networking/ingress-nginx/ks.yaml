@@ -27,8 +27,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  dependsOn:
-    - name: cluster-apps-monitoring-grafana
   path: ./cluster/apps/networking/ingress-nginx/dashboard
   prune: true
   sourceRef:
