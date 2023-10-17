@@ -45,12 +45,10 @@ spec:
       TUNNEL_POST_QUANTUM: true
     args:
       - tunnel
-      # - --config
-      # - /etc/cloudflared/config/config.yaml
+      - --config
+      - /etc/cloudflared/config/config.yaml
       - run
-      - --token
-      - "${SECRET_CLOUDFLARE_TUNNEL_TOKEN}"
-      # - "${SECRET_CLOUDFLARE_TUNNEL_ID}"
+      - "${SECRET_CLOUDFLARE_TUNNEL_ID}"
     service:
       main:
         ports:
