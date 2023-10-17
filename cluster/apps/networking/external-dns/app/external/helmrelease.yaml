@@ -1,11 +1,12 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: external-dns
+  name: &app externaldns-external
   namespace: networking
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: external-dns
@@ -14,9 +15,8 @@ spec:
         kind: HelmRepository
         name: external-dns
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -26,37 +26,30 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    interval: 2m
-    # logLevel: debug
+    fullnameOverride: *app
     provider: cloudflare
     env:
       - name: CF_API_EMAIL
         valueFrom:
           secretKeyRef:
-            name: external-dns-secret
+            name: externaldns-external-secret
             key: email
       - name: CF_API_KEY
         valueFrom:
           secretKeyRef:
-            name: external-dns-secret
+            name: externaldns-external-secret
             key: api-key
     extraArgs:
       - --ingress-class=external
       - --cloudflare-proxied
+      - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
+      - --crd-source-kind=DNSEndpoint
     policy: sync
-    sources:
-      - ingress
-    txtPrefix: "k8s."
-    txtOwnerId: "default"
-    domainFilters:
-      - "${SECRET_PUBLIC_DOMAIN}"
+    sources: ["crd", "ingress"]
+    txtOwnerId: default
+    txtPrefix: k8s.
+    domainFilters: ["${SECRET_PUBLIC_DOMAIN}"]
     serviceMonitor:
       enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-secret
-    resources:
-      requests:
-        memory: 100Mi
-        cpu: 25m
-      limits:
-        memory: 250Mi
+      secret.reloader.stakater.com/reload: externaldns-external-secret
