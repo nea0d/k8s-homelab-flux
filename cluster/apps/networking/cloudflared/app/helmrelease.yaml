@@ -91,7 +91,7 @@ spec:
       creds:
         enabled: true
         type: secret
-        name: cloudflared-tunnel-secret
+        name: cloudflared-secret
         subPath: credentials.json
         mountPath: /etc/cloudflared/creds/credentials.json
         readOnly: true
