@@ -28,13 +28,6 @@ spec:
     keepHistory: false
   values:
     replicas: 1
-    deploymentStrategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxUnavailable: 1
-        maxSurge: 1
-    rbac:
-      pspEnabled: false
     env:
       GF_AUTH_GENERIC_OAUTH_API_URL: "https://auth.${SECRET_PUBLIC_DOMAIN}/api/oidc/userinfo"
       GF_AUTH_GENERIC_OAUTH_AUTH_URL: "https://auth.${SECRET_PUBLIC_DOMAIN}/api/oidc/authorization"
