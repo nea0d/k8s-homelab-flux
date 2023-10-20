@@ -193,6 +193,7 @@ spec:
             editable: true
             jsonData:
               implementation: prometheus
+    dashboards:
       default:
         cloudflared:
           gnetId: 17457 # https://grafana.com/grafana/dashboards/17457?tab=revisions
