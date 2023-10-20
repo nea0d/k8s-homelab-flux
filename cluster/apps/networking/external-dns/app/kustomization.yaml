@@ -6,4 +6,3 @@ namespace: networking
 resources:
   - ./dnsendpoint-crd.yaml
   - ./external
-  - ./internal
