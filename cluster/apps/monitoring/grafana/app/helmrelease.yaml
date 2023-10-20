@@ -193,13 +193,20 @@ spec:
             editable: true
             jsonData:
               implementation: prometheus
-    # dashboards:
-    #   default:
-    #     # Ref: https://grafana.com/grafana/dashboards/13502
-    #     minio:
-    #       gnetId: 13502
-    #       revision: 10
-    #       datasource: Prometheus
+      default:
+        cloudflared:
+          gnetId: 17457 # https://grafana.com/grafana/dashboards/17457?tab=revisions
+          revision: 6
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        external-dns:
+          gnetId: 15038 # https://grafana.com/grafana/dashboards/15038?tab=revisions
+          revision: 1
+          datasource: Prometheus
+        node-exporter-full:
+          gnetId: 1860 # https://grafana.com/grafana/dashboards/1860?tab=revisions
+          revision: 31
+          datasource: Prometheus
     imageRenderer:
       enabled: true
       replicas: 1
