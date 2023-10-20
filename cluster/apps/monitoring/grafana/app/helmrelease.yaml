@@ -27,7 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    replicas: 1
+    replicas: 2
     deploymentStrategy:
       type: RollingUpdate
       rollingUpdate:
@@ -208,21 +208,14 @@ spec:
           gnetId: 1860 # https://grafana.com/grafana/dashboards/1860?tab=revisions
           revision: 31
           datasource: Prometheus
-    imageRenderer:
-      enabled: true
-      replicas: 1
     persistence:
-      enabled: true
-      size: 10Gi
-      storageClass: ceph-block
-    affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: app.kubernetes.io/name
-                    operator: In
-                    values: ["grafana"]
-              topologyKey: kubernetes.io/hostname
+      enabled: false
+    testFramework:
+      enabled: false
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: grafana
