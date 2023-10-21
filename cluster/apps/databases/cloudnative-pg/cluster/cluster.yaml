@@ -22,7 +22,7 @@ spec:
     podAntiAffinityType: required
   bootstrap:
     recovery:
-      source: &previousCluster postgres-v7
+      source: &previousCluster postgres-v8
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
@@ -38,7 +38,7 @@ spec:
         secretAccessKey:
           name: postgres-r2-credentials
           key: R2_SECRET_ACCESS_KEY
-      serverName: &currentCluster postgres-v8
+      serverName: &currentCluster postgres-v9
       # destinationPath: s3://postgres-backup-v1/
       # endpointURL: http://minio.networking:9000
       # s3Credentials:
@@ -49,18 +49,18 @@ spec:
       #     name: postgres-minio
       #     key: MINIO_SECRET_KEY
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
-  # externalClusters:
-  #   - name: *previousCluster
-  #     barmanObjectStore:
-  #       wal:
-  #         compression: bzip2
-  #         maxParallel: 8
-  #       destinationPath: s3://postgres-backup-v1/
-  #       endpointURL: http://minio.networking:9000
-  #       s3Credentials:
-  #         accessKeyId:
-  #           name: postgres-minio
-  #           key: MINIO_ACCESS_KEY
-  #         secretAccessKey:
-  #           name: postgres-minio
-  #           key: MINIO_SECRET_KEY
+  externalClusters:
+    - name: *previousCluster
+      barmanObjectStore:
+        wal:
+          compression: bzip2
+          maxParallel: 8
+        destinationPath: s3://postgres-backup-v1/
+        endpointURL: http://minio.networking:9000
+        s3Credentials:
+          accessKeyId:
+            name: postgres-minio
+            key: MINIO_ACCESS_KEY
+          secretAccessKey:
+            name: postgres-minio
+            key: MINIO_SECRET_KEY
