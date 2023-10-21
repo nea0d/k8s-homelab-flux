@@ -5,7 +5,7 @@ metadata:
   name: cs2
   namespace: gaming
 spec:
-  sourcePVC: gaming-data-v1
+  sourcePVC: cs2-data-v1
   trigger:
     schedule: "0 0 * * *"
   restic:
