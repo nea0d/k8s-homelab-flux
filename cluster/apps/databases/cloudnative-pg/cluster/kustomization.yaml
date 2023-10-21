@@ -6,7 +6,7 @@ namespace: databases
 resources:
   - ./secret.sops.yaml
   - ./secret-r2-credentials.sops.yaml
-  # - ./secretminio.sops.yaml
+  - ./secretminio.sops.yaml
   - ./cluster.yaml
   - ./scheduledbackup.yaml
   - ./service.yaml
