@@ -6,7 +6,7 @@ metadata:
   namespace: databases
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:14.9-12
+  imageName: ghcr.io/cloudnative-pg/postgresql:14.9-15
   enableSuperuserAccess: true
   primaryUpdateStrategy: unsupervised
   storage:
@@ -31,6 +31,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://postgres-backup-v2/
       endpointURL: https://${SECRET_CLOUDFLARE_ACCOUNT_ID}.eu.r2.cloudflarestorage.com
+      serverName: &currentCluster postgres-v9
       s3Credentials:
         accessKeyId:
           name: postgres-r2-credentials
@@ -38,7 +39,6 @@ spec:
         secretAccessKey:
           name: postgres-r2-credentials
           key: R2_SECRET_ACCESS_KEY
-      serverName: &currentCluster postgres-v9
       # destinationPath: s3://postgres-backup-v1/
       # endpointURL: http://minio.networking:9000
       # s3Credentials:
