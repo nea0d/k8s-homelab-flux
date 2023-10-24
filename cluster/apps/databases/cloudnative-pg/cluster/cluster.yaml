@@ -22,32 +22,32 @@ spec:
     podAntiAffinityType: required
   bootstrap:
     recovery:
-      source: &previousCluster postgres-v8
+      source: &previousCluster postgres-v9
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
       wal:
         compression: bzip2
         maxParallel: 8
-      serverName: &currentCluster postgres-v9
-      # destinationPath: s3://postgres-backup-v2/
-      # endpointURL: https://${SECRET_CLOUDFLARE_ACCOUNT_ID}.eu.r2.cloudflarestorage.com
-      # s3Credentials:
-      #   accessKeyId:
-      #     name: postgres-r2-credentials
-      #     key: R2_ACCESS_KEY_ID
-      #   secretAccessKey:
-      #     name: postgres-r2-credentials
-      #     key: R2_SECRET_ACCESS_KEY
-      destinationPath: s3://postgres-backup-v1/
-      endpointURL: http://minio.networking:9000
+      serverName: &currentCluster postgres-v10
+      destinationPath: s3://postgres-backup-v2/
+      endpointURL: https://${SECRET_CLOUDFLARE_ACCOUNT_ID}.eu.r2.cloudflarestorage.com
       s3Credentials:
         accessKeyId:
-          name: postgres-minio
-          key: MINIO_ACCESS_KEY
+          name: postgres-r2-credentials
+          key: R2_ACCESS_KEY_ID
         secretAccessKey:
-          name: postgres-minio
-          key: MINIO_SECRET_KEY
+          name: postgres-r2-credentials
+          key: R2_SECRET_ACCESS_KEY
+      # destinationPath: s3://postgres-backup-v1/
+      # endpointURL: http://minio.networking:9000
+      # s3Credentials:
+      #   accessKeyId:
+      #     name: postgres-minio
+      #     key: MINIO_ACCESS_KEY
+      #   secretAccessKey:
+      #     name: postgres-minio
+      #     key: MINIO_SECRET_KEY
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
     - name: *previousCluster
