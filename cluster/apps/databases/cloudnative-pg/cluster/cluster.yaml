@@ -34,10 +34,10 @@ spec:
       endpointURL: https://${SECRET_CLOUDFLARE_ACCOUNT_ID}.eu.r2.cloudflarestorage.com
       s3Credentials:
         accessKeyId:
-          name: postgres-r2-credentials
+          name: postgres-r2
           key: R2_ACCESS_KEY_ID
         secretAccessKey:
-          name: postgres-r2-credentials
+          name: postgres-r2
           key: R2_SECRET_ACCESS_KEY
       # destinationPath: s3://postgres-backup-v1/
       # endpointURL: http://minio.networking:9000

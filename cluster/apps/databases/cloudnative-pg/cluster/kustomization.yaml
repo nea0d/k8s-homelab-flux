@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: databases
 resources:
   - ./secret.sops.yaml
-  - ./secret-r2-credentials.sops.yaml
+  - ./secretr2.sops.yaml
   - ./secretminio.sops.yaml
   - ./cluster.yaml
   - ./scheduledbackup.yaml
