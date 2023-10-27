@@ -29,6 +29,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    crds:
+      enabled: true
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       config:
@@ -83,13 +85,13 @@ spec:
           hajimari.io/icon: "alert-box"
           hajimari.io/appName: "Alert-Manager"
         hosts:
-          - &host "alert-manager.${SECRET_PUBLIC_DOMAIN}"
+          - &host "alertmanager.${SECRET_PUBLIC_DOMAIN}"
         tls:
           - hosts:
               - *host
-            secretName: "alert-manager-tls"
+            secretName: "alertmanager-tls"
       alertmanagerSpec:
-        replicas: 1
+        replicas: 2
         podAntiAffinity: hard
         storage:
           volumeClaimTemplate:
@@ -113,12 +115,12 @@ spec:
               targetLabel: kubernetes_node
     grafana:
       enabled: false
-      forceDeployDashboards: true
+      forceDeployDashboards: false
       sidecar:
         dashboards:
           multicluster:
             etcd:
-              enabled: true
+              enabled: false
     kubelet:
       enabled: true
       serviceMonitor:
@@ -200,8 +202,8 @@ spec:
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
-        retention: 6h
-        retentionSize: "6GB"
+        retention: 24h
+        retentionSize: "10GB"
         enableAdminAPI: true
         walCompression: true
         storageSpec:
