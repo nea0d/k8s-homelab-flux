@@ -123,6 +123,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/nginx
+          - name: teslamate
+            orgId: 1
+            folder: TeslaMate
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/teslamate
           - name: thanos
             orgId: 1
             folder: Thanos
@@ -177,6 +185,18 @@ spec:
             editable: true
             jsonData:
               implementation: prometheus
+          - name: TeslaMate
+            type: postgres
+            access: proxy
+            url: postgres-r.databases.svc.cluster.local.:5432
+            database: "${SECRET_TESLAMATE_DBNAME}"
+            user: "${SECRET_TESLAMATE_DB_USERNAME}"
+            secureJsonData:
+              password: "${SECRET_TESLAMATE_DB_PASSWORD}"
+            jsonData:
+              sslmode: disable
+              postgresVersion: 1000
+              timeInterval: 30s
     dashboards:
       default:
         cloudflared:
@@ -188,6 +208,16 @@ spec:
         external-dns:
           # renovate: depName="External-dns"
           gnetId: 15038
+          revision: 1
+          datasource: Prometheus
+        gpu-operator:
+          # renovate: depName="NVIDIA DCGM Exporter Dashboard"
+          gnetId: 12239
+          revision: 2
+          datasource: Prometheus
+        metallb:
+          # renovate: depName="Metallb"
+          gnetId: 14127
           revision: 1
           datasource: Prometheus
         minio:
@@ -206,29 +236,20 @@ spec:
           gnetId: 763
           revision: 5
           datasource: Prometheus
-        unpackerr:
-          # renovate: depName="Unpackerr"
-          gnetId: 18817
-          revision: 1
-          datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
-        zfs:
-          # renovate: depName="ZFS"
-          gnetId: 7845
-          revision: 4
-          datasource: Prometheus
+        # zfs:
+        #   # renovate: depName="ZFS"
+        #   gnetId: 7845
+        #   revision: 4
+        #   datasource: Prometheus
         cloudnative-pg:
           url: https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/grafana-dashboard.json
           datasource: Prometheus
         cert-manager:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
           datasource: Prometheus
-        external-secrets:
-          url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
-          datasource: Prometheus
-        miniflux:
-          url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
-          datasource: Prometheus
+        # external-secrets:
+        #   url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
+        #   datasource: Prometheus
       ceph:
         ceph-cluster:
           # renovate: depName="Ceph Cluster"
@@ -298,6 +319,101 @@ spec:
         nginx-request-handling-performance:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
+      teslamate:
+        teslamate-charge-level:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/charge-level.json
+          datasource: TeslaMate
+        teslamate-charges:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/charges.json
+          datasource: TeslaMate
+        teslamate-charging-stats:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/charging-stats.json
+          datasource: TeslaMate
+        teslamate-drive-stats:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/drive-stats.json
+          datasource: TeslaMate
+        teslamate-drives:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/drives.json
+          datasource: TeslaMate
+        teslamate-efficiency:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/efficiency.json
+          datasource: TeslaMate
+        teslamate-internal-charge-details:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/internal/charge-details.json
+          datasource: TeslaMate
+        teslamate-internal-drive-details:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/internal/drive-details.json
+          datasource: TeslaMate
+        teslamate-locations:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/locations.json
+          datasource: TeslaMate
+        teslamate-mileage:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/mileage.json
+          datasource: TeslaMate
+        teslamate-overview:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/overview.json
+          datasource: TeslaMate
+        teslamate-protected-range:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/projected-range.json
+          datasource: TeslaMate
+        teslamate-states:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/states.json
+          datasource: TeslaMate
+        teslamate-statistics:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/statistics.json
+          datasource: TeslaMate
+        teslamate-timeline:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/timeline.json
+          datasource: TeslaMate
+        teslamate-trip:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/trip.json
+          datasource: TeslaMate
+        teslamate-updates:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/updates.json
+          datasource: TeslaMate
+        teslamate-vampire-drain:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/vampire-drain.json
+          datasource: TeslaMate
+        teslamate-visited:
+          url: https://raw.githubusercontent.com/adriankumpf/teslamate/v1.27.1/grafana/dashboards/visited.json
+          datasource: TeslaMate
+        # custom dahsboards
+        teslamate-battery-health:
+          url: https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/BatteryHealth.json
+          datasource: TeslaMate
+        teslamate-browse-charges:
+          url: https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/BrowseCharges.json
+          datasource: TeslaMate
+        teslamate-charging-costs-stats:
+          url: https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/ChargingCostsStats.json
+          datasource: TeslaMate
+        teslamate-charging-curve-stats:
+          url: https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/ChargingCurveStats.json
+          datasource: TeslaMate
+        teslamate-countinuous-trip:
+          url: https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/ContinuousTrips.json
+          datasource: TeslaMate
+        teslamate-current-charge-view:
+          url: https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/CurrentChargeView.json
+          datasource: TeslaMate
+        teslamate-current-drive-view:
+          url: https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/CurrentDriveView.json
+          datasource: TeslaMate
+        teslamate-current-state:
+          url: https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/CurrentState.json
+          datasource: TeslaMate
+        teslamate-dc-charging-curves:
+          url: https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/DCChargingCurvesByCarrier.json
+          datasource: TeslaMate
+        teslamate-incomplete-date:
+          url: https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/IncompleteData.json
+          datasource: TeslaMate
+        teslamate-mileage-stats:
+          url: https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/MileageStats.json
+          datasource: TeslaMate
+        teslamate-tracking-drives:
+          url: https://raw.githubusercontent.com/jheredianet/Teslamate-CustomGrafanaDashboards/main/dashboards/TrackingDrives.json
+          datasource: TeslaMate
       thanos:
         thanos-bucket-replicate:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/bucket-replicate.json
@@ -327,6 +443,11 @@ spec:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/store.json
           datasource: Prometheus
       unifi:
+        unifi-client-dpi:
+          # renovate: depName="UniFi-Poller: Client DPI - Prometheus"
+          gnetId: 11310
+          revision: 5
+          datasource: Prometheus
         unifi-insights:
           # renovate: depName="UniFi-Poller: Client Insights - Prometheus"
           gnetId: 11315
@@ -341,6 +462,11 @@ spec:
           # renovate: depName="UniFi-Poller: UAP Insights - Prometheus"
           gnetId: 11314
           revision: 10
+          datasource: Prometheus
+        unifi-usg:
+          # renovate: depName="UniFi-Poller: USG Insights - Prometheus"
+          gnetId: 11313
+          revision: 9
           datasource: Prometheus
         unifi-usw:
           # renovate: depName="UniFi-Poller: USW Insights - Prometheus"

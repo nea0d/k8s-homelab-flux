@@ -6,14 +6,3 @@ namespace: databases
 resources:
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
-configMapGenerator:
-  - name: grafana-dashboard-cloudnative-pg
-    files:
-      - ./cloudnative-pg-dashboard.json
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
-    grafana_folder: "database"
-  labels:
-    grafana_dashboard: "true"

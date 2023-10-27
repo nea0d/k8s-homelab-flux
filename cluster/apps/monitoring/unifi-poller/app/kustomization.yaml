@@ -5,29 +5,3 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - ./helmrelease.yaml
-configMapGenerator:
-  # - name: grafana-dashboard-unifi-poller-client-dpi
-  #   files:
-  #     - ./dashboard/unifi-poller-client-dpi-prometheus_rev4.json
-  - name: grafana-dashboard-unifi-poller-client-insights
-    files:
-      - ./dashboard/unifi-poller-client-insights-prometheus_rev8.json
-  - name: grafana-dashboard-unifi-poller-network-sites
-    files:
-      - ./dashboard/unifi-poller-network-sites-prometheus_rev4.json
-  - name: grafana-dashboard-unifi-poller-uap-insights
-    files:
-      - ./dashboard/unifi-poller-uap-insights-prometheus_rev9.json
-  - name: grafana-dashboard-unifi-poller-usg-insights
-    files:
-      - ./dashboard/unifi-poller-usg-insights-prometheus_rev8.json
-  - name: grafana-dashboard-unifi-poller-usw-insights
-    files:
-      - ./dashboard/unifi-poller-usw-insights-prometheus_rev8.json
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
-    grafana_folder: "unifi"
-  labels:
-    grafana_dashboard: "true"

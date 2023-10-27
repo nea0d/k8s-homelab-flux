@@ -5,14 +5,3 @@ kind: Kustomization
 namespace: networking
 resources:
   - ./helmrelease.yaml
-configMapGenerator:
-  - name: grafana-dashboard-metallb
-    files:
-      - metallb-dashboard.json
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
-    grafana_folder: "network"
-  labels:
-    grafana_dashboard: "true"
