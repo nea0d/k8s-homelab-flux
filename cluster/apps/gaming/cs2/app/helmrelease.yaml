@@ -30,7 +30,7 @@ spec:
   values:
     image:
       repository: ghcr.io/gameservermanagers/gameserver
-      tag: csgo@sha256:3e5ea71ab865160f3eea7a38179f408af59a6aed90f2a5465ee721ff7475b57a
+      tag: csgo@sha256:f5615ef988ca4ca4ca6d2d728044af20e3a4a17545b47d1d71e4152cbbf0010b
     env:
       TZ: "${TIMEZONE}"
       CS2__INSTANCE_NAME: CS2
