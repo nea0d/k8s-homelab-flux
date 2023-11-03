@@ -1,16 +1,17 @@
 ---
-apiVersion: cilium.io/v2
-kind: CiliumNetworkPolicy
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
 metadata:
-  name: external-secrets-to-bw-cli
+  name: external-secret-to-bw-cli
   namespace: kube-system
 spec:
-  endpointSelector:
+  podSelector:
     matchLabels:
-      app.kubernetes.io/instance: bitwarden
-      app.kubernetes.io/name: bitwarden
+      app.kubernetes.io/instance: bitwarden-cli
+      app.kubernetes.io/name: bitwarden-cli
   ingress:
-    - fromEndpoints:
-        - matchLabels:
+  - from:
+      - podSelector:
+          matchLabels:
             app.kubernetes.io/instance: external-secrets
             app.kubernetes.io/name: external-secrets
