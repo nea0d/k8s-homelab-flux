@@ -15,7 +15,7 @@ spec:
         name: bitnami
         namespace: flux-system
       interval: 15m
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:

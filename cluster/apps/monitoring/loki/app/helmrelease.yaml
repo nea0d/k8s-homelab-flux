@@ -15,7 +15,7 @@ spec:
         name: grafana
         namespace: flux-system
       interval: 15m
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
