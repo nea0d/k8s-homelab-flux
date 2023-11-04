@@ -246,7 +246,7 @@ The cluster application [external-dns](https://github.com/kubernetes-sigs/extern
 
 2. Push you changes to git
 
-    📍 **Verify** all the `*.sops.yaml` and `*.sops.yml` files under the `./cluster` and `./provision` folders are **encrypted** with SOPS
+    📍 **Verify** all the `*.sops.yaml` and `*.sops.yaml` files under the `./cluster` and `./provision` folders are **encrypted** with SOPS
 
     ```sh
     git add -A

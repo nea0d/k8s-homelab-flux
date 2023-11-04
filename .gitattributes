@@ -3,4 +3,4 @@
 *.sops.toml linguist-language=JSON
 *.yaml.j2 linguist-language=YAML
 *.yaml diff=dyff
-*.yml diff=dyff
+*.yaml diff=dyff

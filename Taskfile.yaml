@@ -3,8 +3,8 @@ version: "3"
 
 vars:
   PYTHON_BIN: python3
-  ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
-  CLUSTER_DIR: "{{.ROOT_DIR}}/cluster"
+  ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible/kubernetes"
+  CLUSTER_DIR: "{{.ROOT_DIR}}/kubernetes"
   INFRASTRUCTURE_DIR: "{{.ROOT_DIR}}/ansible"
   CLUSTER_SECRETS_FILE: "{{.CLUSTER_DIR}}/flux/vars/cluster-secrets.sops.env"
   CLUSTER_SETTINGS_FILE: "{{.CLUSTER_DIR}}/flux/vars/cluster-settings.env"
@@ -20,11 +20,11 @@ env:
   K8S_AUTH_KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
 
 includes:
-  an: .taskfiles/Ansible/Tasks.yml
-  es: .taskfiles/ExternalSecrets/Tasks.yml
-  fx: .taskfiles/Flux/Tasks.yml
-  ku: .taskfiles/Kubernetes/Tasks.yml
-  vs: .taskfiles/VolSync/Tasks.yml
+  an: .taskfiles/Ansible/Tasks.yaml
+  es: .taskfiles/ExternalSecrets/Tasks.yaml
+  fx: .taskfiles/Flux/Tasks.yaml
+  ku: .taskfiles/Kubernetes/Tasks.yaml
+  vs: .taskfiles/VolSync/Tasks.yaml
 
 tasks:
 

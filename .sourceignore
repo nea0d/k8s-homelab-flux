@@ -12,4 +12,4 @@
 /.sops.yaml
 /LICENSE
 /README.md
-/Taskfile.yml
+/Taskfile.yaml

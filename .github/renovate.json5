@@ -63,7 +63,7 @@
         // Example: `- https://github.com/rancher/system-upgrade-controller/releases/download/v0.11.0/crd.yaml`
         //          `- https://github.com/argoproj/argo-cd/raw/v2.7.10/manifests/install.yaml`
         //          `- https://github.com/argoproj/argo-cd/raw/v2.7.10/manifests/ha/install.yaml`
-        //          `- https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/21.1.1/kubernetes/kubernetes.yml`
+        //          `- https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/21.1.1/kubernetes/kubernetes.yaml`
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?-\\s(.*?)\/(?<currentValue>(v|\\d)[^/]+)\/\\S+\n",
         // Example: apiVersion=helm.cattle.io/v1 kind=HelmChart
         "datasource=(?<datasource>\\S+)\n.*?repo: (?<registryUrl>\\S+)\n.*?chart: (?<depName>\\S+)\n.*?version: (?<currentValue>\\S+)\n"
