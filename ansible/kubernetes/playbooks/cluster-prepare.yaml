@@ -81,7 +81,7 @@
             group: "{{ ansible_user }}"
             mode: "0755"
             content: neofetch --config none
-        - name: User Configuration | Fish shell (3)
+        - name: User Configuration | Fish shell (4)
           ansible.builtin.copy:
             dest: "{{ '/home/' + ansible_user if ansible_user != 'root' else '/root' }}/.config/fish/functions/k.fish"
             owner: "{{ ansible_user }}"
@@ -183,20 +183,6 @@
               fs.inotify.max_queued_events: 65536
               fs.inotify.max_user_watches: 524288
               fs.inotify.max_user_instances: 8192
-        - name: System Configuration | Grub (1)
-          ansible.builtin.replace:
-            path: /etc/default/grub
-            regexp: '^(GRUB_CMDLINE_LINUX=(?:(?![" ]{{ item.key | regex_escape }}=).)*)(?:[" ]{{ item.key | regex_escape }}=\S+)?(.*")$'
-            replace: '\1 {{ item.key }}={{ item.value }}\2'
-          with_dict: "{{ grub_config }}"
-          vars:
-            grub_config:
-              apparmor: "0"
-              mitigations: "off"
-          register: grub_status
-        - name: System Configuration | Grub (2) # noqa: no-changed-when no-handler
-          ansible.builtin.command: update-grub
-          when: grub_status.changed
 
     - name: Logs Configuration
       block:

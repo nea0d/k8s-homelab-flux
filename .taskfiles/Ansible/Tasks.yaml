@@ -54,7 +54,6 @@ tasks:
     interactive: true
     cmds:
       - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-nuke.yaml
-      - task: reboot
 
   reboot:
     desc: Reboot all the k8s nodes

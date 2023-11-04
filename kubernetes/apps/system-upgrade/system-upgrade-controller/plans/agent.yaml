@@ -8,9 +8,9 @@ metadata:
   labels:
     k3s-upgrade: k3s-agent
 spec:
-  # channel: https://update.k3s.io/v1-release/channels/v1.27
+  # channel: https://update.k3s.io/v1-release/channels/v1.28
   # renovate: datasource=github-releases depName=k3s-io/k3s
-  version: "v1.27.3+k3s1"
+  version: "v1.28.2+k3s1"
   serviceAccountName: system-upgrade
   concurrency: 1
   nodeSelector:
