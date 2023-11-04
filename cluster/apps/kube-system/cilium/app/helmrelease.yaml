@@ -53,22 +53,22 @@ spec:
     tunnelProtocol: vxlan
 
     #other
-    autoDirectNodeRoutes: true
-    bandwidthManager:
-      enabled: true
-      bbr: true
-    bpf:
-      masquerade: true
-    bgp:
-      enabled: false
-    cluster:
-      name: kubernetes
-      id: 1
-    containerRuntime:
-      integration: containerd
-      socketPath: /var/run/k3s/containerd/containerd.sock
-    endpointRoutes:
-      enabled: true
+    # autoDirectNodeRoutes: true
+    # bandwidthManager:
+    #   enabled: true
+    #   bbr: true
+    # bpf:
+    #   masquerade: true
+    # bgp:
+    #   enabled: false
+    # cluster:
+    #   name: kubernetes
+    #   id: 1
+    # containerRuntime:
+    #   integration: containerd
+    #   socketPath: /var/run/k3s/containerd/containerd.sock
+    # endpointRoutes:
+    #   enabled: true
     # hubble:
     #   enabled: true
     #   metrics:
