@@ -49,6 +49,12 @@ tasks:
       - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-nuke.yaml
       - task: reboot
 
+  reboot:
+    desc: Reboot all the k8s nodes
+    dir: '{{.ANSIBLE_DIR}}'
+    cmds:
+      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-reboot.yaml
+
   ping:
     desc: Ping all the hosts
     dir: '{{.ANSIBLE_DIR}}'
@@ -66,9 +72,3 @@ tasks:
     dir: '{{.ANSIBLE_DIR}}'
     cmds:
       - ansible kubernetes -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml -a '/usr/bin/systemctl poweroff' --become
-
-  reboot:
-    desc: Reboot all the k8s nodes
-    dir: '{{.ANSIBLE_DIR}}'
-    cmds:
-      - ansible kubernetes -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml -a '/usr/bin/systemctl reboot' --become

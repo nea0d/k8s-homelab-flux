@@ -1,8 +1,5 @@
 ---
 kubernetes:
-  vars:
-    ansible_user: k8s
-    ansible_ssh_port: 22
   children:
     master:
       hosts:
@@ -17,12 +14,12 @@ kubernetes:
         k8s-worker01:
           ansible_host: 10.10.99.121
           ceph_drives:
-            - /dev/disk/by-id/nvme-eui.6479a75ab0c02d64
+            - /dev/disk/by-id/nvme-GIGABYTE_GP-GSM2NE3512GNTD_SN215008908610
         k8s-worker02:
           ansible_host: 10.10.99.122
           ceph_drives:
-            - /dev/disk/by-id/nvme-eui.6479a75ab0c02d65
+            - /dev/disk/by-id/nvme-GIGABYTE_GP-GSM2NE3512GNTD_SN215008908615
         k8s-worker03:
           ansible_host: 10.10.99.123
           ceph_drives:
-            - /dev/disk/by-id/nvme-eui.6479a75ab0c02cbc
+            - /dev/disk/by-id/nvme-GIGABYTE_GP-GSM2NE3512GNTD_SN215008908604
