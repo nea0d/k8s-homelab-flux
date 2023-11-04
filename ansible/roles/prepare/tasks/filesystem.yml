@@ -1,8 +1,17 @@
 ---
+#cilium preco : https://docs.cilium.io/en/latest/installation/k8s-install-helm/
 - name: Update max_user_watches
   ansible.posix.sysctl:
     name: fs.inotify.max_user_watches
-    value: "65536"
+    value: "524288"
+    state: present
+    sysctl_file: /etc/sysctl.d/98-kubernetes-fs.conf
+
+#cilium preco : https://docs.cilium.io/en/latest/installation/k8s-install-helm/
+- name: Update max_user_instances
+  ansible.posix.sysctl:
+    name: fs.inotify.max_user_instances
+    value: "512"
     state: present
     sysctl_file: /etc/sysctl.d/98-kubernetes-fs.conf
 
