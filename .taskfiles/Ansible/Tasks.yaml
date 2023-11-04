@@ -41,6 +41,13 @@ tasks:
     cmds:
       - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-update-rollout.yaml
 
+  ceph-reset:
+    desc: Reset Ceph cluster
+    dir: '{{.ANSIBLE_DIR}}'
+    interactive: true
+    cmds:
+      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yaml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-ceph-reset.yaml
+
   nuke:
     desc: Uninstall Kubernetes on the nodes
     dir: '{{.ANSIBLE_DIR}}'
