@@ -10,6 +10,7 @@ bin
 .private/
 .logs/
 .task/
+.venv/
 # Ansible
 xanmanning.k3s*
 mrlesmithjr.zfs*
@@ -18,7 +19,6 @@ geerlingguy.pip*
 # Terraform
 .terraform
 .terraform.tfstate*
-terraform.tfstate*
 *.tfvars
 # Sops
 .decrypted~*

@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: organizr-config-v1
+  namespace: nzb
+  labels:
+    app.kubernetes.io/name: organizr
+    snapshot.home.kubernetes/enabled: "true"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ceph-block

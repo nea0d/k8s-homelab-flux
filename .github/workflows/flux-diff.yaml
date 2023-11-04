@@ -4,7 +4,7 @@ name: "Flux Diff"
 on:
   pull_request:
     branches: ["main"]
-    paths: ["cluster/**.yaml"]
+    paths: ["kubernetes/**.yaml"]
 
 jobs:
   flux-diff:
@@ -28,7 +28,7 @@ jobs:
         uses: allenporter/flux-local/action/diff@efbe055c6dc2a63d1102db582632d2aa03696664 # 3.1.1
         id: diff
         with:
-          sources: flux-cluster
+          sources: home-kubernetes
           path: "${{ matrix.path }}"
           resource: "${{ matrix.resource }}"
 

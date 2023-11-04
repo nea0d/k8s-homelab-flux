@@ -1,7 +1,7 @@
 # k8s home cluster
 
 A single [k3s](https://k3s.io) cluster deployed with [Ansible](https://www.ansible.com) and [Terraform](https://www.terraform.io) backed by [Flux](https://toolkit.fluxcd.io/) and [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/).
-Template from [k8s-at-home](https://github.com/onedr0p/flux-cluster-template).
+Template from [k8s-at-home](https://github.com/onedr0p/home-kubernetes-template).
 Promoting Infrastrcture As Code to deploy and manage all my home kubernetes cluster.
 
 ### 💻 Systems
@@ -357,7 +357,7 @@ Once you have confirmed there are no issues requesting your certificates replace
 
 [Renovatebot](https://www.mend.io/free-developer-tools/renovate/) will scan your repository and offer PRs when it finds dependencies out of date. Common dependencies it will discover and update are Flux, Ansible Galaxy Roles, Terraform Providers, Kubernetes Helm Charts, Kubernetes Container Images, Pre-commit hooks updates, and more!
 
-The base Renovate configuration provided in your repository can be view at [.github/renovate.json5](https://github.com/k8s-at-home/flux-cluster-template/blob/main/.github/renovate.json5). If you notice this only runs on weekends and you can [change the schedule to anything you want](https://docs.renovatebot.com/presets-schedule/) or simply remove it.
+The base Renovate configuration provided in your repository can be view at [.github/renovate.json5](https://github.com/k8s-at-home/home-kubernetes-template/blob/main/.github/renovate.json5). If you notice this only runs on weekends and you can [change the schedule to anything you want](https://docs.renovatebot.com/presets-schedule/) or simply remove it.
 
 To enable Renovate on your repository, click the 'Configure' button over at their [Github app page](https://github.com/apps/renovate) and choose your repository. Over time Renovate will create PRs for out-of-date dependencies it finds. Any merged PRs that are in the cluster directory Flux will deploy.
 
@@ -382,7 +382,7 @@ Flux is pull-based by design meaning it will periodically check your git reposit
 2. Webhook secret - Your webhook secret can be found by decrypting the `secret.sops.yaml` using the following command:
 
     ```sh
-    sops -d ./cluster/apps/flux-system/webhooks/github/secret.sops.yaml | yq .stringData.token
+    sops -d ./kubernetes/apps/flux-system/webhooks/github/secret.sops.yaml | yq .stringData.token
     ```
 
     **Note:** Don't forget to update the `BOOTSTRAP_FLUX_GITHUB_WEBHOOK_SECRET` variable in your `.config.env` file so it matches the generated secret if applicable
@@ -417,25 +417,25 @@ The benefits of a public repository include:
 
   1. Generate new SSH key:
       ```sh
-      ssh-keygen -t ed25519 -C "github-deploy-key" -f ./cluster/github-deploy-key.key -q -P ""
+      ssh-keygen -t ed25519 -C "github-deploy-key" -f ./kubernetes/github-deploy-key.key -q -P ""
       ```
-  2. Paste public key (./cluster/github-deploy-key.key.pub) in the deploy keys section of your repository settings
-  3. Create sops secret in `cluster/bootstrap/github-deploy-key.sops.yaml` with the contents of ./cluster/github-deploy-key.key
+  2. Paste public key (./kubernetes/github-deploy-key.key.pub) in the deploy keys section of your repository settings
+  3. Create sops secret in `kubernetes/bootstrap/github-deploy-key.sops.yaml` with the contents of ./kubernetes/github-deploy-key.key
   4. Encrypt secret:
       ```sh
-      sops --encrypt --in-place ./cluster/bootstrap/github-deploy-key.sops.yaml
+      sops --encrypt --in-place ./kubernetes/bootstrap/github-deploy-key.sops.yaml
       ```
   5. Apply secret to cluster:
       ```sh
-      sops --decrypt cluster/bootstrap/github-deploy-key.sops.yaml | kubectl apply -f -
+      sops --decrypt kubernetes/bootstrap/github-deploy-key.sops.yaml | kubectl apply -f -
       ```
-  6.  Update `cluster/flux/config/flux-cluster.yaml`:
+  6.  Update `kubernetes/flux/config/home-kubernetes.yaml`:
       ```yaml
       ---
       apiVersion: source.toolkit.fluxcd.io/v1beta2
       kind: GitRepository
       metadata:
-        name: flux-cluster
+        name: home-kubernetes
         namespace: flux-system
       spec:
         interval: 10m
@@ -460,7 +460,7 @@ The benefits of a public repository include:
 
 ## 👉 Troubleshooting
 
-Our [wiki](https://github.com/k8s-at-home/flux-cluster-template/wiki) (WIP, contributions welcome) is a good place to start troubleshooting issues. If that doesn't cover your issue, come join and say Hi in our [Discord](https://discord.gg/k8s-at-home) server by starting a new thread in the #kubernetes support channel.
+Our [wiki](https://github.com/k8s-at-home/home-kubernetes-template/wiki) (WIP, contributions welcome) is a good place to start troubleshooting issues. If that doesn't cover your issue, come join and say Hi in our [Discord](https://discord.gg/k8s-at-home) server by starting a new thread in the #kubernetes support channel.
 
 You may also open a issue on this GitHub repo or open a [discussion on GitHub](https://github.com/k8s-at-home/organization/discussions).
 
@@ -468,7 +468,7 @@ You may also open a issue on this GitHub repo or open a [discussion on GitHub](h
 
 The world is your cluster, see below for important things you could work on adding.
 
-Our Check out our [wiki](https://github.com/k8s-at-home/flux-cluster-template/wiki) (WIP, contributions welcome) for more integrations!
+Our Check out our [wiki](https://github.com/k8s-at-home/home-kubernetes-template/wiki) (WIP, contributions welcome) for more integrations!
 
 ## 🤝 Thanks
 

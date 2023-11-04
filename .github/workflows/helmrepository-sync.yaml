@@ -13,11 +13,11 @@ on:
         required: true
   pull_request:
     branches: ["main"]
-    paths: ["cluster/**/helmrelease.yaml"]
+    paths: ["kubernetes/**/helmrelease.yaml"]
 
 env:
   BOT_USERNAME: mushu-bot[bot]
-  KUBERNETES_DIR: cluster/
+  KUBERNETES_DIR: kubernetes/
 
 jobs:
   sync:

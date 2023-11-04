@@ -1,0 +1,33 @@
+---
+github_username: nea0d
+timezone: Europe/Paris
+
+# (string) Locale for the servers (e.g. fr_FR.UTF-8)
+locale: "fr_FR.UTF-8"
+
+# (list) Additional ssh public keys to add to the nodes
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCxxkDEGhbVnPr/YkevsvxrMHJrCbLWkE02G6u4M1AHVWnF8Plbdb5tk2OJLGi72O4U2VPS0e42pPwt2UgxsrUNNooCBqIV9PSEtJ2D/RQlBmScBQjw7XNsNhZBfMd6EVfoV52Vruwfuxgr1/K+kKZaec6GRFmlX+4TtgaLmzHaH3oyPOF7Peym/RX9cFEqeWgsBzTA0FVW/0hHCh4Ee1s6cgKQUi24oJmOWpiVQ94hW200k/OWS9st8pCl8Nr0hEimui/BUUIGPUfjGnvdPilvosW0YlqXaAMolNyAG6hor6O2Qmez3vqo5WtmjJRwnPEdXWjKOav1+qfnU8xof1oPoP+FaiNOvsztd3XWOf99nEE+omQ/DOnRKPsiFUYJWefUe5Ft2OhhN/HSWM0a/Dmi7T+k/72GWB9B6XXCgdJaI1o3dO/blBmfkUYVVh+jKydaSoc6Qi1uqU2uNbDKNYhFhHYRMXOOUB15M94K1W5XsiMrhuO2RCpm+e/8ep7Mstc= ssh@oxygn.dev
+  - sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIEEg3x860tDJ2tdi7jiRT2U55MJYdyITwGauGUlI9F4+AAAACXNzaDpveHlnbg== admin@oxygn.dev-yk1
+  - sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPG/69ZRALUeXgXra7QsvsRxOT5VSHc034WOjvmVg73xAAAACXNzaDpveHlnbg== admin@oxygn.dev-yk2
+
+#logs
+systemd_journal_system_max_use: 15M
+systemd_journal_system_max_file_size: 5M
+systemd_journal_system_max_rentention_sec: 2day
+systemd_journal_system_max_file_sec: 1day
+
+#enable log2ram on boot
+log2ram_enable_on_boot: true
+#wether to reboot or not after installing log2ram
+log2ram_reboot_after_install: false
+#action to do : install, update or remove
+log2ram_state: install
+#RAM size to host logs
+log2ram_size: "512M"
+log2ram_log_disk_size: "512M"
+log2ram_use_rsync: "true"
+log2ram_mail: "false"
+log2ram_path_disk: "/var/log"
+log2ram_use_zl2r: "false"
+log2ram_compression_algorithm: "lz4"
