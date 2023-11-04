@@ -51,6 +51,11 @@ spec:
         name: cilium-operator
     tunnelPort: 8473
     tunnelProtocol: vxlan
+    containerRuntime:
+      integration: containerd
+      socketPath: /var/run/k3s/containerd/containerd.sock
+    securityContext:
+      privileged: true
 
     #other
     # autoDirectNodeRoutes: true
