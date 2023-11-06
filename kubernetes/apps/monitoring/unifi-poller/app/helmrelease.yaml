@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: ghcr.io/unpoller/unpoller
-      tag: v2.9.2
+      tag: v2.9.4
     env:
       TZ: "${TIMEZONE}"
       UP_UNIFI_DEFAULT_URL: "${SECRET_UNIFI_POLLER_UNIFI_URL}"
