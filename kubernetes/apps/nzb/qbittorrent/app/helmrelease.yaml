@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.0.0-beta.3
+      version: 2.0.3
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -33,9 +33,21 @@ spec:
         annotations:
           configmap.reloader.stakater.com/reload: qbittorrent-dnsdist
         pod:
+          affinity:
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values: ["sabnzbd"]
+                  topologyKey: kubernetes.io/hostname
           securityContext:
-            supplementalGroups:
-              - 65539
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [10000]
         containers:
           main:
             nameOverride: qbittorrent
@@ -51,11 +63,6 @@ spec:
                 memory: 512Mi
               limits:
                 memory: 1024Mi
-            securityContext:
-              runAsUser: 568
-              runAsGroup: 568
-              fsGroup: 568
-              fsGroupChangePolicy: "OnRootMismatch"
           dnsdist:
             image:
               repository: docker.io/powerdns/dnsdist-18
@@ -104,6 +111,16 @@ spec:
         ports:
           http:
             port: *port
+      bittorrent:
+        controller: main
+        type: LoadBalancer
+        # annotations:
+        #   io.cilium/lb-ipam-ips: 10.10.99.172
+        ports:
+          bittorrent:
+            enabled: true
+            port: *bittorrentPort
+            protocol: TCP
     ingress:
       main:
         enabled: true
