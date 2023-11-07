@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -25,46 +25,71 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  values:
-    image:
-      repository: ghcr.io/onedr0p/plex
-      tag: 1.32.7.7621-871adbd44@sha256:5f25b9ae38b6f3de7bff68374fe10f8e01ce54ea57b5fc858944a30bee0ba29f
-    env:
-      TZ: "${TIMEZONE}"
-      ADVERTISE_IP: "http://${METALLB_PLEX_ADDR}:32400,https://{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}:32400"
-      PLEX_CLAIM: "${SECRET_PLEX_CLAIM}"
-      ALLOWED_NETWORKS: "10.0.0.0/8,172.16.0.0/16,192.168.0.0/16,127.0.0.0/8"
-      SECURE_CONNECTIONS: "1" #1: Preferred, 0: Required
-      # required for HW acceleration
-      NVIDIA_VISIBLE_DEVICES: "all"
-      NVIDIA_DRIVER_CAPABILITIES: "all"
-      HARDWARE_DEVICE_PATH: "/dev/nvidia0"
-      TRANSCODER_TEMP_DIRECTORY: "/tmp" # /transocde
-    controller:
-      type: deployment
-      replicas: 1
+    values:
+    controllers:
+      main:
+        type: deployment
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/plex
+              tag: 1.32.7.7621-871adbd44@sha256:f9f77dc5e17cab9fae5ece663a64d026e3c75142b3b60bb4a52bf061957412be
+            env:
+              TZ: "${TIMEZONE}"
+              ADVERTISE_IP: "http://${LB_PLEX_IP}:32400,https://{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}:443"
+              PLEX_CLAIM: "${SECRET_PLEX_CLAIM}"
+              ALLOWED_NETWORKS: "10.0.0.0/8,172.16.0.0/16,192.168.0.0/16,127.0.0.0/8"
+              SECURE_CONNECTIONS: "1" #1: Preferred, 0: Required
+              # required for HW acceleration
+              NVIDIA_VISIBLE_DEVICES: "all"
+              NVIDIA_DRIVER_CAPABILITIES: "all"
+              HARDWARE_DEVICE_PATH: "/dev/nvidia0"
+              TRANSCODER_TEMP_DIRECTORY: "/tmp" # /transocde
+            runtimeClassName: nvidia
+            resources:
+              requests:
+                nvidia.com/gpu: 1
+                cpu: 200m
+                memory: 300Mi
+              limits:
+                nvidia.com/gpu: 1
+                cpu: 2000m
+                memory: 2048Mi
+        pod:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: nvidia.com/gpu.present
+                        operator: In
+                        values:
+                          - "true"
+          nodeSelector:
+            nvidia.com/gpu.present: "true"
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [44, 105, 10000]
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: "${METALLB_PLEX_ADDR}"
-        externalTrafficPolicy: Local
+        annotations:
+          io.cilium/lb-ipam-ips: "${LB_PLEX_IP}"
         ports:
           http:
             port: &port 32400
-            protocol: HTTPS
     ingress:
       main:
         enabled: true
-        ingressClassName: "external"
+        className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_PUBLIC_DOMAIN}"
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            location = / {
-              if ($http_x_plex_device = ""){
-                return 301 $scheme://$host/web/index.html;
-              }
-            }
           hajimari.io/enable: "true"
           hajimari.io/icon: "plex"
           hajimari.io/group: "media"
@@ -72,11 +97,12 @@ spec:
           - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-            secretName: plex-tls
     persistence:
       config:
         enabled: true
@@ -114,33 +140,3 @@ spec:
         path: "/volume2/Videos"
         mountPath: /videos
         readOnly: true
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups:
-        - 44
-        - 109
-        - 100
-    # affinity with GPU
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: nvidia.com/gpu.present
-                  operator: In
-                  values:
-                    - "true"
-    # required for HW acceleration
-    runtimeClassName: nvidia
-    resources:
-      requests:
-        nvidia.com/gpu: 1
-        cpu: 200m
-        memory: 300Mi
-      limits:
-        nvidia.com/gpu: 1
-        cpu: 2000m
-        memory: 2048Mi

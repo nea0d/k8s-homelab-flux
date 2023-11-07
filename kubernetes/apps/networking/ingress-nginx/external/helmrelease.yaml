@@ -40,9 +40,8 @@ spec:
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_PUBLIC_DOMAIN}"
+          io.cilium/lb-ipam-ips: "${LB_NGINX_EXTERNAL_IP}"
         type: LoadBalancer
-        loadBalancerIP: ${METALLB_NGINX_EXTERNAL_ADDR}
-        externalTrafficPolicy: Local
       publishService:
         enabled: true
       ingressClassResource:

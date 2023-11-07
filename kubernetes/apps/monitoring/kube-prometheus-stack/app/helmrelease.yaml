@@ -134,27 +134,27 @@ spec:
     kubeControllerManager:
       enabled: true
       endpoints:
-        - ${CLUSTER_HOST_MASTER_ADDR_1}
-        - ${CLUSTER_HOST_MASTER_ADDR_2}
-        - ${CLUSTER_HOST_MASTER_ADDR_3}
+        - ${CLUSTER_HOST_MASTER01_IP}
+        - ${CLUSTER_HOST_MASTER02_IP}
+        - ${CLUSTER_HOST_MASTER03_IP}
     kubeScheduler:
       enabled: true
       endpoints:
-        - ${CLUSTER_HOST_MASTER_ADDR_1}
-        - ${CLUSTER_HOST_MASTER_ADDR_2}
-        - ${CLUSTER_HOST_MASTER_ADDR_3}
+        - ${CLUSTER_HOST_MASTER01_IP}
+        - ${CLUSTER_HOST_MASTER02_IP}
+        - ${CLUSTER_HOST_MASTER03_IP}
     kubeProxy:
       enabled: true
       endpoints:
-        - ${CLUSTER_HOST_MASTER_ADDR_1}
-        - ${CLUSTER_HOST_MASTER_ADDR_2}
-        - ${CLUSTER_HOST_MASTER_ADDR_3}
+        - ${CLUSTER_HOST_MASTER01_IP}
+        - ${CLUSTER_HOST_MASTER02_IP}
+        - ${CLUSTER_HOST_MASTER03_IP}
     kubeEtcd:
       enabled: true
       endpoints:
-        - ${CLUSTER_HOST_MASTER_ADDR_1}
-        - ${CLUSTER_HOST_MASTER_ADDR_2}
-        - ${CLUSTER_HOST_MASTER_ADDR_3}
+        - ${CLUSTER_HOST_MASTER01_IP}
+        - ${CLUSTER_HOST_MASTER02_IP}
+        - ${CLUSTER_HOST_MASTER03_IP}
       service:
         enabled: true
         port: 2381
@@ -236,4 +236,4 @@ spec:
         #     honor_timestamps: true
         #     static_configs:
         #       - targets:
-        #           - "${METALLB_K8S_GATEWAY_ADDR}:9153"
+        #           - "${LB_K8S_GATEWAY_IP}:9153"

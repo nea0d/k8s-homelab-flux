@@ -6,15 +6,14 @@ metadata:
   namespace: databases
   annotations:
     coredns.io/hostname: "postgres.${SECRET_PUBLIC_DOMAIN}"
+    io.cilium/lb-ipam-ip: "${LB_POSTGRES_IP}"
 spec:
   type: LoadBalancer
-  loadBalancerIP: "${METALLB_POSTGRES_ADDR}"
-  externalTrafficPolicy: Local
   ports:
     - name: postgres
       port: 5432
       protocol: TCP
       targetPort: 5432
   selector:
-    postgresql: postgres
+    cnpg.io/cluster: postgres
     role: primary

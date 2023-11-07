@@ -56,8 +56,9 @@ spec:
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: "${METALLB_HOME_ASSISTANT_ADDR}"
-        externalTrafficPolicy: Local
+        annotations:
+          coredns.io/hostname: "redis.${SECRET_PUBLIC_DOMAIN}"
+          io.cilium/lb-ipam-ips: "${LB_HOME_ASSISTANT_IP}"
         ports:
           http:
             port: 8123

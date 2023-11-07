@@ -29,8 +29,9 @@ spec:
   values:
     service:
       type: LoadBalancer
-      loadBalancerIP: ${METALLB_INFLUXDB_ADDR}
-      externalTrafficPolicy: Local
+      annotations:
+          coredns.io/hostname: "redis.${SECRET_PUBLIC_DOMAIN}"
+          io.cilium/lb-ipam-ips: "${LB_INFLUXDB_IP}"
     adminUser:
       organization: "oxygn"
       bucket: "default"

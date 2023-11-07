@@ -40,8 +40,9 @@ spec:
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: "${METALLB_CS2_ADDR}"
-        externalTrafficPolicy: Local
+        annotations:
+          coredns.io/hostname: "redis.${SECRET_PUBLIC_DOMAIN}"
+          io.cilium/lb-ipam-ips: "${LB_CS2_IP}"
         ports:
           http:
             enabled: false
