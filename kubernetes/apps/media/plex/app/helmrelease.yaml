@@ -28,7 +28,6 @@ spec:
   values:
     controllers:
       main:
-        type: replicaset
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
