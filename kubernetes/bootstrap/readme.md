@@ -3,7 +3,7 @@
 ## 1. Install the Flux manifests into the cluster
 
 ```sh
-kubectl apply --server-side --kustomize ./kubernetes/bootstrap
+kubectl apply --server-side --kustomize ./kubernetes/bootstrap/flux
 ```
 
 ## 2. Apply Cluster Secrets and ConfigMaps needed before bootstrapping this Git Repository
