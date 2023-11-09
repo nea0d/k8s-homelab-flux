@@ -111,6 +111,7 @@ spec:
               capabilities:
                 add:
                   - NET_ADMIN
+                  - NET_RAW
           port-forward:
             image:
               repository: docker.io/snoringdragon/gluetun-qbittorrent-port-manager
