@@ -42,12 +42,12 @@ spec:
                         operator: In
                         values: ["sabnzbd"]
                   topologyKey: kubernetes.io/hostname
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
-            supplementalGroups: [10000]
+          # securityContext:
+          #   runAsUser: 568
+          #   runAsGroup: 568
+          #   fsGroup: 568
+          #   fsGroupChangePolicy: OnRootMismatch
+          #   supplementalGroups: [10000]
         containers:
           main:
             nameOverride: qbittorrent
@@ -75,6 +75,11 @@ spec:
                 memory: 512Mi
               limits:
                 memory: 1024Mi
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              fsGroup: 568
+              fsGroupChangePolicy: OnRootMismatch
           dnsdist:
             image:
               repository: docker.io/powerdns/dnsdist-18
@@ -92,7 +97,7 @@ spec:
                 value: "8080"
               - name: FIREWALL_OUTBOUND_SUBNETS
                 # Allow access to k8s subnets
-                value: "10.43.0.0/16,10.10.99.0/24"
+                value: "10.32.0.0/16,10.10.99.0/24"
               - name: SHADOWSOCKS
                 value: "on"
               - name: DOT
