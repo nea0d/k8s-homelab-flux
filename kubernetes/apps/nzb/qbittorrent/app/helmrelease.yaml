@@ -129,8 +129,8 @@ spec:
         ports:
           http:
             port: *port
-      bittorrent:
-        controller: main
+      # bittorrent:
+      #   controller: main
         # type: LoadBalancer
         # annotations:
         #   io.cilium/lb-ipam-ips: 10.10.99.172
