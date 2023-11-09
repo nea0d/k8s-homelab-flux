@@ -131,14 +131,14 @@ spec:
             port: *port
       bittorrent:
         controller: main
-        type: LoadBalancer
-        annotations:
-          io.cilium/lb-ipam-ips: 10.10.99.172
-        ports:
-          bittorrent:
-            enabled: true
-            port: *bittorrentPort
-            protocol: TCP
+        # type: LoadBalancer
+        # annotations:
+        #   io.cilium/lb-ipam-ips: 10.10.99.172
+        # ports:
+        #   bittorrent:
+        #     enabled: true
+        #     port: *bittorrentPort
+        #     protocol: TCP
     ingress:
       main:
         enabled: true
