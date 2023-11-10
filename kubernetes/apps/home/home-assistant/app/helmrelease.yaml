@@ -41,18 +41,12 @@ spec:
               tag: 14.9
               pullPolicy: IfNotPresent
             env:
-              - name: POSTGRES_HOST
-                value: "postgres-rw.databases.svc.cluster.local."
-              - name: POSTGRES_DB
-                value: "${SECRET_HOME_ASSISTANT_DBNAME}"
-              - name: POSTGRES_USER
-                value: "${SECRET_HOME_ASSISTANT_DB_USERNAME}"
-              - name: POSTGRES_PASS
-                value: "${SECRET_HOME_ASSISTANT_DB_PASSWORD}"
-              - name: POSTGRES_SUPER_USER
-                value: "${SECRET_POSTGRES_SUPER_USERNAME}"
-              - name: POSTGRES_SUPER_PASS
-                value: "${SECRET_POSTGRES_SUPER_PASSWORD}"
+              POSTGRES_HOST: "postgres-rw.databases.svc.cluster.local."
+              POSTGRES_DB: "${SECRET_HOME_ASSISTANT_DBNAME}"
+              POSTGRES_USER: "${SECRET_HOME_ASSISTANT_DB_USERNAME}"
+              POSTGRES_PASS: "${SECRET_HOME_ASSISTANT_DB_PASSWORD}"
+              POSTGRES_SUPER_USER: "${SECRET_POSTGRES_SUPER_USERNAME}"
+              POSTGRES_SUPER_PASS: "${SECRET_POSTGRES_SUPER_PASSWORD}"
         containers:
           main:
             image:
