@@ -13,8 +13,8 @@ spec:
   metricsPath: /pve
   params:
     module: ["default"]
-    cluster: "1"
-    node: "1"
+    cluster: ["1"]
+    node: ["1"]
   relabelings:
     - sourceLabels: [__address__]
       targetLabel: __param_target
