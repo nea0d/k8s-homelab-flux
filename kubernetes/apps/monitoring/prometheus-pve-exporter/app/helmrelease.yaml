@@ -1,0 +1,80 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: prometheus-pve-exporter
+  namespace: monitoring
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.0.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/prompve/prometheus-pve-exporter
+              tag: v3.0.2
+            envFrom:
+              - secretRef:
+                  name: pve-exporter-secret
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+    service:
+      main:
+        ports:
+          http:
+            port: 9221
+
+    # serviceMonitor:
+    #   enabled: true
+    #   namespace: monitoring
+    #   params:
+    #     - name: pve
+    #       module:
+    #         - default
+    #       cluster: 1
+    #       node: 1
+    #       targets:
+    #         - {{ PVE1_NODE_IP}}  # Proxmox VE node.
+    #         - {{ PVE2_NODE_IP}}  # Proxmox VE node.
+    #   path: /pve
+    #   scrapeTimeout: 10s
+    #   relabelings:
+    #     - source_labels: [__address__]
+    #       target_label: __param_target
+    #     - source_labels: [__param_target]
+    #       target_label: instance
+    #     - target_label: __address__
+    #       replacement: 127.0.0.1:9221  # PVE exporter.
+
+
+    # serviceMonitor:
+    #   main:
+    #     enabled: true
+    #     endpoints:
+    #       - port: http
+    #         scheme: http
+    #         path: /metrics
+    #         interval: 2m # Unifi API only polls at 2m intervals
+    #         scrapeTimeout: 10s
