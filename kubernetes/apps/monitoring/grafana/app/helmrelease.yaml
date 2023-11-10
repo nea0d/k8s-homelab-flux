@@ -280,7 +280,8 @@ spec:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/logs.json
           datasource: Prometheus
       infra:
-        # renovate: depName="Proxmox via Prometheus"
+        proxmox-ve:
+          # renovate: depName="Proxmox via Prometheus"
           gnetId: 10347
           revision: 5
           datasource: Prometheus
