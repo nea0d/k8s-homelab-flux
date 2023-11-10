@@ -26,17 +26,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    crds:
-      enabled: true
     csi:
-      nfs:
-        enabled: true
-    pspEnable: false
+      csiAddons:
+        enabled: false # Set to true when using kubernetes-csi-addons
+      cephFSKernelMountOptions: ms_mode=secure # Set when encryption/compression is enabled
     monitoring:
       enabled: true
-    resources:
-      requests:
-        cpu: 10m
-        memory: 128Mi
-      limits:
-        memory: 256Mi
