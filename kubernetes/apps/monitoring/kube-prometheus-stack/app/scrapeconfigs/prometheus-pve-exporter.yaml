@@ -21,4 +21,4 @@ spec:
     - sourceLabels: [__param_target]
       targetLabel: instance
     - targetLabel: __address__
-      replacement: 127.0.0.1:9221  # PVE exporter.
+      replacement: prometheus-pve-exporter.monitoring:9221  # PVE exporter.
