@@ -14,27 +14,51 @@ spec:
   superuserSecret:
     name: postgres-superuser
   enableSuperuserAccess: true
-  bootstrap:
-    initdb:
-      import:
-        type: monolith
-        databases: ["*"]
-        roles: ["*"]
-        source:
-          externalCluster: cnpg-6
   postgresql:
     parameters:
-      max_connections: "100"
-      shared_buffers: 256MB
+      max_connections: "600"
+      shared_buffers: 512MB
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "500m"
+    limits:
+      memory: "4Gi"
   monitoring:
     enablePodMonitor: true
-  externalClusters:
-    - name: cnpg-6
-      connectionParameters:
-        host: postgres-rw.databases.svc.cluster.local
-        user: postgres
-        dbname: postgres
-        sslmode: require
-      password:
-        name: postgres-superuser
-        key: password
+  backup:
+    retentionPolicy: 30d
+    barmanObjectStore:
+      wal:
+        compression: bzip2
+        maxParallel: 8
+      serverName: &currentCluster postgres16-v1
+      destinationPath: s3://postgres-backup-v2/
+      endpointURL: https://${SECRET_CLOUDFLARE_ACCOUNT_ID}.eu.r2.cloudflarestorage.com
+      s3Credentials:
+        accessKeyId:
+          name: postgres-r2
+          key: R2_ACCESS_KEY_ID
+        secretAccessKey:
+          name: postgres-r2
+          key: R2_SECRET_ACCESS_KEY
+  # Note: Bootstrap is needed when recovering from an existing cnpg cluster
+  # bootstrap:
+  #   recovery:
+  #     source: &previousCluster postgres16-v1
+  # Note: externalClusters is needed when recovering from an existing cnpg cluster
+  # externalClusters:
+  #   - name: *previousCluster
+  #     barmanObjectStore:
+  #       wal:
+  #         compression: bzip2
+  #         maxParallel: 8
+  #       destinationPath: s3://postgres-backup-v2/
+  #       endpointURL: https://${SECRET_CLOUDFLARE_ACCOUNT_ID}.eu.r2.cloudflarestorage.com
+  #       s3Credentials:
+  #         accessKeyId:
+  #           name: postgres-r2
+  #           key: R2_ACCESS_KEY_ID
+  #         secretAccessKey:
+  #           name: postgres-r2
+  #           key: R2_SECRET_ACCESS_KEY
