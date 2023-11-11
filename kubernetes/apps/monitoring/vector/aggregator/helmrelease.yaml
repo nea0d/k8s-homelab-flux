@@ -135,7 +135,7 @@ spec:
           inputs:
             - vector_metrics
           address: 0.0.0.0:9090
-    replicas: 3
+    replicas: 2
     podMonitor:
       enabled: true
       jobLabel: vector-aggregator
