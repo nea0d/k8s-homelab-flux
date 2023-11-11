@@ -43,8 +43,11 @@ spec:
         - name: POSTGRES_SUPER_PASS
           value: "${SECRET_POSTGRES_SUPER_PASSWORD}"
     image:
-      repository: teslamate/teslamate
-      tag: 1.27.3
+      # repository: teslamate/teslamate
+      # tag: 1.27.3
+      # temporarily waiting for official fix : https://github.com/teslamate-org/teslamate/discussions/3370
+      repository: teslamatefork/teslamatefork
+      tag: edge
     env:
       TZ: "${TIMEZONE}"
       # Encrypts Tesla Token
