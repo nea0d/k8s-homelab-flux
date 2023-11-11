@@ -8,5 +8,6 @@ resources:
   - ./secretr2.sops.yaml
   - ./secretminio.sops.yaml
   - ./cluster.yaml
+  - ./cluster16.yaml
   - ./scheduledbackup.yaml
   - ./service.yaml
