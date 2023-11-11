@@ -98,14 +98,12 @@ spec:
             matchLabels:
               app.kubernetes.io/name: ingress-nginx-external
               app.kubernetes.io/component: controller
-      podAnnotations:
-        configmap.reloader.stakater.com/reload: "cloudflare-proxied-networks"
       resources:
         requests:
           cpu: 10m
           memory: 250Mi
         limits:
-          memory: 500Mi
+          memory: 250Mi
     defaultBackend:
       enabled: false
       # image:
@@ -136,35 +134,3 @@ spec:
       #                 operator: In
       #                 values: ["default-backend"]
       #           topologyKey: kubernetes.io/hostname
-  valuesFrom:
-    # Cloudflare Networks
-    # https://www.cloudflare.com/ips/
-    - targetPath: controller.config.proxy-real-ip-cidr
-      kind: ConfigMap
-      name: cloudflare-networks
-      valuesKey: cloudflare-networks.txt
-  # postRenderers:
-  #   - kustomize:
-  #       patchesJson6902:
-  #         - target:
-  #             kind: Deployment
-  #             name: ingress-nginx-controller
-  #           patch:
-  #             - op: replace
-  #               path: /spec/strategy
-  #               value:
-  #                 type: RollingUpdate
-  #                 rollingUpdate:
-  #                   maxSurge: 1
-  #                   maxUnavailable: 1
-  #         - target:
-  #             kind: Deployment
-  #             name: ingress-nginx-defaultbackend
-  #           patch:
-  #             - op: replace
-  #               path: /spec/strategy
-  #               value:
-  #                 type: RollingUpdate
-  #                 rollingUpdate:
-  #                   maxSurge: 1
-  #                   maxUnavailable: 1
