@@ -6,7 +6,6 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./goldilocks/ks.yaml
   - ./grafana/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./kube-state-metrics/ks.yaml
@@ -18,4 +17,3 @@ resources:
   - ./thanos/ks.yaml
   - ./unpoller/ks.yaml
   - ./vector/ks.yaml
-  - ./vpa/ks.yaml
