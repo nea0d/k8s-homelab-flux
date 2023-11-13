@@ -6,7 +6,8 @@ metadata:
   name: weave-gitops
   namespace: flux-system
 spec:
-  interval: 15m
+  interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: weave-gitops
@@ -31,12 +32,21 @@ spec:
     adminUser:
       create: true
       username: admin
+    envVars:
+      - name: WEAVE_GITOPS_FEATURE_TENANCY
+        value: "true"
+      - name: WEAVE_GITOPS_FEATURE_CLUSTER
+        value: "true"
+      - name: WEAVE_GITOPS_FEATURE_TELEMETRY
+        value: "true"
+      - name: WEAVE_GITOPS_FEATURE_OIDC_BUTTON_LABEL
+        value: "Login with Authelia"
     oidcSecret:
-      create: false
-      # clientID: weave-gitops
-      # clientSecret: ${SECRET_WEAVEGITOPS_OAUTH_CLIENT_SECRET}
-      # issuerURL: "https://auth.${SECRET_PUBLIC_DOMAIN}"
-      # redirectURL: "https://gitops.${SECRET_PUBLIC_DOMAIN}/oauth2/callback"
+      create: true
+      clientID: weave-gitops
+      clientSecret: ${SECRET_WEAVEGITOPS_OAUTH_CLIENT_SECRET}
+      issuerURL: "https://auth.${SECRET_PUBLIC_DOMAIN}"
+      redirectURL: "https://gitops.${SECRET_PUBLIC_DOMAIN}/oauth2/callback"
     ingress:
       enabled: true
       className: internal
@@ -54,7 +64,7 @@ spec:
             - *host
           secretName: weave-gitops-tls
     networkPolicy:
-      create: true
+      create: false
     metrics:
       enabled: true
     rbac:
