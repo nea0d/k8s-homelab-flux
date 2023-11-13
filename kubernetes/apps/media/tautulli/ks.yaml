@@ -1,5 +1,5 @@
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1
+# yaml-language-server: $schema=https://kubernetes-schemas.oxygn.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 kind: Kustomization
 metadata:
   name: cluster-apps-tautulli

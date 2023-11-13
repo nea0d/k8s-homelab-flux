@@ -1,5 +1,5 @@
 ---
-apiVersion: kustomize.config.k8s.io/v1beta1
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 kind: Kustomization
 resources:
   - ./actions-runner-controller.yaml
@@ -16,21 +16,14 @@ resources:
   - ./grafana.yaml
   - ./gpu-operator.yaml
   - ./hajimari.yaml
-  - ./influxdata.yaml
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
-  - ./k8s-at-home.yaml
   - ./k8s-gateway.yaml
   - ./kubernetes-dashboard.yaml
-  - ./metallb.yaml
   - ./metrics-server.yaml
-  - ./minio.yaml
-  - ./morremeyer.yaml
   - ./nfs-subdir-external-provisioner.yaml
   - ./piraeus.yaml
   - ./prometheus-community.yaml
-  - ./project-calico.yaml
   - ./rook-ceph.yaml
   - ./stakater.yaml
-  - ./vector.yaml
   - ./weave-gitops.yaml
