@@ -51,7 +51,7 @@ spec:
       mon_data_avail_warn = 15
       osd_class_update_on_start = false
     toolbox:
-      enabled: true
+      enabled: false
     cephClusterSpec:
       network:
         provider: host
@@ -80,6 +80,43 @@ spec:
           - name: k8s-worker03
             devices:
               - name: /dev/disk/by-id/nvme-GIGABYTE_GP-GSM2NE3512GNTD_SN215008908604
+      resources:
+        mgr:
+          requests:
+            cpu: "100m"
+            memory: "512Mi"
+          limits:
+            memory: "1Gi"
+        mon:
+          requests:
+            cpu: "100m"
+            memory: "512Mi"
+          limits:
+            memory: "1Gi"
+        osd:
+          requests:
+            cpu: "100m"
+            memory: "2Gi"
+          limits:
+            memory: "4Gi"
+        mgr-sidecar:
+          requests:
+            cpu: "100m"
+            memory: "40Mi"
+          limits:
+            memory: "100Mi"            
+        crashcollector:
+          requests:
+            cpu: "15m"
+            memory: "60Mi"
+          limits:
+            memory: "60Mi"
+        logcollector:
+          requests:
+            cpu: "15m"
+            memory: "60Mi"
+          limits:
+            memory: "60Mi"            
     cephBlockPools:
       - name: ceph-blockpool
         spec:
@@ -118,10 +155,10 @@ spec:
             activeStandby: true
             resources:
               requests:
-                cpu: 250m
-                memory: 512Mi
+                cpu: 25m
+                memory: 128Mi
               limits:
-                memory: 2Gi
+                memory: 1G
         storageClass:
           enabled: true
           isDefault: false

@@ -32,3 +32,9 @@ spec:
       cephFSKernelMountOptions: ms_mode=secure # Set when encryption/compression is enabled
     monitoring:
       enabled: true
+    resources:
+      requests:
+        cpu: 15m
+        memory: 128Mi
+      limits:
+        memory: 512Mi
