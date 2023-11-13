@@ -39,7 +39,7 @@ spec:
       main:
         containers:
           main:
-            nameOverride: qbittorrent
+            nameOverride: cs2
             image:
               repository: ghcr.io/gameservermanagers/gameserver
               tag: cs2@sha256:6a33499c909834917c36e07775ee79210a40eb4e0ccee54c109fd5ad5d7ff1d3
