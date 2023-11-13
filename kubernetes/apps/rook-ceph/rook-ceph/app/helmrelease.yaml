@@ -39,11 +39,9 @@ spec:
         # @default -- `false`
         enabled: true
     discover:
-      nodeAffinity: 
-        - ceph-storage-node=true
+      nodeAffinity: "ceph-storage-node=true"
     admissionController:
-      nodeAffinity: 
-        - ceph-storage-node=true
+      nodeAffinity: "ceph-storage-node=true"
     monitoring:
       enabled: true
     resources:
