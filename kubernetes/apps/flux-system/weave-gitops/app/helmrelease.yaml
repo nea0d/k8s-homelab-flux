@@ -69,7 +69,7 @@ spec:
       enabled: true
     rbac:
       create: true
-      impersonationResourceNames: ["admin"]
+      impersonationResourceNames: ["matt@oxygn.dev, admins, people"]
       impersonationResources: ["users", "groups"]
       viewSecretsResourceNames: ["cluster-user-auth", "oidc-auth"]
       additionalRules:
