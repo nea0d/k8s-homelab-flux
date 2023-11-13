@@ -6,6 +6,7 @@ metadata:
   namespace: monitoring
 spec:
   interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: kube-prometheus-stack
@@ -14,7 +15,6 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
-      interval: 30m
   maxHistory: 2
   install:
     createNamespace: true
@@ -181,7 +181,7 @@ spec:
       thanosServiceMonitor:
         enabled: true
       prometheusSpec:
-        replicas: 2
+        replicas: 1
         replicaExternalLabelName: __replica__
         externalLabels:
           cluster: "${CLUSTER_NAME}"
