@@ -75,7 +75,7 @@ spec:
                     - key: ceph-storage-node
                       operator: In
                       values:
-                        -"true"
+                        - "true"
       removeOSDsIfOutAndSafeToRemove: false
       storage:
         useAllNodes: false
