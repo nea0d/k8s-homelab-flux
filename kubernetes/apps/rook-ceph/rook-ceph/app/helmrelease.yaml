@@ -31,8 +31,7 @@ spec:
       csiAddons:
         enabled: false # Set to true when using kubernetes-csi-addons
       cephFSKernelMountOptions: ms_mode=secure # Set when encryption/compression is enabled
-      provisionerNodeAffinity: 
-        - ceph-storage-node=true
+      provisionerNodeAffinity: "ceph-storage-node=true"
       readAffinity:
         # -- Enable read affinity for RBD volumes. Recommended to
         # set to true if running kernel 5.8 or newer.
