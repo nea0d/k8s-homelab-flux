@@ -37,11 +37,6 @@ spec:
   values:
     controllers:
       main:
-        pod:
-          securityContext:
-            runAsUser: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
         containers:
           main:
             nameOverride: qbittorrent
@@ -82,9 +77,6 @@ spec:
                 memory: 512M
               limits:
                 memory: 1G
-            securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
     service:
       main:
         type: LoadBalancer
