@@ -18,3 +18,4 @@ resources:
   - ./thanos/ks.yaml
   - ./unpoller/ks.yaml
   - ./vector/ks.yaml
+  - ./vpa/ks.yaml

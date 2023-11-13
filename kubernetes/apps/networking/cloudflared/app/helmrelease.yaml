@@ -7,6 +7,7 @@ metadata:
   namespace: networking
 spec:
   interval: 30m
+  tiemout: 15m
   chart:
     spec:
       chart: app-template
@@ -102,7 +103,7 @@ spec:
             app.kubernetes.io/name: *app
     resources:
       requests:
-        cpu: 5m
-        memory: 10Mi
+        cpu: 15m
+        memory: 60M
       limits:
-        memory: 256Mi
+        memory: 128M

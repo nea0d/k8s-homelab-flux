@@ -88,3 +88,9 @@ spec:
         labelSelector:
           matchLabels:
             app.kubernetes.io/instance: coredns
+    resources:
+      requests:
+        cpu: 35m
+        memory: 128M
+      limits:
+        memory: 128M

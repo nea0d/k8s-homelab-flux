@@ -5,7 +5,8 @@ metadata:
   name: hajimari
   namespace: default
 spec:
-  interval: 15m
+  interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: hajimari
@@ -150,7 +151,7 @@ spec:
       configmap.reloader.stakater.com/reload: "hajimari-settings"
     resources:
       requests:
-        cpu: 100m
-        memory: 128Mi
+        cpu: 15m
+        memory: 100M
       limits:
-        memory: 256Mi
+        memory: 100M

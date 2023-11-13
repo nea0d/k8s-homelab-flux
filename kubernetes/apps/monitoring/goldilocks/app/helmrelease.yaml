@@ -28,9 +28,9 @@ spec:
     keepHistory: false
   values:
     vpa:
-      enabled: true
+      enabled: false
       updater:
-        enabled: true
+        enabled: false
     metrics-server:
       enabled: false
       apiService:
@@ -39,9 +39,9 @@ spec:
       resources:
         requests:
           cpu: 15m
-          memory: 145M
+          memory: 105M
         limits:
-          memory: 174M
+          memory: 105M
     dashboard:
       replicaCount: 1
       ingress:

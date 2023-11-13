@@ -5,7 +5,8 @@ metadata:
   name: gpu-operator
   namespace: gpu-operator
 spec:
-  interval: 15m
+  interval: 30m
+  tiemout: 15m
   chart:
     spec:
       # renovate: registryUrl=https://nvidia.github.io/gpu-operator
@@ -15,7 +16,6 @@ spec:
         kind: HelmRepository
         name: gpu-operator
         namespace: flux-system
-      interval: 15m
   install:
     createNamespace: true
     remediation:
@@ -29,6 +29,12 @@ spec:
       defaultRuntime: "containerd"
       upgradeCRD: true
       cleanupCRD: true
+      resources:
+        requests:
+          cpu: 25m
+          memory: 100M
+        limits:
+          memory: 350M
     dcgmExporter:
       enabled: true
       serviceMonitor:

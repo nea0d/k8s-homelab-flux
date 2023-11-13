@@ -5,11 +5,12 @@ metadata:
   name: &app plex
   namespace: media
 spec:
-  interval: 15m
+  interval: 30m
+  tiemout: 15m
   chart:
     spec:
       chart: app-template
-      version: 2.0.3
+      version: 2.2.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -25,6 +26,13 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: gpu-operator
+      namespace: gpu-operator
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync
   values:
     controllers:
       main:
@@ -50,11 +58,11 @@ spec:
             resources:
               requests:
                 nvidia.com/gpu: 1
-                cpu: 200m
-                memory: 300Mi
+                cpu: 15m
+                memory: 380M
               limits:
                 nvidia.com/gpu: 1
-                memory: 2048Mi
+                memory: 2G
         pod:
           affinity:
             nodeAffinity:

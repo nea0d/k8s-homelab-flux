@@ -5,7 +5,8 @@ metadata:
   name: &app cs2
   namespace: gaming
 spec:
-  interval: 15m
+  interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: app-template
@@ -27,6 +28,11 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+    dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync
   values:
     image:
       repository: ghcr.io/gameservermanagers/gameserver
@@ -109,10 +115,10 @@ spec:
       secret.reloader.stakater.com/reload: *app
     resources:
       requests:
-        cpu: 10m
-        memory: 250Mi
+        cpu: 25m
+        memory: 512M
       limits:
-        memory: 1000Mi
+        memory: 1G
     # prometheus:
     #   podMonitor:
     #     enabled: true

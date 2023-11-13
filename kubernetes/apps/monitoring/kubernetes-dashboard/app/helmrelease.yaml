@@ -5,7 +5,8 @@ metadata:
   name: kubernetes-dashboard
   namespace: monitoring
 spec:
-  interval: 15m
+  interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: kubernetes-dashboard
@@ -58,8 +59,29 @@ spec:
           - --disable-settings-authorizer
           # When enabled, Dashboard login view will also be shown when Dashboard is not served over HTTPS.
           - --enable-insecure-login
+        resources:
+          requests:
+            cpu: 15m
+            memory: 100M
+          limits:
+            memory: 100M
     metricsScraper:
       enabled: true
+      containers:
+        resources:
+          requests:
+            cpu: 15m
+            memory: 100M
+          limits:
+            memory: 100M
+    web:
+      containers:
+        resources:
+          requests:
+            cpu: 15m
+            memory: 100M
+          limits:
+            memory: 100M
     # disables nginx-ingress-controller subchart installation
     nginx:
       enabled: false

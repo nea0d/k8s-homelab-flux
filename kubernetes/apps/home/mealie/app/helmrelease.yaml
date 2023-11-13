@@ -25,6 +25,11 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+    dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: volsync
   values:
     fullnameOverride: *app
     image:
@@ -63,7 +68,7 @@ spec:
         existingClaim: mealie-data-v0
     resources:
       requests:
-        memory: 200Mi
-        cpu: 10m
+        cpu: 15m
+        memory: 200M
       limits:
-        memory: 400Mi
+        memory: 250M
