@@ -5,7 +5,8 @@ metadata:
   name: goldilocks
   namespace: monitoring
 spec:
-  interval: 15m
+  interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: goldilocks
@@ -26,6 +27,14 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    vpa:
+      enabled: true
+      updater:
+        enabled: true
+    metrics-server:
+      enabled: false
+      apiService:
+        create: true
     controller:
       resources:
         requests:
