@@ -30,7 +30,7 @@ spec:
   values:
     logLevel: info #debug
     adminUser:
-      create: true
+      create: false
       username: matt@oxygn.dev
     envVars:
       - name: WEAVE_GITOPS_FEATURE_TENANCY
