@@ -69,13 +69,13 @@ spec:
       enabled: true
     rbac:
       create: true
-      # impersonationResourceNames: ["admin"]
-      # impersonationResources: ["users", "groups"]
-      # viewSecretsResourceNames: ["cluster-user-auth", "oidc-auth"]
-      # additionalRules:
-      #   - apiGroups: ["infra.contrib.fluxcd.io"]
-      #     resources: ["terraforms"]
-      #     verbs: ["get", "list", "patch"]
+      impersonationResourceNames: ["admin"]
+      impersonationResources: ["users", "groups"]
+      viewSecretsResourceNames: ["cluster-user-auth", "oidc-auth"]
+      additionalRules:
+        - apiGroups: ["infra.contrib.fluxcd.io"]
+          resources: ["terraforms"]
+          verbs: ["get", "list", "patch"]
     podAnnotations:
       secret.reloader.stakater.com/reload: weave-gitops-secret
   valuesFrom:
