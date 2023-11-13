@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.2.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -35,20 +35,60 @@ spec:
     - name: volsync
       namespace: volsync
   values:
-    image:
-      repository: ghcr.io/gameservermanagers/gameserver
-      tag: csgo@sha256:84579d7e4888e4a3ffa15639cfe90699011bb15998287efb19ed47ca4a506bf3
-    env:
-      TZ: "${TIMEZONE}"
-      CS2__INSTANCE_NAME: CS2
-      CS2__GAMEPORT: &gameport 27015
-      CS2__CLIENTPORT: &clientport 27005
-      CS2__LOG_LEVEL: info
+    controllers:
+      main:
+        pod:
+          securityContext:
+            runAsUser: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+        containers:
+          main:
+            nameOverride: qbittorrent
+            image:
+              repository: ghcr.io/gameservermanagers/gameserver
+              tag: cs2@sha256:6a33499c909834917c36e07775ee79210a40eb4e0ccee54c109fd5ad5d7ff1d3
+            env:
+              TZ: "${TIMEZONE}"
+              CS2__INSTANCE_NAME: CS2
+              CS2__GAMEPORT: &gameport 27015
+              CS2__CLIENTPORT: &clientport 27005
+              CS2__LOG_LEVEL: info
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: *gameport
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: *gameport
+                  initialDelaySeconds: 0
+                  periodSeconds: 60
+                  timeoutSeconds: 1
+                  failureThreshold: 20
+            resources:
+              requests:
+                cpu: 25m
+                memory: 512M
+              limits:
+                memory: 1G
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
     service:
       main:
         type: LoadBalancer
         annotations:
-          coredns.io/hostname: "redis.${SECRET_PUBLIC_DOMAIN}"
           io.cilium/lb-ipam-ips: "${LB_CS2_IP}"
         ports:
           http:
@@ -65,28 +105,6 @@ spec:
             enabled: true
             port: *clientport
             protocol: TCP
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          tcpSocket:
-            port: *gameport
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: true
-        custom: true
-        spec:
-          tcpSocket:
-            port: *gameport
-          initialDelaySeconds: 0
-          periodSeconds: 60
-          timeoutSeconds: 1
-          failureThreshold: 20
     ingress:
       main:
         enabled: true
@@ -112,23 +130,3 @@ spec:
       data:
         enabled: true
         existingClaim: cs2-data-v1
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *app
-    resources:
-      requests:
-        cpu: 25m
-        memory: 512M
-      limits:
-        memory: 1G
-    # prometheus:
-    #   podMonitor:
-    #     enabled: true
-    #     interval: 3m
-    #     scrapeTimeout: 1m30s
-    # podSecurityContext:
-    #   runAsUser: 1000
-    #   runAsGroup: 1000
-    #   fsGroup: 1000
-    #   fsGroupChangePolicy: "OnRootMismatch"
-    #   supplementalGroups:
-    #     - 100
