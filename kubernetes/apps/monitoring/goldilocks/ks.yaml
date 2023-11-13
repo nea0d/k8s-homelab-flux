@@ -7,8 +7,6 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
-  dependsOn:
-    - name: cluster-apps-vpa
   path: ./kubernetes/apps/monitoring/goldilocks/app
   prune: true
   sourceRef:
