@@ -67,4 +67,3 @@ spec:
         cpu: 10m
       limits:
         memory: 400Mi
-        cpu: 500m

@@ -54,7 +54,6 @@ spec:
                 memory: 300Mi
               limits:
                 nvidia.com/gpu: 1
-                cpu: 2000m
                 memory: 2048Mi
         pod:
           affinity:
