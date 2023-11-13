@@ -25,7 +25,7 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-    dependsOn:
+  dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync

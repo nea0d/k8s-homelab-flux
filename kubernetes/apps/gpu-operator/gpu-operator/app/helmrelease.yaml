@@ -6,7 +6,7 @@ metadata:
   namespace: gpu-operator
 spec:
   interval: 30m
-  tiemout: 15m
+  timeout: 15m
   chart:
     spec:
       # renovate: registryUrl=https://nvidia.github.io/gpu-operator
