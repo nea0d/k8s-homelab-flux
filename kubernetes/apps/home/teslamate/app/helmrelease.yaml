@@ -75,3 +75,9 @@ spec:
         tls:
           - hosts:
               - *host
+    resources:
+      requests:
+        cpu: 25m
+        memory: 250Mi
+      limits:
+        memory: 500Mi
