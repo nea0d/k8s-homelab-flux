@@ -30,8 +30,8 @@ spec:
   values:
     logLevel: info #debug
     adminUser:
-      create: false
-      username: admin
+      create: true
+      username: matt@oxygn.dev
     envVars:
       - name: WEAVE_GITOPS_FEATURE_TENANCY
         value: "true"
@@ -69,7 +69,7 @@ spec:
       enabled: true
     rbac:
       create: true
-      impersonationResourceNames: ["admin", "admins", "matt@oxygn.dev"]
+      impersonationResourceNames: ["admin", "admins", "matt@oxygn.dev", "people"]
       impersonationResources: ["users", "groups"]
       viewSecretsResourceNames: ["cluster-user-auth", "oidc-auth"]
       additionalRules:
