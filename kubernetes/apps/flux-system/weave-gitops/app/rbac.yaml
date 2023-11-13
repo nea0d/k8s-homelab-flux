@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: wego-admin-role
+  name: weave-gitops-admin-role
   namespace: flux-system
 rules:
   - verbs:
@@ -75,7 +75,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: wego-admin-role-binding
+  name: weave-gitops-admin-role-binding
   namespace: flux-system
 subjects:
 - kind: User
@@ -83,5 +83,5 @@ subjects:
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: wego-admin-role
+  name: weave-gitops-admin-role
   apiGroup: rbac.authorization.k8s.io
