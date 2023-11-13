@@ -40,22 +40,17 @@ spec:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 14.9
               pullPolicy: IfNotPresent
-            env:
-              INIT_POSTGRES_HOST: "postgres-rw.databases.svc.cluster.local."
-              INIT_POSTGRES_DBNAME: "${SECRET_HOME_ASSISTANT_DBNAME}"
-              INIT_POSTGRES_USER: "${SECRET_HOME_ASSISTANT_DB_USERNAME}"
-              INIT_POSTGRES_PASS: "${SECRET_HOME_ASSISTANT_DB_PASSWORD}"
-              INIT_POSTGRES_SUPER_USER: "${SECRET_POSTGRES_SUPER_USERNAME}"
-              INIT_POSTGRES_SUPER_PASS: "${SECRET_POSTGRES_SUPER_PASSWORD}"
+            envFrom:
+              - secretRef:
+                  name: home-assistant-secret
         containers:
           main:
             image:
               repository: ghcr.io/onedr0p/home-assistant
               tag: 2023.11.2@sha256:29a2a48386bcd182c97229892ef123f4ee9d4b1dead7e5ea31a2ecc85fa13ab3
-            env:
-              TZ: "${TIMEZONE}"
-              POSTGRES_HOST: postgres-rw.databases.svc.cluster.local.
-              POSTGRES_DB: "${SECRET_HOME_ASSISTANT_DBNAME}"
+            envFrom:
+              - secretRef:
+                  name: home-assistant-secret
             probes:
               liveness:
                 enabled: false

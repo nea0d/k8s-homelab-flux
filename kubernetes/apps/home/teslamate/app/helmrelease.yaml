@@ -5,11 +5,12 @@ metadata:
   name: &app teslamate
   namespace: home
 spec:
-  interval: 15m
+  interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.2.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,65 +27,51 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    initContainers:
-    init-db:
-      image: ghcr.io/onedr0p/postgres-initdb:14.8
-      env:
-        - name: POSTGRES_HOST
-          value: "postgres-rw.databases.svc.cluster.local."
-        - name: POSTGRES_DB
-          value: "${SECRET_TESLAMATE_DBNAME}"
-        - name: POSTGRES_USER
-          value: "${SECRET_TESLAMATE_DB_USERNAME}"
-        - name: POSTGRES_PASS
-          value: "${SECRET_TESLAMATE_DB_PASSWORD}"
-        - name: POSTGRES_SUPER_USER
-          value: "${SECRET_POSTGRES_SUPER_USERNAME}"
-        - name: POSTGRES_SUPER_PASS
-          value: "${SECRET_POSTGRES_SUPER_PASSWORD}"
-    image:
-      # repository: teslamate/teslamate
-      # tag: 1.27.3
-      # temporarily waiting for official fix : https://github.com/teslamate-org/teslamate/discussions/3370
-      repository: teslamatefork/teslamatefork
-      tag: edge
-    env:
-      TZ: "${TIMEZONE}"
-      # Encrypts Tesla Token
-      ENCRYPTION_KEY: "${SECRET_TESLAMATE_ENCRYPTION_KEY}"
-      # -- Postgres database hostname
-      DATABASE_HOST: 'postgres-rw.databases.svc.cluster.local.'
-      # -- Postgres database user name
-      DATABASE_USER: "${SECRET_TESLAMATE_DB_USERNAME}"
-      # -- Postgres database password
-      DATABASE_PASS: "${SECRET_TESLAMATE_DB_PASSWORD}"
-      # -- Postgres database password
-      DATABASE_NAME: "${SECRET_TESLAMATE_DBNAME}"
-      # Disables the MQTT feature if `true`
-      DISABLE_MQTT: "true" # Otherwise app crashes at launch because MQTT_HOST is not set
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 14.9
+              pullPolicy: Always
+            envFrom:
+              - secretRef:
+                  name: teslamate-secret
+        containers:
+          main:
+            image:
+              repository: teslamate/teslamate
+              tag: 1.27.4
+            env:
+              TZ: ${TIMEZONE}
+              DISABLE_MQTT: "true"
+            envFrom:
+              - secretRef:
+                  name: teslamate-secret
     service:
       main:
+        type: ClusterIP
         ports:
           http:
             port: 4000
-    persistence:
-      import:
-        enabled: false
-        mountPath: /opt/app/import
     ingress:
       main:
         enabled: true
-        ingressClassName: "internal"
+        className: internal
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "car-electric"
           hajimari.io/group: "home"
         hosts:
-          - host: &host "teslamate.${SECRET_PUBLIC_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-            secretName: teslamate-tls
