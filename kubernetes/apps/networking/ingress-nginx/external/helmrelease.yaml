@@ -105,6 +105,10 @@ spec:
           memory: 200M
         limits:
           memory: 200M
+    tcp:
+      27015: "gaming/cs2:27015"
+    udp:
+      27015: "gaming/cs2:27015"
     defaultBackend:
       enabled: false
       # image:
