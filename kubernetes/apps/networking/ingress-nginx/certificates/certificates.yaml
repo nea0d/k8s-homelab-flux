@@ -1,16 +1,16 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.oxygn.dev/cert-manager.io/clusterissuer_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/cert-manager.io/certificate_v1.json
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${SECRET_PUBLIC_DOMAIN/./-}"
+  name: oxygn-dev
   namespace: networking
 spec:
-  secretName: "${SECRET_PUBLIC_DOMAIN/./-}-tls"
+  secretName: oxygn-dev-tls
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: "${SECRET_PUBLIC_DOMAIN}"
+  commonName: oxygn.dev
   dnsNames:
-    - "${SECRET_PUBLIC_DOMAIN}"
-    - "*.${SECRET_PUBLIC_DOMAIN}"
+    - oxygn.dev
+    - "*.oxygn.dev"
