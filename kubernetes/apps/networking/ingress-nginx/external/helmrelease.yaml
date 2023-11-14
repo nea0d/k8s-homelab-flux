@@ -89,8 +89,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: |-
-          "networking/oxygn-dev-tls"
+        default-ssl-certificate: "networking/oxygn-dev-tls"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
@@ -106,9 +105,9 @@ spec:
         limits:
           memory: 200M
     tcp:
-      27015: "gaming/cs2:27015"
+      "27015": "gaming/cs2:27015"
     udp:
-      27015: "gaming/cs2:27015"
+      "27015": "gaming/cs2:27015"
     defaultBackend:
       enabled: false
       # image:
