@@ -87,10 +87,12 @@ spec:
           gametcp:
             enabled: true
             port: *gameport
+            targetPort: *gameport
             protocol: TCP
           gameudp:
             enabled: true
             port: *gameport
+            targetPort: *gameport
             protocol: UDP
     ingress:
       main:
