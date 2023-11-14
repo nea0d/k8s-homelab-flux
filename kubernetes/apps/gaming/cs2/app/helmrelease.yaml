@@ -47,7 +47,6 @@ spec:
               TZ: "${TIMEZONE}"
               CS2__INSTANCE_NAME: CS2
               CS2__GAMEPORT: &gameport 27015
-              CS2__CLIENTPORT: &clientport 27005
               CS2__LOG_LEVEL: info
             probes:
               liveness: &probes
@@ -93,10 +92,6 @@ spec:
             enabled: true
             port: *gameport
             protocol: UDP
-          clienttcp:
-            enabled: true
-            port: *clientport
-            protocol: TCP
     ingress:
       main:
         enabled: true
