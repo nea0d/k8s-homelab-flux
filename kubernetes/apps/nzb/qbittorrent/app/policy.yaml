@@ -20,5 +20,7 @@ spec:
         - ports:
             - port: "50381"
               protocol: UDP
+            - port: "50381"
+              protocol: TCP
     - toEntities:
         - cluster

@@ -49,10 +49,10 @@ spec:
               QBT_Preferences__WebUI__AuthSubnetWhitelist: 10.32.0.0/16
               QBT_Preferences__WebUI__LocalHostAuth: false
               QBT_BitTorrent__Session__Interface: eth0
-              QBT_BitTorrent__Session__InterfaceAddress:
-                valueFrom:
-                  fieldRef:
-                    fieldPath: status.podIP
+              QBT_BitTorrent__Session__InterfaceAddress: ${LB_QBITTORRENT_IP}
+                # valueFrom:
+                #   fieldRef:
+                #     fieldPath: status.podIP
               QBT_BitTorrent__Session__InterfaceName: eth0
             resources:
               requests:
