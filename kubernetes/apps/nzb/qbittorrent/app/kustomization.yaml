@@ -7,10 +7,17 @@ resources:
   - ./backups
   - ./helmrelease.yaml
   - ./pvc.yaml
-  - ./policy.yaml
+  - ./vpn-auth-secret.sops.yaml
 configMapGenerator:
+  - name: qbittorrent-dnsdist
+    files:
+      - ./config/dnsdist.conf
   - name: qbittorrent-scripts
     files:
       - ./config/completed.sh
 generatorOptions:
   disableNameSuffixHash: true
+commonLabels:
+  app.kubernetes.io/name: qbittorrent
+  app.kubernetes.io/instance: qbittorrent
+  app.kubernetes.io/component: app
