@@ -10,8 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.0.3
-      interval: 30m
+      version: 2.2.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -33,6 +32,9 @@ spec:
         annotations:
           configmap.reloader.stakater.com/reload: qbittorrent-dnsdist
         pod:
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
           affinity:
             podAntiAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:
@@ -42,15 +44,6 @@ spec:
                         operator: In
                         values: ["sabnzbd"]
                   topologyKey: kubernetes.io/hostname
-          securityContext:
-            supplementalGroups:
-              - 65539
-          # securityContext:
-          #   runAsUser: 568
-          #   runAsGroup: 568
-          #   fsGroup: 568
-          #   fsGroupChangePolicy: OnRootMismatch
-          #   supplementalGroups: [10000]
         containers:
           main:
             nameOverride: qbittorrent
@@ -81,8 +74,6 @@ spec:
             securityContext:
               runAsUser: 568
               runAsGroup: 568
-              fsGroup: 568
-              fsGroupChangePolicy: OnRootMismatch
           dnsdist:
             image:
               repository: docker.io/powerdns/dnsdist-18
@@ -104,9 +95,14 @@ spec:
               - name: SHADOWSOCKS
                 value: "on"
               - name: DOT
-                value: "off"
+                value: "on"
               - name: DNS_ADDRESS
                 value: "127.0.0.2"
+              # required for Privado conf (https://github.com/haugene/docker-transmission-openvpn/issues/2192)
+              - name: PEER_DNS_PIN_ROUTES
+                value: "false"
+              - name: DROP_DEFAULT_ROUTE
+                value: "true"
             envFrom:
               - secretRef:
                   name: vpn-auth-secret
