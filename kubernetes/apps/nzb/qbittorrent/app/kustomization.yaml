@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: nzb
 resources:
   - ./helmrelease.yaml
-  - ./backup
+  - ./backups
 configMapGenerator:
   - name: qbittorrent-scripts
     files:
