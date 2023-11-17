@@ -91,18 +91,13 @@ spec:
                 value: "8080"
               - name: FIREWALL_OUTBOUND_SUBNETS
                 # Allow access to k8s subnets
-                value: "10.33.0.0/16,10.10.99.0/24"
+                value: "10.32.0.0/16,10.33.0.0/16,10.10.99.0/24"
               - name: SHADOWSOCKS
                 value: "on"
               - name: DOT
                 value: "on"
-              - name: DNS_ADDRESS
-                value: "127.0.0.2"
-              # required for Privado conf (https://github.com/haugene/docker-transmission-openvpn/issues/2192)
-              - name: PEER_DNS_PIN_ROUTES
-                value: "false"
-              - name: DROP_DEFAULT_ROUTE
-                value: "true"
+              # - name: DNS_ADDRESS
+              #   value: "127.0.0.2"
             envFrom:
               - secretRef:
                   name: vpn-auth-secret
