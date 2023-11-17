@@ -5,10 +5,3 @@ kind: Kustomization
 namespace: nzb
 resources:
   - ./helmrelease.yaml
-  - ./backup
-configMapGenerator:
-  - name: qbittorrent-scripts
-    files:
-      - ./config/completed.sh
-generatorOptions:
-  disableNameSuffixHash: true

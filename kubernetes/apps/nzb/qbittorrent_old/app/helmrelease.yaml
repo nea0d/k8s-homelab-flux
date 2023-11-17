@@ -1,0 +1,189 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: qbittorrent
+  namespace: nzb
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        annotations:
+          configmap.reloader.stakater.com/reload: qbittorrent-dnsdist
+        pod:
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+          affinity:
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values: ["sabnzbd"]
+                  topologyKey: kubernetes.io/hostname
+        containers:
+          main:
+            nameOverride: qbittorrent
+            image:
+              repository: ghcr.io/onedr0p/qbittorrent
+              tag: 4.6.0@sha256:cb6259df3be61a5108bc4f85b09a523fc4b250589ca9b315ef927cbdf779afb6
+            env:
+              UMASK: "022"
+              TZ: Europe/Paris
+              QBITTORRENT__PORT: &port 8080
+              # QBITTORRENT__BT_PORT: &bittorrentPort 50333
+              # QBT_Preferences__WebUI__AlternativeUIEnabled: false
+              # QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
+              # QBT_Preferences__WebUI__AuthSubnetWhitelist: 10.32.0.0/16
+              # QBT_Preferences__WebUI__LocalHostAuth: false
+              # QBT_BitTorrent__Session__Interface: eth0
+              # QBT_BitTorrent__Session__InterfaceAddress:
+              #   valueFrom:
+              #     fieldRef:
+              #       fieldPath: status.podIP
+              # QBT_BitTorrent__Session__InterfaceName: eth0
+            resources:
+              requests:
+                cpu: 49m
+                memory: 512Mi
+              limits:
+                memory: 1024Mi
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+          dnsdist:
+            image:
+              repository: docker.io/powerdns/dnsdist-18
+              tag: 1.8.2
+          gluetun:
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: latest@sha256:7769408234d50c07638c2d9962bb8d38b403d3c101c252d05ce421149fd2148b
+            env:
+              - name: VPN_SERVICE_PROVIDER
+                value: privado
+              - name: SERVER_COUNTRIES
+                value: Switzerland
+              - name: FIREWALL_INPUT_PORTS
+                value: "8080"
+              - name: FIREWALL_OUTBOUND_SUBNETS
+                # Allow access to k8s subnets
+                value: "10.32.0.0/16,10.33.0.0/16,10.10.99.0/24"
+              - name: SHADOWSOCKS
+                value: "on"
+              - name: DOT
+                value: "on"
+              # - name: DNS_ADDRESS
+              #   value: "127.0.0.2"
+            envFrom:
+              - secretRef:
+                  name: vpn-auth-secret
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+                  # - NET_RAW
+          port-forward:
+            image:
+              repository: docker.io/snoringdragon/gluetun-qbittorrent-port-manager
+              tag: "1.0"
+            env:
+              - name: QBITTORRENT_SERVER
+                value: localhost
+              - name: QBITTORRENT_PORT
+                value: "8080"
+              - name: PORT_FORWARDED
+                value: "/tmp/gluetun/forwarded_port"
+    service:
+      main:
+        enabled: true
+        ports:
+          http:
+            port: *port
+      # bittorrent:
+      #   controller: main
+        # type: LoadBalancer
+        # annotations:
+        #   io.cilium/lb-ipam-ips: 10.10.99.172
+        # ports:
+        #   bittorrent:
+        #     enabled: true
+        #     port: *bittorrentPort
+        #     protocol: TCP
+    ingress:
+      main:
+        enabled: true
+        className: "internal"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "cloud-download"
+          hajimari.io/group: "nzb"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: qbittorrent-tls
+    persistence:
+      config:
+        enabled: true
+        existingClaim: qbittorrent-config-v1
+        advancedMounts:
+          main:
+            main:
+              - path: /config
+      media:
+        enabled: true
+        type: nfs
+        server: "nas01.${SECRET_PRIVATE_DOMAIN}"
+        path: /volume2/Media
+        mountPath: /media
+      dnsdist-config:
+        enabled: true
+        type: configMap
+        name: qbittorrent-dnsdist
+        advancedMounts:
+          main:
+            dnsdist:
+              - path: /etc/dnsdist/dnsdist.conf
+                subPath: dnsdist.conf
+                readOnly: true
+      gluetun-data:
+        enabled: true
+        type: emptyDir
+        advancedMounts:
+          main:
+            gluetun:
+              - path: /tmp/gluetun
+            port-forward:
+              - path: /tmp/gluetun
+                readOnly: true

@@ -4,11 +4,17 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: nzb
 resources:
+  - ./pvc.yaml
   - ./helmrelease.yaml
-  - ./backup
+  - ./vpn-auth-secret.sops.yaml
+  - ./backups
 configMapGenerator:
-  - name: qbittorrent-scripts
+  - name: qbittorrent-dnsdist
     files:
-      - ./config/completed.sh
+      - ./config/dnsdist.conf
 generatorOptions:
   disableNameSuffixHash: true
+commonLabels:
+  app.kubernetes.io/name: qbittorrent
+  app.kubernetes.io/instance: qbittorrent
+  app.kubernetes.io/component: app
