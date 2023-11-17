@@ -17,6 +17,7 @@ spec:
     cacheStorageClassName: local-path
     cacheAccessModes: ["ReadWriteOnce"]
     storageClassName: ceph-filesystem
+    volumeSnapshotClassName: csi-ceph-filesystem
     accessModes: ["ReadWriteMany"]
     moverSecurityContext:
       runAsUser: 568
