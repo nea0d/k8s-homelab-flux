@@ -166,29 +166,29 @@ spec:
           - name: Prometheus
             type: prometheus
             url: http://thanos-query-frontend.monitoring.svc.cluster.local.:9090
-            uid: "PBFA97CFB590B2093"
+            uid: "prometheus"
             access: proxy
             isDefault: true
             editable: true
             jsonData:
               prometheusType: Thanos
-              alertmanagerUid: "P7648CD38D5F55DE2"
+              alertmanagerUid: "alertmanager"
               manageAlerts: true
               httpMethod": "POST"
           - name: Loki
             type: loki
             access: proxy
             url: http://loki-gateway.monitoring.svc.cluster.local.:80
-            uid: "P8E80F9AEF21F6940"
+            uid: "loki"
             editable: true
             jsonData:
-              alertmanagerUid: "P7648CD38D5F55DE2"
+              alertmanagerUid: "alertmanager"
               manageAlerts: true
               maxLines: 250
           - name: Alertmanager
             type: alertmanager
             access: proxy
-            uid: "P7648CD38D5F55DE2"
+            uid: "alertmanager"
             url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local.:9093
             editable: true
             jsonData:
