@@ -284,7 +284,8 @@ spec:
           # renovate: depName="Proxmox via Prometheus"
           gnetId: 10347
           revision: 5
-          datasource: Prometheus
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
       kubernetes:
         kubernetes-api-server:
           # renovate: depName="Kubernetes / System / API Server"
