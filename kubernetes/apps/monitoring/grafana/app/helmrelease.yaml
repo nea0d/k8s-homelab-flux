@@ -91,6 +91,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/default
+          - name: apps
+            orgId: 1
+            folder: ""
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/apps
           - name: ceph
             orgId: 1
             folder: Ceph
@@ -206,7 +214,7 @@ spec:
               postgresVersion: 1000
               timeInterval: 30s
     dashboards:
-      default:
+      apps:
         cloudflared:
           # renovate: depName="Cloudflare Tunnels (cloudflared)"
           gnetId: 17457
