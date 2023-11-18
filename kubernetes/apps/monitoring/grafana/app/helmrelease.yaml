@@ -489,10 +489,9 @@ spec:
         enabled: true
         label: grafana_dashboard
         searchNamespace: ALL
-        folder: /var/lib/grafana/dashboards/default
         folderAnnotation: grafana_folder
         provider:
-          allowUiUpdates: true
+          disableDelete: true
           foldersFromFilesStructure: true
       datasources:
         enabled: true
