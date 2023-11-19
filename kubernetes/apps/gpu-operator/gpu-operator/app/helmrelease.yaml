@@ -56,7 +56,7 @@ spec:
         - name: DRAIN_DELETE_EMPTYDIR_DATA
           value: "false"
     nfd:
-      enabled: true
+      enabled: false
     psp:
       enabled: false
     toolkit:
