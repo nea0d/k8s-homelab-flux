@@ -54,6 +54,10 @@ spec:
     toolbox:
       enabled: true
     cephClusterSpec:
+      mgr:
+        modules:
+          - name: rook
+            enabled: true
       network:
         provider: host
         connections:
