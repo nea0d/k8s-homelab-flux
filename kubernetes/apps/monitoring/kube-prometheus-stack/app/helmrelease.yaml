@@ -184,8 +184,6 @@ spec:
       prometheusSpec:
         replicas: 1
         replicaExternalLabelName: __replica__
-        externalLabels:
-          cluster: "${CLUSTER_NAME}"
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
