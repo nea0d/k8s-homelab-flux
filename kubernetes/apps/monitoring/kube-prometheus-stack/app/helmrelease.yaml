@@ -207,8 +207,9 @@ spec:
         thanos:
           image: quay.io/thanos/thanos:v0.32.5
           objectStorageConfig:
-            name: thanos-objstore-secret
-            key: objstore.yaml
+            existingSecret:
+              name: thanos-objstore-secret
+              key: objstore.yml
         resources:
           requests:
             cpu: 150m
