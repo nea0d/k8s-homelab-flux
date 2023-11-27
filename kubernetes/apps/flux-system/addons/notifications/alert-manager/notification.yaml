@@ -7,7 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   type: alertmanager
-  address: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local.:9093/api/v2/alerts/
+  address: http://alertmanager-operated.monitoring.svc.cluster.local:9093/api/v2/alerts/
+  # address: http://vmalertmanager-victoria-metrics.monitoring.svc.cluster.local:9093/api/v2/alerts/
+  interval: 10m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.oxygn.dev/notification.toolkit.fluxcd.io/alert_v1beta2.json
 apiVersion: notification.toolkit.fluxcd.io/v1beta2
@@ -28,8 +30,14 @@ spec:
       name: "*"
     - kind: Kustomization
       name: "*"
+    - kind: OCIRepository
+      name: "*"
+    - kind: Terraform
+      name: "*"
   exclusionList:
     - "error.*lookup github\\.com"
+    - "error.*lookup raw\\.githubusercontent\\.com"
+    - "error.*connection timed out"
+    - "dial.*tcp.*timed out"
     - "waiting.*socket"
-    - "dial.*tcp.*timeout"
   suspend: false
