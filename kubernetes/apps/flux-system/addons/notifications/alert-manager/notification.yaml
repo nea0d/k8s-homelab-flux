@@ -35,7 +35,7 @@ spec:
   exclusionList:
     - "error.*lookup github\\.com"
     - "error.*lookup raw\\.githubusercontent\\.com"
-    - "error.*connection timed out"
-    - "dial.*tcp.*timed out"
+    - "ssh.*handshake.*timed.out"
+    - "dial.*tcp.*timed.out"
     - "waiting.*socket"
   suspend: false
