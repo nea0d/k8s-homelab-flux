@@ -75,7 +75,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: "echo-server-tls"
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname

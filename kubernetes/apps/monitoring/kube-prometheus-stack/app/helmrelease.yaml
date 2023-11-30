@@ -93,7 +93,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: "alertmanager-tls"
       alertmanagerSpec:
         replicas: 2
         storage:
@@ -176,7 +175,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: "prometheus-tls"
       thanosService:
         enabled: true
       thanosServiceMonitor:

@@ -56,7 +56,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: lidarr-tls
       api:
         enabled: true
         ingressClassName: "internal"
@@ -68,7 +67,7 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: lidarr-api-tls
+            
     persistence:
       config:
         enabled: true

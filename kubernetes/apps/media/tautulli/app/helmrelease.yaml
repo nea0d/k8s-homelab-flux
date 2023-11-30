@@ -59,7 +59,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: tautulli-tls
     persistence:
       config:
         enabled: true

@@ -61,7 +61,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: "goldilocks-tls"
       resources:
         requests:
           cpu: 15m

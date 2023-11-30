@@ -58,4 +58,3 @@ spec:
   tls:
     - hosts:
         - *host
-      secretName: pbs-tls

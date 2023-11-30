@@ -99,7 +99,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: home-assistant-tls
     persistence:
       config:
         enabled: true

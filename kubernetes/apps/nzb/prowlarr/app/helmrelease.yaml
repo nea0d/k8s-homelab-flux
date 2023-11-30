@@ -56,7 +56,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: prowlarr-tls
     persistence:
       config:
         enabled: true

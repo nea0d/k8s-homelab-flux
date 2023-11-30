@@ -143,7 +143,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: "hajimari-tls"
     persistence:
       data:
         enabled: true

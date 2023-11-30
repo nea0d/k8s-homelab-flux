@@ -114,7 +114,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: cs2-tls
     persistence:
       data:
         enabled: true

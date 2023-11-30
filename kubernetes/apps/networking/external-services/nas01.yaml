@@ -57,4 +57,3 @@ spec:
   tls:
     - hosts:
         - *host
-      secretName: nas01-tls

@@ -535,7 +535,6 @@ spec:
       tls:
         - hosts:
             - *host
-          secretName: "grafana-tls"
     persistence:
       enabled: false
     testFramework:

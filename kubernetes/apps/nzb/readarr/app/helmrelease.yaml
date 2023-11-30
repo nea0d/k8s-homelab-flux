@@ -56,7 +56,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: readarr-tls
       api:
         enabled: true
         ingressClassName: "internal"
@@ -68,7 +67,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: readarr-api-tls
     persistence:
       config:
         enabled: true

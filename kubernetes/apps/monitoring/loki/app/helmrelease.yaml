@@ -130,7 +130,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: "loki-tls"
     read:
       replicas: 1
       persistence:

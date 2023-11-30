@@ -77,7 +77,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: redis-lb-tls
     podSecurityContext:
       runAsUser: 99
       runAsGroup: 99

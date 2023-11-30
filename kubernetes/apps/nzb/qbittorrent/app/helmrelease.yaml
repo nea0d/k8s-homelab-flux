@@ -156,7 +156,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: qbittorrent-tls
     persistence:
       config:
         enabled: true

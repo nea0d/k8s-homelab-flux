@@ -75,4 +75,3 @@ spec:
     - hosts:
         - *host-console
         - *host-api
-      secretName: minio-tls

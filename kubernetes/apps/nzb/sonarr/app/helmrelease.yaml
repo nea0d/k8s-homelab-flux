@@ -71,7 +71,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: sonarr-tls
       # api:
       #   enabled: true
       #   ingressClassName: "internal"
@@ -83,7 +82,6 @@ spec:
       #   tls:
       #     - hosts:
       #         - *host
-      #       secretName: sonarr-api-tls
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568

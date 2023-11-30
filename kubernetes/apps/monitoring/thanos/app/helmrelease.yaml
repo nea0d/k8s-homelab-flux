@@ -56,7 +56,6 @@ spec:
         extraTls:
           - hosts:
               - *host
-            secretName: thanos-query-frontend-tls
     bucketweb:
       enabled: true
       replicaCount: 1
