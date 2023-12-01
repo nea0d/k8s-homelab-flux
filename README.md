@@ -15,21 +15,11 @@
 </p>
 
 <p align="center">
-  <a href="https://k3s.io/">
-    <img alt="k3s" src="https://img.shields.io/badge/k3s-v1.28.3-orange?logo=kubernetes&logoColor=white&style=flat-square">
-  </a>
-  <a href="https://github.com/nea0d/k8s-homelab-flux/stargazers">
-    <img alt="GitHub Stars" src="https://img.shields.io/github/stars/nea0d/k8s-homelab-flux?logo=github&color=green&logoColor=white&style=flat-square">
-  </a>
-  <a href="https://github.com/nea0d/k8s-homelab-flux/commits/main">
-    <img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/nea0d/k8s-homelab-flux?logo=git&logoColor=white&color=purple&style=flat-square">
-  </a>
-  <a href="https://github.com/nea0d/k8s-homelab-flux/commits/main">
-    <img alt="GitHub tag checks state" src="https://img.shields.io/github/checks-status/nea0d/k8s-homelab-flux/main">
-  </a>
-  <a href="https://discord.gg/home-operations">
-    <img alt="K8s-at-home Discord" src="https://img.shields.io/badge/discord-chat-7289DA.svg?logo=discord&logoColor=white&maxAge=60&style=flat-square">
-  </a>
+  <a href="https://k3s.io/"><img alt="k3s" src="https://img.shields.io/badge/k3s-v1.28.3-orange?logo=kubernetes&logoColor=white&style=flat-square"></a>&nbsp;
+  <a href="https://github.com/nea0d/k8s-homelab-flux/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/nea0d/k8s-homelab-flux?logo=github&color=green&logoColor=white&style=flat-square"></a>&nbsp;
+  <a href="https://github.com/nea0d/k8s-homelab-flux/commits/main"><img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/nea0d/k8s-homelab-flux?logo=git&logoColor=white&color=purple&style=flat-square"></a>&nbsp;
+  <a href="https://github.com/nea0d/k8s-homelab-flux/commits/main"><img alt="GitHub tag checks state" src="https://img.shields.io/github/checks-status/nea0d/k8s-homelab-flux/main"></a>&nbsp;
+  <a href="https://discord.gg/home-operations"><img alt="K8s-at-home Discord" src="https://img.shields.io/badge/discord-chat-7289DA.svg?logo=discord&logoColor=white&maxAge=60&style=flat-square"></a>
 </p>
 
 <p align="center">
@@ -48,13 +38,13 @@ This is a mono repository for my home infrastructure and Kubernetes cluster. I t
 
 There is a template over at [onedr0p/flux-cluster-template](https://github.com/onedr0p/flux-cluster-template) if you want to try and follow along with some of the practices I use here.
 
-### Installation
+### ⚙️ Installation
 
 My cluster is [k3s](https://k3s.io/) overtop Ubuntu 22.04LTS VMs provisioned in a 2-nodes PromoxVE 8 cluster using the [Ansible](https://www.ansible.com/) galaxy role [ansible-role-k3s](https://github.com/PyratLabs/ansible-role-k3s). This is a semi-hyper-converged cluster, workloads and block storage are sharing the same available resources on my nodes while I have a separate server for (NFS) file storage.
 
 🔸 _[Click here](./ansible/) to see my Ansible playbooks and roles._
 
-### Core Components
+### 🔧 Core Components
 
 - [actions-runner-controller](https://github.com/actions/actions-runner-controller): self-hosted Github runners
 - [cilium](https://github.com/cilium/cilium): internal Kubernetes networking plugin
@@ -65,7 +55,7 @@ My cluster is [k3s](https://k3s.io/) overtop Ubuntu 22.04LTS VMs provisioned in 
 - [sops](https://toolkit.fluxcd.io/guides/mozilla-sops/): managed secrets for Kubernetes, Ansible, and Terraform which are committed to Git
 - [volsync](https://github.com/backube/volsync) and [snapscheduler](https://github.com/backube/snapscheduler): backup and recovery of persistent volume claims
 
-### GitOps
+### 🤖 GitOps
 
 [Flux](https://github.com/fluxcd/flux2) watches the clusters in my [kubernetes](./kubernetes/) folder (see Directories below) and makes the changes to my cluster based on the state of my Git repository.
 
