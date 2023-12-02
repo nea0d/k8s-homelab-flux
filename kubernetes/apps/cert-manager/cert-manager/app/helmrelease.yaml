@@ -29,15 +29,14 @@ spec:
     keepHistory: false
   values:
     installCRDs: true
-    replicaCount: 3
+    replicaCount: 2
     webhook:
       enabled: true
-      replicaCount: 3
+      replicaCount: 2
     cainjector:
-      replicaCount: 3
-    extraArgs:
-      - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
-      - --dns01-recursive-nameservers-only
+      replicaCount: 2
+    dns01RecursiveNameservers: 1.1.1.1:53,9.9.9.9:53
+    dns01RecursiveNameserversOnly: true
     podDnsPolicy: None
     podDnsConfig:
       nameservers:
