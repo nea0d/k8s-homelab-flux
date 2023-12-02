@@ -10,7 +10,7 @@ spec:
   timeout: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://nvidia.github.io/gpu-operator
+      # renovate: registryUrl=https://helm.ngc.nvidia.com/nvidia
       chart: gpu-operator
       version: v23.9.0
       sourceRef:
