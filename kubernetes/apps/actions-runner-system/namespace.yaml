@@ -3,6 +3,9 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: actions-runner-system
+  annotations:
+    volsync.backube/privileged-movers: "true"
   labels:
+    digest-resolution: enabled
     goldilocks.fairwinds.com/enabled: "true"
     kustomize.toolkit.fluxcd.io/prune: disabled
