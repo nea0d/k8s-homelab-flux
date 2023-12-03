@@ -3,13 +3,13 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres16
+  name: postgres
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.1-4
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.1-5
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 10Gi
+    size: 20Gi
     storageClass: local-path
   superuserSecret:
     name: postgres-superuser
@@ -17,13 +17,14 @@ spec:
   postgresql:
     parameters:
       max_connections: "600"
+      max_slot_wal_keep_size: 10GB
       shared_buffers: 512MB
   resources:
     requests:
-      memory: 1Gi
+      memory: 2Gi
       cpu: 250m
     limits:
-      memory: 2Gi
+      memory: 4Gi
   monitoring:
     enablePodMonitor: true
   backup:
@@ -32,7 +33,7 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      serverName: &currentCluster postgres16-v1
+      serverName: &currentCluster postgres-v2
       destinationPath: s3://postgres-backup-v2/
       endpointURL: https://${SECRET_CLOUDFLARE_ACCOUNT_ID}.eu.r2.cloudflarestorage.com
       s3Credentials:
@@ -43,22 +44,22 @@ spec:
           name: postgres-r2
           key: R2_SECRET_ACCESS_KEY
   # Note: Bootstrap is needed when recovering from an existing cnpg cluster
-  # bootstrap:
-  #   recovery:
-  #     source: &previousCluster postgres16-v1
+  bootstrap:
+    recovery:
+      source: &previousCluster postgres16-v1
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
-  # externalClusters:
-  #   - name: *previousCluster
-  #     barmanObjectStore:
-  #       wal:
-  #         compression: bzip2
-  #         maxParallel: 8
-  #       destinationPath: s3://postgres-backup-v2/
-  #       endpointURL: https://${SECRET_CLOUDFLARE_ACCOUNT_ID}.eu.r2.cloudflarestorage.com
-  #       s3Credentials:
-  #         accessKeyId:
-  #           name: postgres-r2
-  #           key: R2_ACCESS_KEY_ID
-  #         secretAccessKey:
-  #           name: postgres-r2
-  #           key: R2_SECRET_ACCESS_KEY
+  externalClusters:
+    - name: *previousCluster
+      barmanObjectStore:
+        wal:
+          compression: bzip2
+          maxParallel: 8
+        destinationPath: s3://postgres-backup-v2/
+        endpointURL: https://${SECRET_CLOUDFLARE_ACCOUNT_ID}.eu.r2.cloudflarestorage.com
+        s3Credentials:
+          accessKeyId:
+            name: postgres-r2
+            key: R2_ACCESS_KEY_ID
+          secretAccessKey:
+            name: postgres-r2
+            key: R2_SECRET_ACCESS_KEY
