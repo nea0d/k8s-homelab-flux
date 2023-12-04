@@ -9,7 +9,7 @@ spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:16.1-6
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 20Gi
+    size: 15Gi
     storageClass: local-path
   superuserSecret:
     name: postgres-superuser
@@ -33,8 +33,8 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      serverName: &currentCluster postgres-v2
-      destinationPath: s3://postgres-backup-v2/
+      serverName: &currentCluster postgres-v3
+      destinationPath: s3://postgres-backup-v1/
       endpointURL: https://${SECRET_CLOUDFLARE_ACCOUNT_ID}.eu.r2.cloudflarestorage.com
       s3Credentials:
         accessKeyId:
@@ -46,7 +46,7 @@ spec:
   # Note: Bootstrap is needed when recovering from an existing cnpg cluster
   bootstrap:
     recovery:
-      source: &previousCluster postgres16-v1
+      source: &previousCluster postgres-v2
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
     - name: *previousCluster
