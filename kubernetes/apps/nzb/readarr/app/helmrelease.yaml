@@ -44,8 +44,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/readarr-nightly
-              tag: 0.3.10.2287@sha256:77e7b2e0208835f5599f7bd449980d891468cc6a24768f29a8ea3f22513cf7f6
+              repository: ghcr.io/onedr0p/readarr-develop
+              tag: 0.3.10.2287@sha256:f7b1f6dfb57b6df1dff804b27864eab91761c2b05a19a36c8b897eb59b73136b
             env:
               # https://github.com/Radarr/Radarr/issues/7030#issuecomment-1039689518
               # https://github.com/dotnet/runtime/issues/9336
@@ -79,9 +79,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 256M
+                memory: 128Mi
               limits:
-                memory: 1Gi
+                memory: 512Mi
         pod:
           securityContext:
             runAsUser: 568
