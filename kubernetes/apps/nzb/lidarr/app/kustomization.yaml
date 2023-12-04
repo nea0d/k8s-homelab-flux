@@ -6,4 +6,5 @@ namespace: nzb
 resources:
   - ./pvc.yaml
   - ./helmrelease.yaml
-  - ./backups
+  # - ./backups
+  - ./secret.sops.yaml
