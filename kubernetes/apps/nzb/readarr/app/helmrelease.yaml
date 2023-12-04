@@ -3,21 +3,19 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app readarr
-  namespace: nzb
+  name: readarr
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.3.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
   maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -26,15 +24,72 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   values:
-    image:
-      repository: ghcr.io/onedr0p/readarr-nightly
-      tag: 0.3.10.2287@sha256:77e7b2e0208835f5599f7bd449980d891468cc6a24768f29a8ea3f22513cf7f6
-    env:
-      TZ: "${TIMEZONE}"
-      READARR__INSTANCE_NAME: Readarr
-      READARR__PORT: &port 80
-      READARR__LOG_LEVEL: info
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 15
+              pullPolicy: IfNotPresent
+            envFrom: &envFrom
+              - secretRef:
+                  name: readarr-secret
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/readarr-nightly
+              tag: 0.3.10.2287@sha256:77e7b2e0208835f5599f7bd449980d891468cc6a24768f29a8ea3f22513cf7f6
+            env:
+              # https://github.com/Radarr/Radarr/issues/7030#issuecomment-1039689518
+              # https://github.com/dotnet/runtime/issues/9336
+              # COMPlus_EnableDiagnostics: "0"
+              READARR__AUTHENTICATION_METHOD: External
+              READARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+              READARR__INSTANCE_NAME: Readarr
+              READARR__PORT: &port 80
+              READARR__LOG_LEVEL: info
+              TZ: ${TIMEZONE}
+            envFrom: *envFrom
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256M
+              limits:
+                memory: 1Gi
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [10000]
     service:
       main:
         ports:
@@ -43,55 +98,29 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "internal"
+        className: internal
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "book-open-variant"
           hajimari.io/group: "nzb"
         hosts:
-          - host: &host "readarr.${SECRET_PUBLIC_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *host
-      api:
-        enabled: true
-        ingressClassName: "internal"
-        hosts:
-          - host: *host
-            paths:
-              - path: /api
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
     persistence:
       config:
         enabled: true
-        existingClaim: readarr-config-v1
+        existingClaim: readarr-config
       media:
         enabled: true
         type: nfs
         server: "nas01.${SECRET_PRIVATE_DOMAIN}"
         path: /volume2/Media
-        mountPath: /media
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups:
-        - 100
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
-      limits:
-        memory: 1000Mi
-    prometheus:
-      podMonitor:
-        enabled: true
-        interval: 3m
-        scrapeTimeout: 1m30s
+        globalMounts:
+          - path: /media
