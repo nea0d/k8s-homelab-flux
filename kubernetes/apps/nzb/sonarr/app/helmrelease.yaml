@@ -122,4 +122,5 @@ spec:
         type: nfs
         server: "nas01.${SECRET_PRIVATE_DOMAIN}"
         path: /volume2/Media
-        mountPath: /media
+        globalMounts:
+          - path: /media
