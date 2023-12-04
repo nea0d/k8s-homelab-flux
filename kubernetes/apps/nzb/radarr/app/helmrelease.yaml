@@ -105,7 +105,7 @@ spec:
           hajimari.io/icon: "filmstrip"
           hajimari.io/group: "nzb"
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_PRIVATE_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
             paths:
               - path: /
                 service:
