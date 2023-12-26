@@ -45,7 +45,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/lidarr-develop
-              tag: 2.0.7.3849@sha256:ca52210af5f51abf236c05bb01e06de15c501deab2a0b46b5cc34d9351b2fc9f
+              tag: 2.1.1.3877@sha256:c8882348959b2257078dca3062c3c7a8a35e4244e29e7f8039cd17663594b93f
             env:
               # https://github.com/Radarr/Radarr/issues/7030#issuecomment-1039689518
               # https://github.com/dotnet/runtime/issues/9336
