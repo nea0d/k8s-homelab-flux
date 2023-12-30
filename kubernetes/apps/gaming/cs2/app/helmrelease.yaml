@@ -42,7 +42,7 @@ spec:
             nameOverride: cs2
             image:
               repository: ghcr.io/gameservermanagers/gameserver
-              tag: cs2@sha256:680a5ef9b4394fa0745dea352d6b03a5b15e786e7cf58d43c5ed5f59cabaf927
+              tag: cs2@sha256:668d57c5230c73ce940ec8d28065b594903b41889695178b5bd196b2a3a08bfc
             env:
               TZ: "${TIMEZONE}"
               CS2__INSTANCE_NAME: CS2
