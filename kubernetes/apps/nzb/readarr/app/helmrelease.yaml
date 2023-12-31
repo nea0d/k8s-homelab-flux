@@ -45,7 +45,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/readarr-develop
-              tag: 0.3.11.2319@sha256:a14419cd9a77438f48df48537d8fc1a02cc9c89321d60ceaec3870850f87b31b
+              tag: 0.3.14.2348@sha256:33fc965dff66c1475671e61106e6f8719f2da3501957cba142e1db0ff92dde36
             env:
               # https://github.com/Radarr/Radarr/issues/7030#issuecomment-1039689518
               # https://github.com/dotnet/runtime/issues/9336
