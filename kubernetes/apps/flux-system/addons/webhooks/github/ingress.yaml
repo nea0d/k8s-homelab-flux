@@ -3,12 +3,15 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: webhook-receiver
+  namespace: flux-system
   annotations:
     external-dns.alpha.kubernetes.io/target: "external.oxygn.dev"
+    nginx.ingress.kubernetes.io/limit-rps: "5"
+    nginx.ingress.kubernetes.io/limit-rpm: "100"
 spec:
   ingressClassName: "external"
   rules:
-    - host: &host "flux-receiver.oxygn.dev"
+    - host: &host "flux-webhook.oxygn.dev"
       http:
         paths:
           - path: /hook/
