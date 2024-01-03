@@ -1,9 +1,9 @@
 ---
-apiVersion: notification.toolkit.fluxcd.io/v1beta1
+# yaml-language-server: $schema=https://kub-schemas.pages.dev/notification.toolkit.fluxcd.io/receiver_v1.json
+apiVersion: notification.toolkit.fluxcd.io/v1
 kind: Receiver
 metadata:
   name: github-receiver
-  namespace: flux-system
 spec:
   type: github
   events:
@@ -12,17 +12,15 @@ spec:
   secretRef:
     name: github-webhook-secret
   resources:
-    - apiVersion: source.toolkit.fluxcd.io/v1beta2
+    - apiVersion: source.toolkit.fluxcd.io/v1
       kind: GitRepository
       name: home-kubernetes
       namespace: flux-system
-
-    - apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+    - apiVersion: kustomize.toolkit.fluxcd.io/v1
       kind: Kustomization
-      name: apps
+      name: cluster
       namespace: flux-system
-
-    - apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+    - apiVersion: kustomize.toolkit.fluxcd.io/v1
       kind: Kustomization
-      name: home-kubernetes
+      name: cluster-apps
       namespace: flux-system
