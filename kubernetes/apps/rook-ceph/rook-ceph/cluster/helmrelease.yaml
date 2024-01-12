@@ -50,8 +50,6 @@ spec:
       bdev_async_discard = true
       mon_data_avail_warn = 15
       osd_class_update_on_start = false
-      ROOK_ENABLE_DISCOVERY_DAEMON = true
-      ROOK_DISCOVER_DEVICES_INTERVAL = 5
     toolbox:
       enabled: true
     cephClusterSpec:

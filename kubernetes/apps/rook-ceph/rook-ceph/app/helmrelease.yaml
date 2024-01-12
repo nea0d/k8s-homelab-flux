@@ -37,6 +37,10 @@ spec:
         # set to true if running kernel 5.8 or newer.
         # @default -- `false`
         enabled: true
+    # -- Enable discovery daemon
+    enableDiscoveryDaemon: true
+    # -- Set the discovery daemon device discovery interval (default to 60m)
+    discoveryDaemonInterval: 5m
     discover:
       nodeAffinity: "ceph-storage-node=true"
     admissionController:
