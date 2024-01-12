@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: rook-ceph-cluster
-      version: v1.13.2
+      version: v1.13.1
       sourceRef:
         kind: HelmRepository
         name: rook-ceph
@@ -50,6 +50,8 @@ spec:
       bdev_async_discard = true
       mon_data_avail_warn = 15
       osd_class_update_on_start = false
+      ROOK_ENABLE_DISCOVERY_DAEMON = true
+      ROOK_DISCOVER_DEVICES_INTERVAL = 5
     toolbox:
       enabled: true
     cephClusterSpec:
@@ -69,6 +71,8 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
+        prometheusEndpoint: http://thanos-query-frontend.monitoring.svc.cluster.local.:9090
+        prometheusEndpointSSLVerify: false
       placement:
         all:
           nodeAffinity:
