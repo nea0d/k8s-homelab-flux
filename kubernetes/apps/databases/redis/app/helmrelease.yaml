@@ -1,12 +1,13 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.oxygn.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
+namespace: databases
 metadata:
   name: redis
-  namespace: databases
 spec:
-  interval: 15m
+  interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: redis
@@ -15,9 +16,7 @@ spec:
         kind: HelmRepository
         name: bitnami
         namespace: flux-system
-  maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
@@ -48,3 +47,4 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
+        interval: 1m
