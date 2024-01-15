@@ -34,7 +34,7 @@ spec:
       enabled: true
       hostname: "magicmirror.oxygn.dev"
       path: ""
-      tls: true
+      tls: false
       class: internal
 
     # List of modules to install.
