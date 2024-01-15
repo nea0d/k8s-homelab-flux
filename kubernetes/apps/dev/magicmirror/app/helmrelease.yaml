@@ -10,8 +10,7 @@ spec:
   timeout: 15m
   chart:
     spec:
-      chart: magicmirror
-      # version: 1.0.0
+      chart: ./
       sourceRef:
         kind: GitRepository
         name: magicmirror
