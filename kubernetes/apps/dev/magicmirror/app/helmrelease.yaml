@@ -11,9 +11,9 @@ spec:
   chart:
     spec:
       chart: magicmirror
-      version: 1.0.0
+      # version: 1.0.0
       sourceRef:
-        kind: HelmRepository
+        kind: GitRepository
         name: magicmirror
         namespace: flux-system
   maxHistory: 2
