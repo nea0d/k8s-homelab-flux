@@ -8,10 +8,5 @@ metadata:
 spec:
   interval: 30m
   url: https://gitlab.com/khassel/magicmirror-helm
-  # ref:
-  #   tag: v0.0.26
-  # ignore: |
-  #   # exclude all
-  #   /*
-  #   # include kubernetes directory
-  #   !/deploy/chart/local-path-provisioner
+  ref:
+    branch: master
