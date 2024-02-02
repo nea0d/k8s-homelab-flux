@@ -28,8 +28,8 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: gpu-operator
-      namespace: gpu-operator
+    # - name: gpu-operator
+    #   namespace: gpu-operator
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync
@@ -51,31 +51,31 @@ spec:
               ALLOWED_NETWORKS: "10.0.0.0/8,172.16.0.0/16,192.168.0.0/16,127.0.0.0/8"
               SECURE_CONNECTIONS: "1" #1: Preferred, 0: Required
               # required for HW acceleration
-              NVIDIA_VISIBLE_DEVICES: "all"
-              NVIDIA_DRIVER_CAPABILITIES: "all"
-              HARDWARE_DEVICE_PATH: "/dev/nvidia0"
+              # NVIDIA_VISIBLE_DEVICES: "all"
+              # NVIDIA_DRIVER_CAPABILITIES: "all"
+              # HARDWARE_DEVICE_PATH: "/dev/nvidia0"
               TRANSCODER_TEMP_DIRECTORY: "/tmp" # /transocde
-            runtimeClassName: nvidia
+            # runtimeClassName: nvidia
             resources:
               requests:
-                nvidia.com/gpu: 1
+                # nvidia.com/gpu: 1
                 cpu: 15m
                 memory: 380M
               limits:
-                nvidia.com/gpu: 1
+                # nvidia.com/gpu: 1
                 memory: 2G
         pod:
-          affinity:
-            nodeAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                  - matchExpressions:
-                      - key: nvidia.com/gpu.present
-                        operator: In
-                        values:
-                          - "true"
-          nodeSelector:
-            nvidia.com/gpu.present: "true"
+          # affinity:
+          #   nodeAffinity:
+          #     requiredDuringSchedulingIgnoredDuringExecution:
+          #       nodeSelectorTerms:
+          #         - matchExpressions:
+          #             - key: nvidia.com/gpu.present
+          #               operator: In
+          #               values:
+          #                 - "true"
+          # nodeSelector:
+          #   nvidia.com/gpu.present: "true"
           securityContext:
             runAsUser: 568
             runAsGroup: 568
