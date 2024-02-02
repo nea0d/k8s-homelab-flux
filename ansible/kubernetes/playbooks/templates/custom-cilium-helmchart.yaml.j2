@@ -16,8 +16,6 @@ spec:
     autoDirectNodeRoutes: true
     bpf:
       masquerade: true
-    bgp:
-      enabled: false
     cluster:
       name: kubernetes
       id: 1
@@ -50,3 +48,4 @@ spec:
     securityContext:
       privileged: true
     tunnel: disabled
+    routingMode: native
