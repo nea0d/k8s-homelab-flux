@@ -42,7 +42,8 @@ spec:
         enabled: true
     driver:
       enabled: true
-      driver:
+      usePrecompiled: true
+      version: 525
     manager:
       env:
         - name: ENABLE_AUTO_DRAIN
