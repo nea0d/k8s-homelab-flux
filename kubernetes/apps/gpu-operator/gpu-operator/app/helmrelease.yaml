@@ -41,9 +41,7 @@ spec:
       serviceMonitor:
         enabled: true
     driver:
-      enabled: true
-      usePrecompiled: true
-      version: 525
+      enabled: false
     manager:
       env:
         - name: ENABLE_AUTO_DRAIN
