@@ -39,9 +39,21 @@ let config = {
             config: {
             calendars: [
                 {
-                symbol: "calendar-check",
-                url: "${SECRET_MAGICMIRROR_GCALENDAR_FAMILY}"
-                }
+                    symbol: "calendar-check",
+                    url: "${SECRET_MAGICMIRROR_GCALENDAR_FAMILY}"
+                },
+                {
+                    symbol: "suitcase",
+                    url: "https://fr.ftp.opendatasoft.com/openscol/fr-en-calendrier-scolaire/Zone-A.ics"
+                },
+                {
+                    symbol: "power-off",
+                    url: "https://calendar.google.com/calendar/ical/fr.french%23holiday%40group.v.calendar.google.com/public/basic.ics"
+                },
+                {
+                    symbol: "cake-candles",
+                    url: "https://calendar.google.com/calendar/ical/d95c64ab2ab0d76b581ac5b2d507ecef58b798b094eea4549cd4d61743457abe%40group.calendar.google.com/private-ac9398e45e7666fbd88b72f704261fb1/basic.ics"
+                },
             ]
             }
         },
@@ -79,7 +91,7 @@ let config = {
             feeds: [
                 {
                 title: "AFP",
-                url: "https://news.google.com/rss/search?q=source:AFP&um=1&ie=UTF-8&num=100&hl=en-US&gl=US&ceid=US:en"
+                url: "https://news.google.com/rss/search?q=source:AP&um=1&ie=UTF-8&num=100&hl=en-US&gl=US&ceid=US:en"
                 }
             ],
             showSourceTitle: true,
