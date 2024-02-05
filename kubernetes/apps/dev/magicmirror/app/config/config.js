@@ -35,13 +35,13 @@ let config = {
         },
         {
             module: "calendar",
-            header: "US Holidays",
+            header: "Family Calendar",
             position: "top_left",
             config: {
             calendars: [
                 {
                 symbol: "calendar-check",
-                url: "{SECRET_MAGICMIRROR_GCALENDAR_FAMILY}"
+                url: "${SECRET_MAGICMIRROR_GCALENDAR_FAMILY}"
                 }
             ]
             }

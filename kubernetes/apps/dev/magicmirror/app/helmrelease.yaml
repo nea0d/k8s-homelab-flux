@@ -107,7 +107,7 @@ spec:
         name: mm-configjs
         advancedMounts:
           main:
-            dnsdist:
+            main:
               - path: /opt/magic_mirror/config/config.js
                 subPath: config.js
                 readOnly: true
@@ -117,7 +117,7 @@ spec:
         name: mm-customcss
         advancedMounts:
           main:
-            dnsdist:
+            main:
               - path: /opt/magic_mirror/css/custom.css
                 subPath: custom.css
                 readOnly: true
@@ -127,6 +127,6 @@ spec:
         name: mm-modules
         advancedMounts:
           main:
-            dnsdist:
+            main:
               - path: /opt/magic_mirror/modules
                 readOnly: true
