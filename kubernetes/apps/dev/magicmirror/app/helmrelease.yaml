@@ -110,6 +110,7 @@ spec:
             main:
               - path: /opt/magic_mirror/config/config.js
                 subPath: config.js
+                readOnly: true
       mm-customcss:
         enabled: true
         type: configMap
@@ -119,10 +120,10 @@ spec:
             main:
               - path: /opt/magic_mirror/css/custom.css
                 subPath: custom.css
-      mm-modules:
+                readOnly: true
+      modules:
         enabled: true
-        type: configMap
-        name: mm-modules
+        type: emptyDir
         advancedMounts:
           main:
             main:

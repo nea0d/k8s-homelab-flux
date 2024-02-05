@@ -32,19 +32,19 @@ let config = {
             module: "clock",
             position: "top_left"
         },
-        // {
-        //     module: "calendar",
-        //     header: "Family Calendar",
-        //     position: "top_left",
-        //     config: {
-        //     calendars: [
-        //         {
-        //         symbol: "calendar-check",
-        //         url: "${SECRET_MAGICMIRROR_GCALENDAR_FAMILY}"
-        //         }
-        //     ]
-        //     }
-        // },
+        {
+            module: "calendar",
+            header: "Family Calendar",
+            position: "top_left",
+            config: {
+            calendars: [
+                {
+                symbol: "calendar-check",
+                url: "${SECRET_MAGICMIRROR_GCALENDAR_FAMILY}"
+                }
+            ]
+            }
+        },
         {
             module: "compliments",
             position: "lower_third"
@@ -72,22 +72,22 @@ let config = {
             apiKey: "${SECRET_MAGICMIRROR_OPENWEATHERMAP_APIKEY}"
             }
         },
-        // {
-        //     module: "newsfeed",
-        //     position: "bottom_bar",
-        //     config: {
-        //     feeds: [
-        //         {
-        //         title: "AFP",
-        //         url: "https://news.google.com/rss/search?q=source:AFP&um=1&ie=UTF-8&num=100&hl=en-US&gl=US&ceid=US:en"
-        //         }
-        //     ],
-        //     showSourceTitle: true,
-        //     showPublishDate: true,
-        //     broadcastNewsFeeds: true,
-        //     broadcastNewsUpdates: true
-        //     }
-        // },
+        {
+            module: "newsfeed",
+            position: "bottom_bar",
+            config: {
+            feeds: [
+                {
+                title: "AFP",
+                url: "https://news.google.com/rss/search?q=source:AFP&um=1&ie=UTF-8&num=100&hl=en-US&gl=US&ceid=US:en"
+                }
+            ],
+            showSourceTitle: true,
+            showPublishDate: true,
+            broadcastNewsFeeds: true,
+            broadcastNewsUpdates: true
+            }
+        },
     ]
 };
 
