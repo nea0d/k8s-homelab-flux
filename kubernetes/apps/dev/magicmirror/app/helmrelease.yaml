@@ -36,8 +36,13 @@ spec:
               reloader.stakater.com/auto: "true"
             nameOverride: magicmirror
             image:
-              repository: karsten13/magicmirror:alpine
-              tag: v2.26.0
+              repository: karsten13/magicmirror
+              tag: alpine
+            command:
+              - /opt/magic_mirror/entrypoint.sh
+              - npm
+              - run
+              - server
             env:
               TZ: "${TIMEZONE}"
               MM_PORT: &port 8080
