@@ -5,3 +5,19 @@ kind: Kustomization
 namespace: dev
 resources:
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: mm-configjs
+    files:
+      - ./config/config.js
+  - name: mm-customcss
+    files:
+      - ./config/custom.css
+  - name: mm-modules
+    files:
+      - ./config/modules
+generatorOptions:
+  disableNameSuffixHash: true
+commonLabels:
+  app.kubernetes.io/name: magicmirror
+  app.kubernetes.io/instance: magicmirror
+  app.kubernetes.io/component: app
