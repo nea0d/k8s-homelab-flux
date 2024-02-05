@@ -41,7 +41,8 @@ let config = {
             calendars: [
                 {
                 symbol: "calendar-check",
-                url: "webcal://www.calendarlabs.com/ical-calendar/ics/76/US_Holidays.ics"					}
+                url: "{SECRET_MAGICMIRROR_GCALENDAR_FAMILY}"
+                }
             ]
             }
         },
@@ -55,9 +56,9 @@ let config = {
             config: {
             weatherProvider: "openweathermap",
             type: "current",
-            location: "New York",
-            locationID: "5128581", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
-            apiKey: "YOUR_OPENWEATHER_API_KEY"
+            location: "Meyzieu",
+            locationID: "6441828", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
+            apiKey: "${SECRET_MAGICMIRROR_OPENWEATHERMAP_APIKEY}"
             }
         },
         {
@@ -67,9 +68,9 @@ let config = {
             config: {
             weatherProvider: "openweathermap",
             type: "forecast",
-            location: "New York",
-            locationID: "5128581", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
-            apiKey: "YOUR_OPENWEATHER_API_KEY"
+            location: "Meyzieu",
+            locationID: "6441828", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
+            apiKey: "${SECRET_MAGICMIRROR_OPENWEATHERMAP_APIKEY}"
             }
         },
         {
@@ -78,8 +79,8 @@ let config = {
             config: {
             feeds: [
                 {
-                title: "New York Times",
-                url: "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
+                title: "AFP",
+                url: "https://news.google.com/rss/search?q=source:AFP&um=1&ie=UTF-8&num=100&hl=en-US&gl=US&ceid=US:en"
                 }
             ],
             showSourceTitle: true,
