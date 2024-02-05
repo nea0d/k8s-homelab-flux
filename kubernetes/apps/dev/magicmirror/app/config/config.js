@@ -69,7 +69,9 @@ let config = {
             type: "current",
             location: "Meyzieu",
             locationID: "6441828", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
-            apiKey: "${SECRET_MAGICMIRROR_OPENWEATHERMAP_APIKEY}"
+            apiKey: "${SECRET_MAGICMIRROR_OPENWEATHERMAP_APIKEY}",
+            showPrecipitationProbability: true,
+            showPrecipitationAmount: true
             }
         },
         {
@@ -81,7 +83,9 @@ let config = {
             type: "forecast",
             location: "Meyzieu",
             locationID: "6441828", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
-            apiKey: "${SECRET_MAGICMIRROR_OPENWEATHERMAP_APIKEY}"
+            apiKey: "${SECRET_MAGICMIRROR_OPENWEATHERMAP_APIKEY}",
+            showPrecipitationProbability: true,
+            showPrecipitationAmount: true
             }
         },
         {
@@ -90,9 +94,29 @@ let config = {
             config: {
             feeds: [
                 {
-                title: "AFP",
-                url: "https://news.google.com/rss/search?q=source:AP&um=1&ie=UTF-8&num=100&hl=en-US&gl=US&ceid=US:en"
-                }
+                title: "NY Times World",
+                url: "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"
+                },
+                {
+                    title: "NY Times Europe",
+                    url: "https://rss.nytimes.com/services/xml/rss/nyt/Europe.xml"
+                },
+                {
+                    title: "NY Times Tech",
+                    url: "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml"
+                },
+                {
+                    title: "NY Times Science",
+                    url: "https://rss.nytimes.com/services/xml/rss/nyt/Science.xml"
+                },
+                {
+                    title: "NY Times Climate",
+                    url: "https://rss.nytimes.com/services/xml/rss/nyt/Climate.xml"
+                },
+                {
+                    title: "NY Times Space",
+                    url: "https://rss.nytimes.com/services/xml/rss/nyt/Space.xml"
+                } 
             ],
             showSourceTitle: true,
             showPublishDate: true,
