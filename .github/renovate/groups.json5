@@ -64,6 +64,16 @@
       ],
       "group": { "commitMessageTopic": "{{{groupName}}} group" },
       "separateMinorPatch": false
+    },
+    {
+      "description": ["System Upgrade Controller Group"],
+      "groupName": "System Upgrade Controller",
+      "matchPackagePatterns": ["system-upgrade-controller"],
+      "matchDatasources": ["docker", "github-releases"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
     }
   ]
 }
