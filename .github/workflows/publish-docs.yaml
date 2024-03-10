@@ -22,7 +22,7 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - name: Generate Token
-        uses: actions/create-github-app-token@e8e39f73bb84fdf315a015fa3104f314c0a258b4 # v1.8.1
+        uses: actions/create-github-app-token@f2acddfb5195534d487896a656232b016a682f3c # v1.9.0
         id: app-token
         with:
           app-id: "${{ secrets.BOT_APP_ID }}"
@@ -41,7 +41,7 @@ jobs:
           enablement: true
 
       - name: Build docs
-        uses: docker://ghcr.io/bjw-s/mdbook:0.4.37@sha256:9dcbf78270599e168f4acc80849473d7c3ec6be9429d805f39101512793b05f5
+        uses: docker://ghcr.io/bjw-s/mdbook:0.4.37@sha256:928114007b3d17b94d67d6421a719be5dd80ff7f82f8c46cf13d604a0113dea9
         with:
           args: mdbook build docs
 
@@ -59,7 +59,7 @@ jobs:
     needs: build
     steps:
       - name: Generate Token
-        uses: actions/create-github-app-token@e8e39f73bb84fdf315a015fa3104f314c0a258b4 # v1.8.1
+        uses: actions/create-github-app-token@f2acddfb5195534d487896a656232b016a682f3c # v1.9.0
         id: app-token
         with:
           app-id: "${{ secrets.BOT_APP_ID }}"
