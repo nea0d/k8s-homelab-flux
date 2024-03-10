@@ -1,0 +1,91 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: mealie2
+  namespace: home
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  values:
+    controllers:
+      main:
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+              pullPolicy: IfNotPresent
+            envFrom: &envFrom
+              - secretRef:
+                  name: mealie-secret
+        containers:
+          main:
+            image:
+              repository: ghcr.io/mealie-recipes/mealie
+              tag: v1.3.1
+              pullPolicy: IfNotPresent
+            env:
+              TZ: "${TIMEZONE}"
+              PUID: 1000
+              PGID: 1000
+              DEFAULT_EMAIL: "${SECRET_CLOUDFLARE_EMAIL}"
+              ALLOW_SIGNUP: false
+              API_PORT: 9000
+              AUTO_BACKUP_ENABLED: false
+              BASE_URL: https://mealie2.${SECRET_PUBLIC_DOMAIN}
+              SMTP_HOST: smtp-relay.system.svc.cluster.local.
+              SMTP_PORT: 2525
+              SMTP_FROM_NAME: mealie2@${SECRET_PUBLIC_DOMAIN}
+              SMTP_AUTH_STRATEGY: none
+              SMTP_FROM_EMAIL: mealie2@${SECRET_PUBLIC_DOMAIN}
+              TOKEN_TIME: 720
+              # Database Settings
+              DB_ENGINE: postgres
+            envFrom: *envFrom
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256M
+              limits:
+                memory: 512M
+
+    service:
+      main:
+        ports:
+          http:
+            port: 9000
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "external"
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_PUBLIC_DOMAIN}"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "food"
+          hajimari.io/group: "home"
+        hosts:
+          - host: &host "mealie2.${SECRET_PUBLIC_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      api-data:
+        enabled: true
+        existingClaim: mealie-api-data
+        globalMounts:
+          - path: /app/data/

@@ -8,4 +8,5 @@ resources:
   # Flux-Kustomizations
   - ./home-assistant/ks.yaml
   - ./mealie/ks.yaml
+  - ./mealie2/ks.yaml
   - ./teslamate/ks.yaml
