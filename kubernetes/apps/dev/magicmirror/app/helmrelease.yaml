@@ -28,6 +28,15 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+        supplementalGroups:
+          - 65539
+
     controllers:
       magicmirror:
         annotations:
@@ -37,13 +46,9 @@ spec:
             image:
               repository: karsten13/magicmirror
               tag: alpine
-            command: ["sh",
+            command: ["/bin/sh",
               "-c",
               "/opt/magic_mirror/install-modules.sh"]
-            securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
-              fsGroup: 1000
         containers:
           app:
             nameOverride: magicmirror
@@ -78,10 +83,6 @@ spec:
                 memory: 128M
               limits:
                 memory: 256M
-            securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
-              fsGroup: 1000
     service:
       app:
         controller: magicmirror
@@ -144,7 +145,7 @@ spec:
               - path: /opt/magic_mirror/modules.ini
                 subPath: modules.ini
                 readOnly: true
-      modules-installsh:
+      mm-modulesinstallsh:
         enabled: true
         type: configMap
         name: mm-modulesinstallsh
