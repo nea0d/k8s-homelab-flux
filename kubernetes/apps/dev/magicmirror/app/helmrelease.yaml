@@ -131,7 +131,7 @@ spec:
                 readOnly: true
       mm-modulesini:
         enabled: true
-        type: ConfigMap
+        type: configMap
         name: mm-modulesini
         defaultMode: 0775
         globalMounts:
@@ -140,7 +140,7 @@ spec:
             readOnly: true
       modules-installsh:
         enabled: true
-        type: ConfigMap
+        type: configMap
         name: mm-modulesinstallsh
         defaultMode: 0775
         globalMounts:
