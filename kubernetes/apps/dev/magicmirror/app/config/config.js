@@ -153,7 +153,7 @@ let config = {
         },
         {
 			module: "MMM-OnSpotify",
-			position: "bottom_right", /* bottom_left, bottom_center */ 
+			position: "top_center", /* bottom_left, bottom_center */ 
 			config: {
 				clientID: "${SECRET_MAGICMIRROR_SPOTIFY_CLIENTID}",
 				clientSecret: "${SECRET_MAGICMIRROR_SPOTIFY_CLIENTSECRET}",
@@ -199,7 +199,10 @@ let config = {
                 blurCorrectionInFrameSide: false,
                 blurCorrectionInAllSides: false,
                 alwaysUseDefaultDeviceIcon: false,
-                experimentalCSSOverridesForMM2: false
+                experimentalCSSOverridesForMM2: [
+                    ["--color-text-dimmed", "palette_vibrantlight"],
+                    ["--ONSP-OVERRIDES-ICONS-COLOR", "palette_vibrantlight"], /* View custom.css */
+                ],
 			}
 		}
     ]
