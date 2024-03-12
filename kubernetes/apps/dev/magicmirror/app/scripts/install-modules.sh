@@ -1,7 +1,7 @@
 #!/bin/bash
 cd /opt/magic_mirror/modules
 set -ex
-cat /opt/magic_mirror/modules.ini | while read module
+cat /tmp/scripts/modules.ini | while read module
 do
   echo installing $module
   git clone $module

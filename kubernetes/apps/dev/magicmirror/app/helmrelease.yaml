@@ -39,7 +39,7 @@ spec:
               tag: alpine
             command: ["sh",
               "-c",
-              "/opt/magic_mirror/install-modules.sh"]
+              "/tmp/scripts/install-modules.sh"]
         containers:
           app:
             nameOverride: magicmirror
@@ -137,16 +137,16 @@ spec:
         advancedMounts:
           magicmirror:
             install-modules:
-              - path: /opt/magic_mirror/modules.ini
+              - path: /tmp/scripts/modules.ini
                 subPath: modules.ini
                 readOnly: true
       modules-installsh:
         enabled: true
         type: configMap
         name: mm-modulesinstallsh
-        defaultMode: 0775
+        defaultMode: 0777
         advancedMounts:
           magicmirror:
             install-modules:
-              - path: /opt/magic_mirror/install-modules.sh
+              - path: /tmp/scripts/install-modules.sh
                 subPath: install-modules.sh
