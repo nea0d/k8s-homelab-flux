@@ -149,7 +149,7 @@ let config = {
                 lastUpdate: true,
                 timeLastUpdateWarning: 1,
                 debug: false
-            },
+            }
         },
         {
 			module: "MMM-OnSpotify",
@@ -172,7 +172,6 @@ let config = {
                 deviceFilter: [],
                 deviceFilterExclude: false,
                 filterNoticeSubtitle: true,
-                language: config.language,
                 // Update intervals [SEE BELOW]
                 isPlaying: 1,
                 isEmpty: 2,
@@ -200,9 +199,9 @@ let config = {
                 blurCorrectionInFrameSide: false,
                 blurCorrectionInAllSides: false,
                 alwaysUseDefaultDeviceIcon: false,
-                experimentalCSSOverridesForMM2: false, // [SEE BELOW]
+                experimentalCSSOverridesForMM2: false
 			}
-		},
+		}
     ]
 };
 
