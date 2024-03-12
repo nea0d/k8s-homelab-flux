@@ -162,7 +162,7 @@ let config = {
 				/* Add here your theming and behaviour configurations */
                 // General module options [SEE BELOW]
                 advertisePlayerTheme: true,
-                displayWhenEmpty: "user",
+                displayWhenEmpty: "none",
                 userAffinityUseTracks: false,
                 prefersLargeImageSize: false,
                 hideTrackLenghtAndAnimateProgress: false,
@@ -204,7 +204,74 @@ let config = {
                     ["--ONSP-OVERRIDES-ICONS-COLOR", "palette_vibrantlight"], /* View custom.css */
                 ],
 			}
-		}
+		},
+        {
+            module: 'MMM-Teslamate',
+            position: 'bottom_right',
+            config: {
+                mqttServer: {
+                    address: "${LB_MOSQUITTO_IP}",  // Server address or IP address of the MQTT broker
+                    port: 1883,              // Port number if other than default (1883)
+                    user: "${SECRET_MOSQUITTO_MQTT_USERNAME}",          // Leave out for no user
+                    password: "${SECRET_MOSQUITTO_MQTT_PASSWORD}",  // Leave out for no password
+                },
+                rangeDisplay: "%", // "%" or "range"
+                imperial: false, //use imperial units (true = Miles & F) or metric (false = Km & C)
+        
+                carID: '1', // defaults to '1'; only override if you have multiple Teslas and want to display 
+                            // a specific car per instance of the module
+        
+                // set to true to enable both the graphic, and the additional stats 
+                // (charge remaining, scheduled charge start, etc)
+                hybridView: false,
+                // size of the visible area
+                sizeOptions: {
+                    // size of the icons + battery (above text)
+                    width: 450, // px, default: 450
+                    height: 203, // px, default: 203
+                    // the battery images itself
+                    batWitdh: 250, // px, default: 250
+                    batHeight: 75, // px, default: 75
+                    // visual distance reduction to the module above
+                    topOffset: -40, // px, default: -40
+                },
+                displayOptions: {
+                    odometer: {
+                        visible: false, // bool, default: true (option to hide the odometer)
+                        fontSize: null, // null (to use default/css) or numeric rem-value (default value is 1.8)
+                    },
+                    batteryBar: {
+                        visible: true, // bool, default: true (option to hide the battery-bar)
+                        topMargin: 0, // px, default: 0 (px-value to add space between the battery-bar and the informations above)
+                    },
+                    temperatureIcons: {
+                        topMargin: 0, // px, default: 0 (px-value to add space between the temperature-icons and the informations above)
+                    }
+                },
+                carImageOptions: {
+                    model: "m3", // mx, ms (S pre-refresh), ? (S post-refresh)
+        
+                    view: "STUD_3QTR", // STUD_SIDE works better for S/X
+        
+                    // full list of option codes: https://tesla-api.timdorr.com/vehicle/optioncodes.
+                    // you need at least the color and the wheels. not all combos work.
+                    // also consult: https://teslaownersonline.com/threads/teslas-image-compositor.7089/
+                    options: "PPSW,W39B,DV2W",
+        
+                    // play with this until it looks about right.
+                    // tested values: 0 for m3/STUD_3QTR, 25 for ms/STUD_SIDE
+                    verticalOffset: 0,
+        
+                    opacity: 0.5
+                },
+        
+                // show inside and outside temperatures below the car image: when AC or preconditioning is running (default), always, or never
+                showTemps: "hvac_on", // "always", "never"
+        
+                // time in seconds to wait before re-rendering the module on incoming data. prevents high CPU load due to re-rendering on every new data point during driving
+                updatePeriod: 5,
+            }
+        },
     ]
 };
 

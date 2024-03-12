@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mosquitto
+  namespace: dev
+  labels:
+    app.kubernetes.io/name: mosquitto
+    snapshot.home.kubernetes/enabled: "true"
+spec:
+  accessModes: ["ReadWriteMany"]
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ceph-filesystem

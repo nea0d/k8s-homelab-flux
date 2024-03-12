@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.3.0
+      version: 3.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -29,7 +29,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      teslamate:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -42,24 +42,26 @@ spec:
               - secretRef:
                   name: teslamate-secret
         containers:
-          main:
+          app:
             image:
               repository: teslamate/teslamate
               tag: 1.28.3
             env:
               TZ: ${TIMEZONE}
-              DISABLE_MQTT: "true"
+              DISABLE_MQTT: "false"
+              MQTT_HOST: "mosquitto.dev.svc.cluster.local"
             envFrom:
               - secretRef:
                   name: teslamate-secret
     service:
-      main:
+      app:
+        controller: teslamate
         type: ClusterIP
         ports:
           http:
             port: 4000
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         annotations:
@@ -71,7 +73,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  name: teslamate
                   port: http
         tls:
           - hosts:
