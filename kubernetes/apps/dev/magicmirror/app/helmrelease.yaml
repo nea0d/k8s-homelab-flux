@@ -42,7 +42,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
-          install-modules :
+          installmodules :
             image:
               repository: karsten13/magicmirror
               tag: alpine
@@ -135,13 +135,19 @@ spec:
               - path: /opt/magic_mirror/css/custom.css
                 subPath: custom.css
                 readOnly: true
+      mm-modules:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /opt/magic_mirror/modules
+            readOnly: false
       mm-modulesini:
         enabled: true
         type: configMap
         name: mm-modulesini
         advancedMounts:
           magicmirror:
-            install-modules:
+            installmodules:
               - path: /opt/magic_mirror/modules.ini
                 subPath: modules.ini
                 readOnly: true
@@ -152,6 +158,6 @@ spec:
         defaultMode: 0775
         advancedMounts:
           magicmirror:
-            install-modules:
+            installmodules:
               - path: /opt/magic_mirror/install-modules.sh
                 subPath: install-modules.sh

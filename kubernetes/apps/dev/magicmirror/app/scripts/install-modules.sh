@@ -1,4 +1,5 @@
 #!/bin/bash
+echo initializing mm modules
 cd /opt/magic_mirror/modules
 set -ex
 cat /opt/magic_mirror/modules.ini | while read module
