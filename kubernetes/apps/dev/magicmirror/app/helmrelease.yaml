@@ -141,21 +141,27 @@ spec:
         globalMounts:
           - path: /opt/magic_mirror/modules
             readOnly: false
-      mm-modulesini:
+      modules-ini:
         enabled: true
         type: configMap
         name: mm-modulesini
+        globalMounts:
+          - path: /tmp/scripts
+            readOnly: true
         advancedMounts:
           magicmirror:
             installmodules:
               - path: /opt/magic_mirror/modules.ini
                 subPath: modules.ini
                 readOnly: true
-      mm-modulesinstallsh:
+      module-install:
         enabled: true
         type: configMap
         name: mm-modulesinstallsh
         defaultMode: 0775
+        globalMounts:
+          - path: /tmp/scripts
+            readOnly: false
         advancedMounts:
           magicmirror:
             installmodules:
