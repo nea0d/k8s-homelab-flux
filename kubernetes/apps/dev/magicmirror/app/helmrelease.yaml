@@ -115,8 +115,8 @@ spec:
         type: configMap
         name: mm-configjs
         advancedMounts:
-          main:
-            main:
+          magicmirror:
+            app:
               - path: /opt/magic_mirror/config/config.js
                 subPath: config.js
                 readOnly: true
@@ -125,8 +125,8 @@ spec:
         type: configMap
         name: mm-customcss
         advancedMounts:
-          main:
-            main:
+          magicmirror:
+            app:
               - path: /opt/magic_mirror/css/custom.css
                 subPath: custom.css
                 readOnly: true
@@ -139,10 +139,12 @@ spec:
             install-modules:
               - path: /opt/magic_mirror/modules.ini
                 subPath: modules.ini
+                readOnly: true
       modules-installsh:
         enabled: true
         type: configMap
         name: mm-modulesinstallsh
+        defaultMode: 0775
         advancedMounts:
           magicmirror:
             install-modules:
