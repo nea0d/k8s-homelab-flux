@@ -1,4 +1,3 @@
-#!/bin/bash
 echo initializing mm modules
 cd /opt/magic_mirror/modules
 set -ex
