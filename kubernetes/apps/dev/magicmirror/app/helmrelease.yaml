@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.oxygn.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.5.0
+      version: 3.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -29,7 +29,9 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      magicmirror:
+        annotations:
+          reloader.stakater.com/auto: "true"
         initContainers:
           install-modules :
             image:
@@ -39,9 +41,7 @@ spec:
               "-c",
               "/opt/magic_mirror/install-modules.sh"]
         containers:
-          main:
-            annotations:
-              reloader.stakater.com/auto: "true"
+          app:
             nameOverride: magicmirror
             image:
               repository: karsten13/magicmirror
@@ -79,7 +79,8 @@ spec:
               runAsGroup: 1000
               fsGroup: 1000
     service:
-      main:
+      app:
+        controller: magicmirror
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: "${LB_MAGICMIRROR_IP}"
@@ -90,7 +91,7 @@ spec:
             targetPort: *port
             protocol: TCP
     ingress:
-      main:
+      app:
         enabled: true
         className: "internal"
         annotations:
@@ -103,7 +104,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  name: app
                   port: *port
         tls:
           - hosts:
@@ -133,17 +134,17 @@ spec:
         enabled: true
         type: configMap
         name: mm-modulesini
-        defaultMode: 0775
-        globalMounts:
-          - path: /opt/magic_mirror/modules.ini
-            subPath: modules.ini
-            readOnly: true
+        advancedMounts:
+          magicmirror:
+            install-modules:
+              - path: /opt/magic_mirror/modules.ini
+                subPath: modules.ini
       modules-installsh:
         enabled: true
         type: configMap
         name: mm-modulesinstallsh
-        defaultMode: 0775
-        globalMounts:
-          - path: /opt/magic_mirror/install-modules.sh
-            subPath: install-modules.sh
-            readOnly: true
+        advancedMounts:
+          magicmirror:
+            install-modules:
+              - path: /opt/magic_mirror/install-modules.sh
+                subPath: install-modules.sh
