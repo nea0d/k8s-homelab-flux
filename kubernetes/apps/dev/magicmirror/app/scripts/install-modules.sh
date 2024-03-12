@@ -2,7 +2,7 @@
 echo initializing mm modules
 cd /opt/magic_mirror/modules
 set -ex
-cat /opt/magic_mirror/modules.ini | while read module
+cat /tmp/config/modules.ini | while read module
 do
   echo installing $module
   git clone $module
