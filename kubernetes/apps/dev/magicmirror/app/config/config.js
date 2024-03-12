@@ -150,7 +150,59 @@ let config = {
                 timeLastUpdateWarning: 1,
                 debug: false
             },
-        }
+        },
+        {
+			module: "MMM-OnSpotify",
+			position: "bottom_right", /* bottom_left, bottom_center */ 
+			config: {
+				clientID: "${SECRET_MAGICMIRROR_SPOTIFY_CLIENTID}",
+				clientSecret: "${SECRET_MAGICMIRROR_SPOTIFY_CLIENTSECRET}",
+				accessToken: "${SECRET_MAGICMIRROR_SPOTIFY_ACCESSTOKEN}",
+				refreshToken: "${SECRET_MAGICMIRROR_SPOTIFY_REFRESHTOKEN}",
+				/* Add here your theming and behaviour configurations */
+                // General module options [SEE BELOW]
+                advertisePlayerTheme: true,
+                displayWhenEmpty: "user",
+                userAffinityUseTracks: false,
+                prefersLargeImageSize: false,
+                hideTrackLenghtAndAnimateProgress: false,
+                showDebugPalette: false,
+                userDataMaxAge: 14400,
+                userAffinityMaxAge: 36000,
+                deviceFilter: [],
+                deviceFilterExclude: false,
+                filterNoticeSubtitle: true,
+                language: config.language,
+                // Update intervals [SEE BELOW]
+                isPlaying: 1,
+                isEmpty: 2,
+                isPlayingHidden: 2,
+                isEmptyHidden: 3,
+                onReconnecting: 4,
+                onError: 8,
+                // Animations [SEE BELOW]
+                mediaAnimations: false,
+                fadeAnimations: false,
+                textAnimations: false,
+                transitionAnimations: false,
+                // Spotify Code (EXPERMIENTAL)
+                spotifyCodeExperimentalShow: true,
+                spotifyCodeExperimentalUseColor: true,
+                spotifyCodeExperimentalSeparateItem: true,
+                // Theming General
+                roundMediaCorners: true,
+                roundProgressBar: true,
+                showVerticalPipe: true, 
+                useColorInProgressBar: true,
+                useColorInTitle: true,
+                useColorInUserData: true,
+                showBlurBackground: false,
+                blurCorrectionInFrameSide: false,
+                blurCorrectionInAllSides: false,
+                alwaysUseDefaultDeviceIcon: false,
+                experimentalCSSOverridesForMM2: false, // [SEE BELOW]
+			}
+		},
     ]
 };
 
