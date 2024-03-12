@@ -39,7 +39,7 @@ spec:
               tag: alpine
             command: ["sh",
               "-c",
-              "/tmp/scripts/install-modules.sh"]
+              "/opt/magic_mirror/install-modules.sh"]
             securityContext:
               runAsUser: 1000
               runAsGroup: 1000
@@ -141,7 +141,7 @@ spec:
         advancedMounts:
           magicmirror:
             install-modules:
-              - path: /tmp/scripts/modules.ini
+              - path: /opt/magic_mirror/modules.ini
                 subPath: modules.ini
                 readOnly: true
       modules-installsh:
@@ -152,5 +152,5 @@ spec:
         advancedMounts:
           magicmirror:
             install-modules:
-              - path: /tmp/scripts/install-modules.sh
+              - path: /opt/magic_mirror/install-modules.sh
                 subPath: install-modules.sh
