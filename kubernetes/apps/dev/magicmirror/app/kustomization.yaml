@@ -12,9 +12,12 @@ configMapGenerator:
   - name: mm-customcss
     files:
       - ./config/custom.css
-  - name: mm-modules
+  - name: mm-modulesini
     files:
-      - ./config/modules
+      - ./config/modules.ini
+  - name: mm-modulesinstallsh
+    files:
+      - ./scripts/install-modules.sh
 generatorOptions:
   disableNameSuffixHash: true
 commonLabels:

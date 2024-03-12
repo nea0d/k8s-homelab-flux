@@ -124,6 +124,33 @@ let config = {
             broadcastNewsUpdates: true
             }
         },
+        {
+            module: 'MMM-GoogleTrafficTimes',
+            position: 'bottom_left',
+            config: {
+                key: "${SECRET_MAGICMIRROR_GOOGLEMAPS_APIKEY}",
+                origin: "${SECRET_MAGICMIRROR_HOME_ADDRESS}",
+                destinations: [
+                    {
+                        name: "Work Matt",
+                        address: "${SECRET_MAGICMIRROR_WORK_MATT_ADDRESS}"
+                    },
+                    {
+                        name: "Work Agnès",
+                        address: "${SECRET_MAGICMIRROR_WORK_AGNES_ADDRESS}"
+                    }
+                ],
+                updateInterval: 900000,
+                avoidHighways: false,
+                avoidTolls: false,
+                mode: 'driving',
+                language: "fr-FR",
+                offsetTime: 25,
+                lastUpdate: true,
+                timeLastUpdateWarning: 1,
+                debug: false
+            },
+        }
     ]
 };
 

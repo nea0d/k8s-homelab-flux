@@ -30,6 +30,14 @@ spec:
   values:
     controllers:
       main:
+        initContainers:
+          install-modules :
+            image:
+              repository: karsten13/magicmirror
+              tag: alpine
+            command: ["sh",
+              "-c",
+              "/opt/magic_mirror/install-modules.sh"]
         containers:
           main:
             annotations:
@@ -121,10 +129,21 @@ spec:
               - path: /opt/magic_mirror/css/custom.css
                 subPath: custom.css
                 readOnly: true
-      modules:
+      mm-modulesini:
         enabled: true
-        type: emptyDir
-        advancedMounts:
-          main:
-            main:
-              - path: /opt/magic_mirror/modules
+        type: ConfigMap
+        name: mm-modulesini
+        defaultMode: 0775
+        globalMounts:
+          - path: /opt/magic_mirror/modules.ini
+            subPath: modules.ini
+            readOnly: true
+      modules-installsh:
+        enabled: true
+        type: ConfigMap
+        name: mm-modulesinstallsh
+        defaultMode: 0775
+        globalMounts:
+          - path: /opt/magic_mirror/install-modules.sh
+            subPath: install-modules.sh
+            readOnly: true
