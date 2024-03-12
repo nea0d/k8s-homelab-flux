@@ -40,6 +40,10 @@ spec:
             command: ["sh",
               "-c",
               "/tmp/scripts/install-modules.sh"]
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              fsGroup: 1000
         containers:
           app:
             nameOverride: magicmirror
@@ -144,7 +148,7 @@ spec:
         enabled: true
         type: configMap
         name: mm-modulesinstallsh
-        defaultMode: 0777
+        defaultMode: 0775
         advancedMounts:
           magicmirror:
             install-modules:
