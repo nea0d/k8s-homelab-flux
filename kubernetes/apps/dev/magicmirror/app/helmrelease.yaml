@@ -146,7 +146,7 @@ spec:
         type: configMap
         name: mm-modulesini
         globalMounts:
-          - path: /tmp/scripts
+          - path: /tmp/config
             readOnly: true
         advancedMounts:
           magicmirror:
