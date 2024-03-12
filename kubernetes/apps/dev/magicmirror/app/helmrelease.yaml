@@ -109,7 +109,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: app
+                  name: magicmirror
                   port: *port
         tls:
           - hosts:
