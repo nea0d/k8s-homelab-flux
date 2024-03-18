@@ -1,0 +1,69 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.4/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: capacitor
+  namespace: flux-system
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.4
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  interval: 30m
+  values:
+    controllers:
+      capacitor:
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: ghcr.io/gimlet-io/capacitor
+              tag: v0.3.3
+              pullPolicy: Always
+            resources:
+              requests:
+                cpu: 50m
+                memory: 100Mi
+                ephemeral-storage: 1Gi
+              limits:
+                memory: 200Mi
+                ephemeral-storage: 2Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+    
+    serviceAccount: 
+      create: true
+      name: "capacitor"
+    
+    service:
+      app:
+        controller: capacitor
+        ports:
+          http:
+            enabled: true
+            port: 9000
+    
+    ingress:
+      capacitor:
+        enabled: true
+        className: internal
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: omega
+        hosts:
+          - host: &host capacitor.${SECRET_PUBLIC_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
