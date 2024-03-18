@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/instance: *app
 spec:
   # type: ClusterIP
-  clusterIP: None
+  # clusterIP: None
   type: ExternalName
   externalName: unifi.${SECRET_PRIVATE_DOMAIN}
   ports:
