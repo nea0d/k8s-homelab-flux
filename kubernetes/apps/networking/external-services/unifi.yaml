@@ -56,7 +56,7 @@ spec:
               service:
                 name: *app
                 port:
-                  number: *port
+                  name: "https"
   tls:
     - hosts:
         - *host
