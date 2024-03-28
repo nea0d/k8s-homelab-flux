@@ -7,4 +7,4 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./authelia/ks.yaml
-  - ./glauth/ks.yaml
+  - ./lldap/ks.yaml
