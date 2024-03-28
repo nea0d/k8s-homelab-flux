@@ -44,7 +44,7 @@ spec:
         pod-recommendation-min-memory-mb: 61
         storage: prometheus
         prometheus-address: |-
-          http://thanos-query-frontend.monitoring.svc.cluster.local.:9090
+          http://thanos-query-frontend.monitoring.svc.cluster.local.:10902
     updater:
       enabled: false
     admissionController:

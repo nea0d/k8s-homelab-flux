@@ -90,7 +90,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/default
+              path: /var/lib/grafana/dashboards/default-folder
           - name: apps
             orgId: 1
             folder: ""
@@ -98,7 +98,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/apps
+              path: /var/lib/grafana/dashboards/apps-folder
           - name: ceph
             orgId: 1
             folder: Ceph
@@ -106,7 +106,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/ceph
+              path: /var/lib/grafana/dashboards/ceph-folder
           - name: flux
             orgId: 1
             folder: Flux
@@ -114,7 +114,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/flux
+              path: /var/lib/grafana/dashboards/flux-folder
           - name: infra
             orgId: 1
             folder: Infra
@@ -122,7 +122,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/infra
+              path: /var/lib/grafana/dashboards/infra-folder
           - name: kubernetes
             orgId: 1
             folder: Kubernetes
@@ -130,7 +130,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/kubernetes
+              path: /var/lib/grafana/dashboards/kubernetes-folder
           - name: nginx
             orgId: 1
             folder: Nginx
@@ -138,7 +138,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/nginx
+              path: /var/lib/grafana/dashboards/nginx-folder
           - name: teslamate
             orgId: 1
             folder: TeslaMate
@@ -146,7 +146,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/teslamate
+              path: /var/lib/grafana/dashboards/teslamate-folder
           - name: thanos
             orgId: 1
             folder: Thanos
@@ -154,7 +154,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/thanos
+              path: /var/lib/grafana/dashboards/thanos-folder
           - name: unifi
             orgId: 1
             folder: Unifi
@@ -162,7 +162,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/unifi
+              path: /var/lib/grafana/dashboards/unifi-folder
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -173,7 +173,7 @@ spec:
         datasources:
           - name: Prometheus
             type: prometheus
-            url: http://thanos-query-frontend.monitoring.svc.cluster.local.:9090
+            url: http://thanos-query-frontend.monitoring.svc.cluster.local.:10902
             uid: "prometheus"
             access: proxy
             isDefault: true
@@ -183,16 +183,16 @@ spec:
               alertmanagerUid: "alertmanager"
               manageAlerts: true
               httpMethod": "POST"
-          - name: Loki
-            type: loki
-            access: proxy
-            url: http://loki-gateway.monitoring.svc.cluster.local.:80
-            uid: "loki"
-            editable: true
-            jsonData:
-              alertmanagerUid: "alertmanager"
-              manageAlerts: true
-              maxLines: 250
+          # - name: Loki
+          #   type: loki
+          #   access: proxy
+          #   url: http://loki-gateway.monitoring.svc.cluster.local.:80
+          #   uid: "loki"
+          #   editable: true
+          #   jsonData:
+          #     alertmanagerUid: "alertmanager"
+          #     manageAlerts: true
+          #     maxLines: 250
           - name: Alertmanager
             type: alertmanager
             access: proxy
