@@ -9,13 +9,14 @@ authentication_backend:
     implementation: custom
     timeout: 5s
     start_tls: false
-    base_dn: dc=home,dc=arpa
+    base_dn: dc=oxygn,dc=dev
     additional_users_dn: ou=people
     users_filter: (&({username_attribute}={input})(objectClass=person))
     additional_groups_dn: ou=groups
     groups_filter: (member={dn})
     group_search_mode: filter
-    user: "uid=${SECRET_LLDAP_USER_DN},ou=people,dc=home,dc=arpa"
+    user: "${SECRET_LLDAP_USER_DN}"
+    password: "${SECRET_LLDAP_LDAP_USER_PASS}"
     attributes:
       username: uid
       display_name: displayName
