@@ -5,6 +5,7 @@ authentication_backend:
     disable: true
   refresh_interval: 1m
   ldap:
+    enabled: true
     address: ldap://lldap.authentication.svc.cluster.local:389
     implementation: custom
     timeout: 5s
@@ -15,8 +16,7 @@ authentication_backend:
     additional_groups_dn: ou=groups
     groups_filter: (member={dn})
     group_search_mode: filter
-    user: uid=admin,ou=people,dc=home,dc=arpa
-    password: password
+    user: "uid=${SECRET_LLDAP_USER_DN},ou=people,dc=home,dc=arpa"
     attributes:
       username: uid
       display_name: displayName
