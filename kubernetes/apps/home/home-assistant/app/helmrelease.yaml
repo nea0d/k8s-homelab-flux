@@ -75,7 +75,6 @@ spec:
       main:
         type: LoadBalancer
         annotations:
-          coredns.io/hostname: "redis.${SECRET_PUBLIC_DOMAIN}"
           io.cilium/lb-ipam-ips: "${LB_HOME_ASSISTANT_IP}"
         ports:
           http:

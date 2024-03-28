@@ -14,7 +14,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: cluster-apps-cloudnative-pg
-    - name: cluster-apps-redis
+    - name: dragonfly-cluster
   path: ./kubernetes/apps/authentication/authelia/app
   prune: true
   sourceRef:
