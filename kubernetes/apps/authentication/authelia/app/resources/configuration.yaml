@@ -15,8 +15,8 @@ authentication_backend:
     additional_groups_dn: ou=groups
     groups_filter: (member={dn})
     group_search_mode: filter
-    user: "uid=authelia-bind,ou=people,dc=oxygn,dc=dev"
-    password: "authelia"
+    user: "${SECRET_LLDAP_USER_DN}"
+    password: password
     attributes:
       username: uid
       display_name: displayName
