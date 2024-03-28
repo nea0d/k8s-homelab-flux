@@ -24,7 +24,7 @@ spec:
       retries: 3
   dependsOn:
     - name: lldap
-      namespace: default
+      namespace: authentication
   values:
     controllers:
       authelia:
