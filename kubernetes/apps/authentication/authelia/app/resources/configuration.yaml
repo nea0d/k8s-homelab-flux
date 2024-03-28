@@ -15,8 +15,8 @@ authentication_backend:
     additional_groups_dn: ou=groups
     groups_filter: (member={dn})
     group_search_mode: filter
-    user: "uid=${SECRET_LLDAP_USER_DN},ou=people,dc=home,dc=arpa"
-    password: ${SECRET_LLDAP_USER_PASS}
+    user: uid=admin,ou=people,dc=home,dc=arpa
+    password: password
     attributes:
       username: uid
       display_name: displayName
