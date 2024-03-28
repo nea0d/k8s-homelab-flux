@@ -24,6 +24,12 @@ authentication_backend:
       member_of: memberOf
       group_name: cn
 
+log:
+  level: 'debug'
+  format: 'text'
+  file_path: ''
+  keep_stdout: false
+
 session:
   same_site: lax
   expiration: 1h
